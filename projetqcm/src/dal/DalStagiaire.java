@@ -43,7 +43,7 @@ public class DalStagiaire {
 			stm.setString(1, libelle);	
 			ResultSet rs = stm.executeQuery();
 			while(rs.next()){
-				Stagiaire s = new Stagiaire(rs.getString("NOM"),rs.getString("PRENOM"),rs.getString);
+				Stagiaire s = new Stagiaire(rs.getString("NOM"),rs.getString("PRENOM"),/*TODO*/"");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
