@@ -25,9 +25,8 @@ public class Stagiaire {
 		this.inscriptions = new Vector<Inscription>();
 	}
 	
-	public Stagiaire(UUID id,String nom,String prenom,String promotion){
+	public Stagiaire(String nom,String prenom,String promotion){
 		this();
-		this.id = id;
 		this.nom = nom;
 		this.prenom = prenom;
 		this.promotion = promotion;
@@ -39,6 +38,18 @@ public class Stagiaire {
 	
 	public UUID getId() {
 		return id;
+	}
+
+	public String getMotDePasse() {
+		return motDePasse;
+	}
+
+	public void setMotDePasse(String motDePasse) {
+		this.motDePasse = motDePasse;
+	}
+
+	public void setId(UUID id) {
+		this.id = id;
 	}
 
 	public String getNom() {
