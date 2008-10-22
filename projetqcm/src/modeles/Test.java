@@ -4,13 +4,20 @@ import java.util.Vector;
 
 
 public class Test {
-	//Attributs
+	/*****************************************************
+	*						Attributs					 *
+	******************************************************/
+	
 	private String nom;
 	private String temps;
 	private int seuil;
 	private Vector<Section> sections;
 	
-	//Constructeurs
+	
+	/*****************************************************
+	*						Constructeurs				 *
+	******************************************************/
+	
 	public Test(){
 		super();
 		this.sections = new Vector<Section>();
@@ -23,7 +30,11 @@ public class Test {
 		this.setSeuil(seuil);
 	}
 
-	//Propriétés
+	
+	/*****************************************************
+	*						Accesseur					 *
+	******************************************************/
+	
 	public String getNom() {
 		return nom;
 	}
@@ -61,7 +72,10 @@ public class Test {
 		return null;
 	}
 	
-	//Méthodes
+	/*****************************************************
+	*						Methodes					 *
+	******************************************************/
+	
 	public void addSection(Section sec){
 		this.getSections().add(sec);
 	}
