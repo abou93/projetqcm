@@ -4,7 +4,11 @@ import java.util.UUID;
 import java.util.Vector;
 
 public class Stagiaire {
-	//Attributs
+
+	/*****************************************************
+	*						Attributs					 *
+	******************************************************/
+	
 	private UUID id;
 	private String nom;
 	private String prenom;
@@ -12,7 +16,10 @@ public class Stagiaire {
 	private String motDePasse;
 	private Vector<Inscription> inscriptions;
 	
-	//Constructeurs
+	/*****************************************************
+	*						Constructeurs				 *
+	******************************************************/
+	
 	public Stagiaire(){
 		super();
 		this.inscriptions = new Vector<Inscription>();
@@ -26,7 +33,10 @@ public class Stagiaire {
 		this.promotion = promotion;
 	}
 	
-	//Propriétés
+	/*****************************************************
+	*						Accesseur					 *
+	******************************************************/
+	
 	public UUID getId() {
 		return id;
 	}
@@ -56,7 +66,10 @@ public class Stagiaire {
 		return null;
 	}
 	
-	//Méthodes
+	/*****************************************************
+	*						Methodes					 *
+	******************************************************/
+	
 	public void changerMotDePasse(String nouveauMotDePasse){
 		this.motDePasse = nouveauMotDePasse;
 	}
