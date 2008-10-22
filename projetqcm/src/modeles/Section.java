@@ -1,6 +1,5 @@
 package modeles;
 
-import java.util.UUID;
 import java.util.Vector;
 
 public class Section {
