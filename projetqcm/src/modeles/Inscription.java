@@ -1,12 +1,19 @@
 package modeles;
 
 public class Inscription {
-	//Attributs
+	/*****************************************************
+	*						Attributs					 *
+	******************************************************/
+	
 	private Test test;
 	private String duree;
 	private String mailformateur;
 	
-	//Constructeurs
+	
+	/*****************************************************
+	*						Constructeurs				 *
+	******************************************************/
+	
 	public Inscription(){
 		super();
 	}
@@ -18,7 +25,11 @@ public class Inscription {
 		this.mailformateur = mailFormateur;
 	}
 	
-	//Propriétés
+	
+	/*****************************************************
+	*						Accesseur					 *
+	******************************************************/
+	
 	public Test getTest() {
 		return test;
 	}
@@ -42,8 +53,6 @@ public class Inscription {
 	public void setMailformateur(String mailformateur) {
 		this.mailformateur = mailformateur;
 	}
-	
-	//Méthodes
 	
 	
 }
