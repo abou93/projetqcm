@@ -3,6 +3,7 @@ package modeles;
 import java.util.Vector;
 
 public class Section {
+	
 	/*****************************************************
 	*						Attributs					 *
 	******************************************************/
