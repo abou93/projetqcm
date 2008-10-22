@@ -5,10 +5,19 @@ import java.util.ResourceBundle;
 
 public class AccesBase {
 
+	/*****************************************************
+	*						Constructeurs				 *
+	******************************************************/
+	
 	public AccesBase() 
 	{
 		super();
 	}
+	
+	/*****************************************************
+	*						Methodes					 *
+	******************************************************/
+	
 	public static Connection getConnection()
 	{
 		Connection ctn=null; 
@@ -25,4 +34,16 @@ public class AccesBase {
 		}
 		return ctn;
 	}
+	
+	public static void deconnexionBase(Connection cnx){
+		
+		try {
+			cnx.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println(e.getMessage());
+		}
+	
+	}
+	
 }
