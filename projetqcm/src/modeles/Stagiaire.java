@@ -82,7 +82,7 @@ public class Stagiaire {
 	******************************************************/
 	
 	public void changerMotDePasse(String nouveauMotDePasse){
-		this.motDePasse = nouveauMotDePasse;
+		this.setMotDePasse(nouveauMotDePasse);
 	}
 	
 	public void addInscription(Inscription insc){
