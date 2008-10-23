@@ -13,9 +13,12 @@ public class Question {
 	private String enonce;
 	private Type type;
 	private String cheminImage;
+	private Section section;
 	private Vector<Reponse> reponses ;
 	
 	
+	
+
 	/*****************************************************
 	*						Constructeurs				 *
 	******************************************************/
@@ -106,6 +109,13 @@ public class Question {
 		this.reponses = reponses;
 	} 
 	
+	public Section getSection() {
+		return section;
+	}
+
+	public void setSection(Section section) {
+		this.section = section;
+	}
 	
 	/*****************************************************
 	*						Methodes					 *

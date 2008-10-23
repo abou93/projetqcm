@@ -7,9 +7,14 @@ import modeles.Question;
 
 public class DalQuestion {
 	
-
 	
-	public static boolean insertQuestion(Question question,int numeroSection){
+	/***
+	 *  Insert Question Reponse	
+	 *  reçoit une question + le numero de section à insérée dans la Base
+	 *  Retourne true si ok, false si nok 
+	 */
+	
+	public static boolean insertQuestion(Question question){
 		
 		Connection cnx;
 		PreparedStatement stm;
@@ -21,7 +26,7 @@ public class DalQuestion {
 			stm.setString(2,question.getEnonce());
 			stm.setInt(3, question.getType().getNumero());
 			stm.setString(4, question.getCheminImage());
-			stm.setInt(5,numeroSection);
+			stm.setInt(5,question.getSection().getNumero());
 			stm.execute();
 			insertReponse(question);
 			AccesBase.deconnexionBase(cnx);
@@ -37,7 +42,7 @@ public class DalQuestion {
 	}
 	
 	
-	private static boolean insertReponse(Question question){
+	public static boolean insertReponse(Question question){
 		
 		Connection cnx;
 		PreparedStatement stm;
@@ -65,6 +70,34 @@ public class DalQuestion {
 		AccesBase.deconnexionBase(cnx);
 		return false;
 	}
+	
+public static boolean updateQuestion(Question question){
+		
+		Connection cnx;
+		PreparedStatement stm;
+		cnx=AccesBase.getConnection();
+		
+		try {
+			stm = cnx.prepareStatement("update QUESTIONS_ENONCES set ENONCE = ?,TYPE = ? ,IMAGE =?,NUMERO_SECTION=? where ID = ?");
+			stm.setString(1,question.getEnonce());
+			stm.setInt(2, question.getType().getNumero());
+			stm.setString(3, question.getCheminImage());
+			stm.setInt(4,question.getSection().getNumero());
+			stm.setObject(5, question.getId());
+			stm.execute();
+			insertReponse(question);
+			AccesBase.deconnexionBase(cnx);
+			return true;
+		
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+			System.err.println("erreur updateQuestion");
+		}					
+		
+		AccesBase.deconnexionBase(cnx);
+		return false;
+	}
+	
 	
 	
 }
