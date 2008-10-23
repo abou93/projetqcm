@@ -1,6 +1,7 @@
 package dal;
 
 import java.sql.*;
+import java.util.Vector;
 
 import modeles.*;
 
@@ -215,5 +216,43 @@ public class DalTest {
 	/*****************************************************
 	*					Methodes Select 				 *
 	******************************************************/
+	
+
+	/***
+	 * Récupère le test dans la base pour la question passée en paramètre <br>
+	 * Retourne un test
+	 * @param String nomTest
+	 * @return Test
+	 */
+	public static Test selectTestByNom(String nomTest)
+	{
+		Test test = new Test();
+		Connection cnx;
+		PreparedStatement stm;
+		ResultSet rs;
+		cnx=AccesBase.getConnection();
+		
+		try {
+			
+			stm = cnx.prepareStatement("select TESTS where NOM = ? ");
+			stm.setString(1, nomTest.trim());
+			rs=stm.executeQuery();
+			
+			while(rs.next())
+			{
+				test.setNom(nomTest);
+				test.setSeuil(rs.getInt("SEUIL"));
+				test.setTemps(rs.getInt("TEMPS"));
+			}
+				
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+			System.err.println("erreur selectTest");
+		}					
+		
+		AccesBase.deconnexionBase(cnx);
+		return test;
+	}
+	
 	
 }
