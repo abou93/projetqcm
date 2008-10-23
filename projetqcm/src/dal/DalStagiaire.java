@@ -6,14 +6,28 @@ import java.util.Vector;
 
 import modeles.Promotion;
 import modeles.Stagiaire;
+import modeles.Test;
+
+/***
+ * Permet l'accès aux tables <b>Stagiaires</b> et <b>Promotions</b> de la base de données
+ * @author Maël Genevrais
+ * 
+ */
 
 public class DalStagiaire {
 	
+	/***
+	 * Connection permettant l'accès à la base de donnée.
+	 */
 	private static Connection cnx;
 	
-	/*****************************************************
-	*						Méthodes					 *
-	******************************************************/
+	
+	/***
+	 *  Va chercher toutes les promotions dans la base.
+	 *  Retourne un vecteur de String
+	 *  @param none
+	 *  @return Vecteur de String (Noms des promotions) 
+	 */
 	
 	//Selectionner toutes les promotions
 	public static Vector<String> selectAllPromotions(){
@@ -21,7 +35,7 @@ public class DalStagiaire {
 		Vector<String> listePromo = new Vector<String>();
 		
 		try {
-			PreparedStatement stm = cnx.prepareStatement("select * from PROMOTION");
+			PreparedStatement stm = cnx.prepareStatement("select * from PROMOTIONS");
 			ResultSet rs = stm.executeQuery();
 			while(rs.next()){
 				listePromo.add(rs.getString("LIBELLE"));
@@ -34,18 +48,27 @@ public class DalStagiaire {
 		return listePromo;
 	}
 	
+	
+	/***
+	 *  Va chercher les stagiaires d'une promotion dans la base. 
+	 *  Reçoit un code promotion en paramètre.
+	 *  Retourne un vecteur de Stagaire
+	 *  @param String codePromotion
+	 *  @return Vector(Stagiaire)
+	 */
+	
 	//Selectionner les stagiaires dont la promotion porte le libelle 'libelle'
-	public static Vector<Stagiaire> selectStagiaires(String libelle){
+	public static Vector<Stagiaire> selectStagiaires(String codePromotion){
 		cnx = AccesBase.getConnection();
 		Vector<Stagiaire> listeStagiaires = new Vector<Stagiaire>();
 		
 		try {
-			PreparedStatement stm = cnx.prepareStatement("select * from PROMOTION p inner join STAGIAIRE s on p.CODE = s.CODE_PROMOTION where p.LIBELLE = ?");
-			stm.setString(1, libelle);	
+			PreparedStatement stm = cnx.prepareStatement("select * from PROMOTIONS p inner join STAGIAIRES s on p.CODE = s.CODE_PROMOTION where p.CODE = ?");
+			stm.setString(1, codePromotion);	
 			ResultSet rs = stm.executeQuery();
 			while(rs.next()){
 				Promotion p = new Promotion(rs.getString("CODE"),rs.getString("LIBELLE"));
-				Stagiaire s = new Stagiaire((UUID)rs.getObject("ID"),rs.getString("NOM"),rs.getString("PRENOM"),p,rs.getString("MOT_DE_PASSE"));
+				Stagiaire s = new Stagiaire(UUID.fromString(rs.getString("ID")),rs.getString("NOM"),rs.getString("PRENOM"),p,rs.getString("MOT_DE_PASSE"));
 				listeStagiaires.add(s);
 			}
 		} catch (SQLException e) {
@@ -56,17 +79,26 @@ public class DalStagiaire {
 		return listeStagiaires;
 	}
 	
+	
+	/***
+	 *  Va chercher un stagiaire dans la base. 
+	 *  Reçoit l'identifiant du stagiaire désiré en paramètre.
+	 *  Retourne un Stagaire
+	 *  @param UUID idStagaire
+	 *  @return Stagiaire
+	 */
+	
 	//Selectionner le stagiaire dont l'identifiant est 'id'
-	public static Stagiaire selectStagiaire(UUID id){
+	public static Stagiaire selectStagiaire(UUID idStagiaire){
 		cnx = AccesBase.getConnection();
 		Stagiaire s;
 		try {
-			PreparedStatement stm = cnx.prepareStatement("select * from PROMOTION p inner join STAGIAIRE s on p.CODE = s.CODE_PROMOTION where ID = ?");
-			stm.setObject(1, id);	
+			PreparedStatement stm = cnx.prepareStatement("select * from PROMOTIONS p inner join STAGIAIRES s on p.CODE = s.CODE_PROMOTION where ID = ?");
+			stm.setString(1, idStagiaire.toString());	
 			ResultSet rs = stm.executeQuery();
 			rs.next();
 			Promotion p = new Promotion(rs.getString("CODE"),rs.getString("LIBELLE"));
-			s = new Stagiaire((UUID)rs.getObject("ID"),rs.getString("NOM"),rs.getString("PRENOM"),p,rs.getString("MOT_DE_PASSE"));
+			s = new Stagiaire(UUID.fromString(rs.getString("ID")),rs.getString("NOM"),rs.getString("PRENOM"),p,rs.getString("MOT_DE_PASSE"));
 		} catch (SQLException e) {
 			e.printStackTrace();
 			s=null;
@@ -74,6 +106,36 @@ public class DalStagiaire {
 		
 		AccesBase.deconnexionBase(cnx);
 		return s;
+	}
+	
+	
+	/***
+	 *  Va chercher les stagiaires inscrit à un test dans la base. 
+	 *  Reçoit le test désiré en paramètre.
+	 *  Retourne un Vecteur de Stagiaire
+	 *  @param Test test
+	 *  @return Vector(Stagiaire)
+	 */
+	
+	//Selectionner les stagiaires inscrit au test 'test'
+	public static Vector<Stagiaire> selectStagiaireTest(Test test){
+		cnx = AccesBase.getConnection();
+		Vector<Stagiaire> listeStagiaires = new Vector<Stagiaire>();
+		try {
+			PreparedStatement stm = cnx.prepareStatement("select * from PROMOTIONS p inner join STAGIAIRES s on p.CODE = s.CODE_PROMOTION inner join INSCRIPTIONS i on s.ID = i.ID_STAGIAIRE where NOM_TEST = ?");
+			stm.setObject(1, test.getNom());	
+			ResultSet rs = stm.executeQuery();
+			while(rs.next()){
+				Promotion p = new Promotion(rs.getString("CODE"),rs.getString("LIBELLE"));
+				listeStagiaires.add(new Stagiaire((UUID)rs.getObject("ID"),rs.getString("NOM"),rs.getString("PRENOM"),p,rs.getString("MOT_DE_PASSE")));
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		AccesBase.deconnexionBase(cnx);
+		return listeStagiaires;
 	}
 	
 }
