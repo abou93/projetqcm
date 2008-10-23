@@ -12,7 +12,7 @@ public class Stagiaire {
 	private UUID id;
 	private String nom;
 	private String prenom;
-	private String promotion;
+	private Promotion promotion;
 	private String motDePasse;
 	private Vector<Inscription> inscriptions;
 	
@@ -25,7 +25,7 @@ public class Stagiaire {
 		this.inscriptions = new Vector<Inscription>();
 	}
 	
-	public Stagiaire(String nom,String prenom,String promotion){
+	public Stagiaire(String nom,String prenom,Promotion promotion){
 		this();
 		this.nom = nom;
 		this.prenom = prenom;
@@ -60,7 +60,7 @@ public class Stagiaire {
 		return prenom;
 	}
 
-	public String getPromotion() {
+	public Promotion getPromotion() {
 		return promotion;
 	}
 
