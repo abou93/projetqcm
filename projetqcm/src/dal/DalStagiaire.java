@@ -11,7 +11,6 @@ import modeles.Test;
 /***
  * Permet l'accès aux tables <b>Stagiaires</b> et <b>Promotions</b> de la base de données
  * @author Maël Genevrais
- * 
  */
 
 public class DalStagiaire {
