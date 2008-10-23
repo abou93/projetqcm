@@ -114,7 +114,7 @@ public class DalQuestion {
 			stm.setInt(2, question.getType().getNumero());
 			stm.setString(3, question.getCheminImage());
 			stm.setInt(4,question.getSection().getNumero());
-			stm.setObject(5, question.getId());
+			stm.setString(5, question.getId().toString());
 			stm.execute();
 			AccesBase.deconnexionBase(cnx);
 			return true;
