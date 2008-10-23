@@ -34,11 +34,11 @@ public class Stagiaire {
 	
 	public Stagiaire(UUID id,String nom,String prenom,Promotion promotion,String motDePasse){
 		this();
-		this.id = id;
+		this.setId(id);
 		this.nom = nom;
 		this.prenom = prenom;
 		this.promotion = promotion;
-		this.motDePasse = motDePasse;
+		this.setMotDePasse(motDePasse);
 	}
 	
 	/*****************************************************
