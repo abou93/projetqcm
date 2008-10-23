@@ -113,6 +113,7 @@ public class Question {
 		return section;
 	}
 
+	
 	public void setSection(Section section) {
 		this.section = section;
 	}
@@ -132,6 +133,13 @@ public class Question {
 		return this.getListeReponses().size();
 	}
 	
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("Question " + this.getId().toString()+ "\n");
+		builder.append(this.getEnonce()+ "\n");
+		builder.append("Nombre de reponse : " + this.getNombreReponse());
+		return builder.toString();
+	}
 		
 	
 }

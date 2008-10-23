@@ -10,7 +10,7 @@ public class DalQuestion {
 	
 	/***
 	 *  Insert Question Reponse	
-	 *  reçoit une question + le numero de section à insérée dans la Base
+	 *  reçoit une question à insérée dans la Base
 	 *  Retourne true si ok, false si nok 
 	 */
 	
@@ -40,6 +40,12 @@ public class DalQuestion {
 		AccesBase.deconnexionBase(cnx);
 		return false;
 	}
+	
+	/***
+	 *  InsertReponse	
+	 *  reçoit une question à mettre à jour dans la Base
+	 *  Retourne true si ok, false si nok 
+	 */
 	
 	
 	public static boolean insertReponse(Question question){
@@ -71,7 +77,13 @@ public class DalQuestion {
 		return false;
 	}
 	
-public static boolean updateQuestion(Question question){
+	/***
+	 *  UpdateQuestion	
+	 *  reçoit une question à mettre à jour dans la Base
+	 *  Retourne true si ok, false si nok 
+	 */
+	
+	public static boolean updateQuestion(Question question){
 		
 		Connection cnx;
 		PreparedStatement stm;

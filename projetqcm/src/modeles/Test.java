@@ -64,14 +64,12 @@ public class Test {
 		return sections;
 	}
 	
-	public Section getSection(int numero){
-		for (Section sec : this.getSections()){
-			if(sec.getNumero() == numero){
-				return sec;
-			}
-		}
-		return null;
+	public Section getSection(int index){
+			return this.getSections().elementAt(index);
 	}
+
+		
+	
 	
 	/*****************************************************
 	*						Methodes					 *

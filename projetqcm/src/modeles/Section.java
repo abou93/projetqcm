@@ -50,6 +50,7 @@ public class Section {
 	/*****************************************************
 	*						Accesseur					 *
 	******************************************************/
+	
 	public int getNumero() {
 		return numero;
 	}
@@ -87,6 +88,20 @@ public class Section {
 
 	public void setQuestions(Vector<Question> questions) {
 		this.questions = questions;
+	}
+	
+	/*****************************************************
+	*						Méthodes					 *
+	******************************************************/
+	
+	public void addQuestion(Question question)
+	{
+		this.getQuestions().add(question);
+	}
+	
+	public Question getQuestionAt(int index)
+	{
+		return this.getQuestions().elementAt(index);
 	}
 	
 	
