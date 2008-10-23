@@ -32,6 +32,15 @@ public class Stagiaire {
 		this.promotion = promotion;
 	}
 	
+	public Stagiaire(UUID id,String nom,String prenom,Promotion promotion,String motDePasse){
+		this();
+		this.id = id;
+		this.nom = nom;
+		this.prenom = prenom;
+		this.promotion = promotion;
+		this.motDePasse = motDePasse;
+	}
+	
 	/*****************************************************
 	*						Accesseur					 *
 	******************************************************/
