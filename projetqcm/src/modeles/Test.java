@@ -10,7 +10,7 @@ public class Test {
 	******************************************************/
 	
 	private String nom;
-	private String temps;
+	private int temps;
 	private int seuil;
 	private Vector<Section> sections;
 	
@@ -24,7 +24,7 @@ public class Test {
 		this.sections = new Vector<Section>();
 	}
 	
-	public Test(String nom,String temps,int seuil){
+	public Test(String nom,int temps,int seuil){
 		this();
 		this.setNom(nom);
 		this.setTemps(temps);
@@ -44,11 +44,11 @@ public class Test {
 		this.nom = nom;
 	}
 
-	public String getTemps() {
+	public int getTemps() {
 		return temps;
 	}
 
-	public void setTemps(String temps) {
+	public void setTemps(int temps) {
 		this.temps = temps;
 	}
 
@@ -84,7 +84,7 @@ public class Test {
 	}
 	
 	public String toString(){
-		return ("Test " + this.getNom() + "d'une durée de " + this.getTemps() + " minute(s). Seuil de réussite : " + this.getSeuil() + "%");
+		return ("Test " + this.getNom() + " d'une durée de " + this.getTemps() + " minute(s). Seuil de réussite : " + this.getSeuil() + "%");
 	}
 	
 }
