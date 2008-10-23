@@ -1,19 +1,36 @@
 package dal;
 
 import java.sql.*;
+import java.util.UUID;
+import java.util.Vector;
 
-import modeles.Question;
+import modeles.*;
 
 
+/***
+ * @author Lefort Steve 
+ * @category Acces base de donnée
+ * :  <i> Description de la classe </i> <br> <br>
+ * Regroupe les différentes méthodes d'accès à la base de donnée
+ * pour les classes d'objet : <br> <br>
+ * <li> Question </li>
+ * <li>	Reponse </li> 
+ * <li>	Type </li> 
+ *   
+ */
 public class DalQuestion {
+	
+	/*****************************************************
+	*					Methodes Insert 				 *
+	******************************************************/
 	
 	
 	/***
-	 *  Insert Question Reponse	
-	 *  reçoit une question à insérée dans la Base
-	 *  Retourne true si ok, false si nok 
+	 *  Reçoit une question pour l'insérée dans la base de donnée
+	 *  Retourne true si ok, false si nok
+	 *  @param Question question
+	 *  @return Boolean      
 	 */
-	
 	public static boolean insertQuestion(Question question){
 		
 		Connection cnx;
@@ -22,50 +39,47 @@ public class DalQuestion {
 		
 		try {
 			stm = cnx.prepareStatement("Insert into QUESTIONS_ENONCES (ID,ENONCE,TYPE,IMAGE,NUMERO_SECTION) values (?, ?, ?, ?, ?)");
-			stm.setObject(1, question.getId());
+			stm.setString(1, question.getId().toString());
 			stm.setString(2,question.getEnonce());
 			stm.setInt(3, question.getType().getNumero());
 			stm.setString(4, question.getCheminImage());
 			stm.setInt(5,question.getSection().getNumero());
 			stm.execute();
-			insertReponse(question);
 			AccesBase.deconnexionBase(cnx);
 			return true;
 		
 		} catch (SQLException e) {
 			System.err.println(e.getMessage());
 			System.err.println("erreur insertQuestion");
+			
+			AccesBase.deconnexionBase(cnx);
+			return false;
 		}					
-		
-		AccesBase.deconnexionBase(cnx);
-		return false;
+			
 	}
 	
 	/***
-	 *  InsertReponse	
-	 *  reçoit une question à mettre à jour dans la Base
-	 *  Retourne true si ok, false si nok 
+	 *  Reçoit une Reponse pour l'insérée dans la base de donnée
+	 *  Retourne true si ok, false si nok
+	 *  @param Reponse reponse
+	 *  @return Boolean 
 	 */
-	
-	
-	public static boolean insertReponse(Question question){
+	public static boolean insertReponse(Reponse reponse){
 		
 		Connection cnx;
 		PreparedStatement stm;
 		cnx=AccesBase.getConnection();
 		
 		try {
-			for (int i = 0 ; i<question.getNombreReponse();i++)
-			{
 				stm = cnx.prepareStatement("Insert into QUESTIONS_REPONSES (ID_ENONCE,NUMERO,TEXTE,REPONSE) values (?, ?, ?, ?)");
-				stm.setObject(1, question.getId());
-				stm.setInt(2,i);
-				stm.setString(3,question.getReponseAt(i).getTexte());
-				stm.setBoolean(4, question.getReponseAt(i).isEtat());
+				stm.setString(1, reponse.getQuestion().getId().toString());
+				stm.setInt(2,reponse.getNumero());
+				stm.setString(3,reponse.getTexte());
+				stm.setBoolean(4,reponse.isEtat());
 				stm.execute();
 				AccesBase.deconnexionBase(cnx);
 				return true;
-			}
+			
 			
 				
 		} catch (SQLException e) {
@@ -77,12 +91,17 @@ public class DalQuestion {
 		return false;
 	}
 	
-	/***
-	 *  UpdateQuestion	
-	 *  reçoit une question à mettre à jour dans la Base
-	 *  Retourne true si ok, false si nok 
-	 */
+	/*****************************************************
+	*					Methodes Update					 *
+	******************************************************/
 	
+	
+	/***
+	 *  Reçoit une question à mettre à jour dans la base de donnée
+	 *  Retourne true si ok, false si nok 
+	 *  @param Question question
+	 *  @return Boolean
+	 */
 	public static boolean updateQuestion(Question question){
 		
 		Connection cnx;
@@ -97,7 +116,6 @@ public class DalQuestion {
 			stm.setInt(4,question.getSection().getNumero());
 			stm.setObject(5, question.getId());
 			stm.execute();
-			insertReponse(question);
 			AccesBase.deconnexionBase(cnx);
 			return true;
 		
@@ -110,6 +128,217 @@ public class DalQuestion {
 		return false;
 	}
 	
+	/***
+	 *  Reçoit une question à mettre à jour dans la base de donnée
+	 *  Retourne true si ok, false si nok 
+	 *  @param Reponse reponse
+	 *  @return Boolean
+	 */
+	public static boolean updateReponse(Reponse reponse){
+		
+		Connection cnx;
+		PreparedStatement stm;
+		cnx=AccesBase.getConnection();
+		
+		try {
+			stm = cnx.prepareStatement("update QUESTIONS_REPONSES set TEXTE =?,REPONSE =? where ID_ENONCE = ? and NUMERO = ? ");
+			stm.setString(1,reponse.getTexte());
+			stm.setBoolean(2, reponse.isEtat());
+			stm.setString(3, reponse.getQuestion().getId().toString());
+			stm.setInt(4,reponse.getNumero());
+			stm.execute();
+			AccesBase.deconnexionBase(cnx);
+			return true;
+		
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+			System.err.println("erreur updateReponse");
+		}					
+		
+		AccesBase.deconnexionBase(cnx);
+		return false;
+	}
+	
+	/*****************************************************
+	*					Methodes Delete					 *
+	******************************************************/
+	
+	
+	/***
+	 * Reçoit une question à supprimer de la base de donnée <br>
+	 * Retourne true si ok , false si nok
+	 * @param Question question
+	 * @return Boolean
+	 */
+	public static boolean deleteQuestion(Question question)
+	{
+		Connection cnx;
+		PreparedStatement stm;
+		cnx=AccesBase.getConnection();
+		
+		try {
+			stm = cnx.prepareStatement("delete QUESTIONS_ENONCES where ID = ? ");
+			stm.setString(1, question.getId().toString());
+			stm.execute();
+			AccesBase.deconnexionBase(cnx);
+			return true;
+		
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+			System.err.println("erreur deleteReponse");
+		}					
+		
+		AccesBase.deconnexionBase(cnx);
+		return false;
+	}
+	
+	/***
+	 * Reçoit une reponse à supprimer de la base de donnée <br>
+	 * Retourne true si ok , false si nok
+	 * @param Reponse reponse
+	 * @return Boolean
+	 */
+	public static boolean deleteReponse(Reponse reponse)
+	{
+		Connection cnx;
+		PreparedStatement stm;
+		cnx=AccesBase.getConnection();
+		
+		try {
+			stm = cnx.prepareStatement("delete QUESTIONS_REPONSES where ID_ENONCE = ? and NUMERO = ? ");
+			stm.setString(1, reponse.getQuestion().getId().toString());
+			stm.setInt(2, reponse.getNumero());
+			stm.execute();
+			AccesBase.deconnexionBase(cnx);
+			return true;
+		
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+			System.err.println("erreur deleteReponse");
+		}					
+		
+		AccesBase.deconnexionBase(cnx);
+		return false;
+	}
+	
+	/*****************************************************
+	*					Methodes Select					 *
+	******************************************************/
+	
+	/***
+	 * Recupere les questions presentes dans la base pour la section passée en paramètre <br>
+	 * Retourne une liste de Question
+	 * @param Section section
+	 * @return Vector
+	 */
+	public static Vector<Question> selectQuestions(Section section)
+	{
+		
+		Vector<Question> listeQuestions= new Vector<Question>(); 
+		Connection cnx;
+		PreparedStatement stm;
+		ResultSet rs;
+		cnx=AccesBase.getConnection();
+		
+		try {
+			
+			stm = cnx.prepareStatement("select QUESTIONS_ENONCES where NUMERO_SECTION = ? ");
+			stm.setInt(1, section.getNumero());
+			rs=stm.executeQuery();
+			
+			while(rs.next())
+			{
+				Question question = new Question();
+				question.setId(UUID.fromString(rs.getString("ID")));
+				question.setEnonce(rs.getString("ENONCE"));
+				question.setType(selectType(rs.getInt("TYPE")));
+				question.setCheminImage(rs.getString("IMAGE"));
+				listeQuestions.add(question);
+			}
+				
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+			System.err.println("erreur selectQuestions");
+		}					
+		
+		AccesBase.deconnexionBase(cnx);
+		return listeQuestions;
+	}
+	
+	/***
+	 * Récupère les reponses dans la base pour la question passée en paramètre <br>
+	 * Retourne une liste de Reponse
+	 * @param Question question
+	 * @return Vector
+	 */
+	public static Vector<Reponse> selectReponse(Question question)
+	{
+		Vector<Reponse> listeReponses= new Vector<Reponse>(); 
+		Connection cnx;
+		PreparedStatement stm;
+		ResultSet rs;
+		cnx=AccesBase.getConnection();
+		
+		try {
+			
+			stm = cnx.prepareStatement("select QUESTIONS_REPONSES where ID_ENONCE = ? ");
+			stm.setString(1, question.getId().toString());
+			rs=stm.executeQuery();
+			
+			while(rs.next())
+			{
+				Reponse reponse = new Reponse();
+				reponse.setQuestion(question);
+				reponse.setNumero(rs.getInt("NUMERO"));
+				reponse.setTexte(rs.getString("TEXTE"));
+				reponse.setEtat(rs.getBoolean("REPONSE"));
+				listeReponses.add(reponse);
+			}
+				
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+			System.err.println("erreur selectQuestions");
+		}					
+		
+		AccesBase.deconnexionBase(cnx);
+		return listeReponses;
+	}
+	
+	/***
+	 * Recupere les questions presentes dans la base pour la section passée en paramètre <br>
+	 * Retourne une liste de Question
+	 * @param Section section
+	 * @return Vector
+	 */
+	public static Type selectType(int numero)
+	{
+		
+		Connection cnx;
+		PreparedStatement stm;
+		ResultSet rs;
+		cnx=AccesBase.getConnection();
+		Type type = new Type();;
+		
+		try {
+			
+			stm = cnx.prepareStatement("select TYPE where NUMERO = ? ");
+			stm.setInt(1, numero);
+			rs=stm.executeQuery();
+			while(rs.next())
+			{
+				type.setNumero(rs.getInt("NUMERO"));
+				type.setLibelle(rs.getString("LIBELLE"));
+			}
+			
+							
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+			System.err.println("erreur selectType");
+		}					
+		
+		AccesBase.deconnexionBase(cnx);
+		return type;
+	}
 	
 	
 }

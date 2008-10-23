@@ -8,6 +8,8 @@ public class Reponse {
 	
 	private String texte;
 	private boolean etat;
+	private int numero;
+	private Question question;
 	
 	/*****************************************************
 	*						Constructeurs				 *
@@ -18,6 +20,8 @@ public class Reponse {
 		super();
 		this.setTexte("Nouvelle reponse");
 		this.setEtat(false);
+		this.setNumero(0);
+		this.setQuestion(null);
 		
 	}
 	
@@ -26,6 +30,19 @@ public class Reponse {
 		this();
 		this.setTexte(untexte);
 		this.setEtat(unetat);
+	}
+	
+	public Reponse(String untexte,int numero, boolean unetat)
+	{
+		this(untexte,unetat);
+		this.setNumero(numero);
+	
+	}
+	
+	public Reponse(String untexte, int numero, boolean unetat, Question question)
+	{
+		this(untexte,numero,unetat);
+		this.setQuestion(question);
 	}
 	
 	/*****************************************************
@@ -51,6 +68,27 @@ public class Reponse {
 	{
 		this.etat = etat;
 	}
+	
+	public Question getQuestion() 
+	{
+		return question;
+	}
+
+	public void setQuestion(Question question) 
+	{
+		this.question = question;
+	}
+	
+	public int getNumero()
+	{
+		return numero;
+	}
+
+	public void setNumero(int numero) 
+	{
+		this.numero = numero;
+	}
+
 	
 	
 }
