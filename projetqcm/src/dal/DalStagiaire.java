@@ -1,6 +1,7 @@
 package dal;
 
 import java.sql.*;
+import java.util.UUID;
 import java.util.Vector;
 
 import modeles.Promotion;
@@ -44,7 +45,7 @@ public class DalStagiaire {
 			ResultSet rs = stm.executeQuery();
 			while(rs.next()){
 				Promotion p = new Promotion(rs.getString("CODE"),rs.getString("LIBELLE"));
-				Stagiaire s = new Stagiaire(rs.getString("NOM"),rs.getString("PRENOM"),p);
+				Stagiaire s = new Stagiaire((UUID)rs.getObject("ID"),rs.getString("NOM"),rs.getString("PRENOM"),p,rs.getString("MOT_DE_PASSE"));
 				listeStagiaires.add(s);
 			}
 		} catch (SQLException e) {
