@@ -38,9 +38,8 @@ public class DalStagiaire {
 		cnx = AccesBase.getConnection();
 		Vector<Stagiaire> listeStagiaires = new Vector<Stagiaire>();
 		
-		PreparedStatement stm;
 		try {
-			stm = cnx.prepareStatement("select * from PROMOTION p inner join STAGIAIRE s on p.CODE = s.CODE_PROMOTION where p.LIBELLE = ?");
+			PreparedStatement stm = cnx.prepareStatement("select * from PROMOTION p inner join STAGIAIRE s on p.CODE = s.CODE_PROMOTION where p.LIBELLE = ?");
 			stm.setString(1, libelle);	
 			ResultSet rs = stm.executeQuery();
 			while(rs.next()){
@@ -52,6 +51,7 @@ public class DalStagiaire {
 			e.printStackTrace();
 		}
 		
+		AccesBase.deconnexionBase(cnx);
 		return listeStagiaires;
 	}
 	
