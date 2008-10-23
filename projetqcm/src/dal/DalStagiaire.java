@@ -3,6 +3,7 @@ package dal;
 import java.sql.*;
 import java.util.Vector;
 
+import modeles.Promotion;
 import modeles.Stagiaire;
 
 public class DalStagiaire {
@@ -43,7 +44,9 @@ public class DalStagiaire {
 			stm.setString(1, libelle);	
 			ResultSet rs = stm.executeQuery();
 			while(rs.next()){
-				Stagiaire s = new Stagiaire(rs.getString("NOM"),rs.getString("PRENOM"),/*TODO*/"");
+				Promotion p = new Promotion(rs.getString("CODE"),rs.getString("LIBELLE"));
+				Stagiaire s = new Stagiaire(rs.getString("NOM"),rs.getString("PRENOM"),p);
+				listeStagiaires.add(s);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
