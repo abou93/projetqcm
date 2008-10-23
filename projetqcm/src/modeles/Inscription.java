@@ -1,5 +1,8 @@
 package modeles;
 
+import java.util.UUID;
+import java.util.Vector;
+
 public class Inscription {
 	
 	/*****************************************************
@@ -9,6 +12,8 @@ public class Inscription {
 	private Test test;
 	private String duree;
 	private String mailformateur;
+	private Stagiaire stagiaire;
+	private Vector<UUID> tirage;
 	
 	
 	/*****************************************************
@@ -17,13 +22,15 @@ public class Inscription {
 	
 	public Inscription(){
 		super();
+		tirage = new Vector<UUID>();
 	}
 	
-	public Inscription(Test test,String duree,String mailFormateur){
+	public Inscription(Test test,String duree,String mailFormateur,Stagiaire stagiaire){
 		this();
 		this.test = test;
 		this.duree = duree;
 		this.mailformateur = mailFormateur;
+		this.stagiaire = stagiaire;
 	}
 	
 	
@@ -55,5 +62,25 @@ public class Inscription {
 		this.mailformateur = mailformateur;
 	}
 	
+	public Stagiaire getStagiaire(){
+		return this.stagiaire;
+	}
+	
+	public Vector<UUID> getTirage(){
+		return this.tirage;
+	}
+	
+	
+	/*****************************************************
+	*						Méthodes					 *
+	******************************************************/
+	
+	public void addIdQuestion(Question question){
+		this.tirage.add(question.getId());
+	}
+	
+	public void supprIdQuestion(Question question){
+		this.tirage.removeElement(question.getId());
+	}
 	
 }

@@ -37,13 +37,14 @@ public class DalStagiaire {
 			PreparedStatement stm = cnx.prepareStatement("select * from PROMOTIONS");
 			ResultSet rs = stm.executeQuery();
 			while(rs.next()){
-				listePromo.add(rs.getString("LIBELLE"));
+				listePromo.add(rs.getString("LIBELLE").trim());
 			}
+			AccesBase.deconnexionBase(cnx);
 		} catch (SQLException e) {
 			e.printStackTrace();
+			AccesBase.deconnexionBase(cnx);
+			return null;
 		}
-		
-		AccesBase.deconnexionBase(cnx);
 		return listePromo;
 	}
 	
@@ -52,7 +53,7 @@ public class DalStagiaire {
 	 *  Va chercher les stagiaires d'une promotion dans la base. 
 	 *  Reçoit un code promotion en paramètre.
 	 *  Retourne un vecteur de Stagaire
-	 *  @param String codePromotion
+	 *  @param String : codePromotion
 	 *  @return Vector(Stagiaire)
 	 */
 	
@@ -66,15 +67,16 @@ public class DalStagiaire {
 			stm.setString(1, codePromotion);	
 			ResultSet rs = stm.executeQuery();
 			while(rs.next()){
-				Promotion p = new Promotion(rs.getString("CODE"),rs.getString("LIBELLE"));
-				Stagiaire s = new Stagiaire(UUID.fromString(rs.getString("ID")),rs.getString("NOM"),rs.getString("PRENOM"),p,rs.getString("MOT_DE_PASSE"));
+				Promotion p = new Promotion(rs.getString("CODE").trim(),rs.getString("LIBELLE").trim());
+				Stagiaire s = new Stagiaire(UUID.fromString(rs.getString("ID")),rs.getString("NOM").trim(),rs.getString("PRENOM").trim(),p,rs.getString("MOT_DE_PASSE").trim());
 				listeStagiaires.add(s);
 			}
+			AccesBase.deconnexionBase(cnx);
 		} catch (SQLException e) {
 			e.printStackTrace();
+			AccesBase.deconnexionBase(cnx);
+			return null;
 		}
-		
-		AccesBase.deconnexionBase(cnx);
 		return listeStagiaires;
 	}
 	
@@ -83,7 +85,7 @@ public class DalStagiaire {
 	 *  Va chercher un stagiaire dans la base. 
 	 *  Reçoit l'identifiant du stagiaire désiré en paramètre.
 	 *  Retourne un Stagaire
-	 *  @param UUID idStagaire
+	 *  @param UUID : idStagaire
 	 *  @return Stagiaire
 	 */
 	
@@ -96,14 +98,14 @@ public class DalStagiaire {
 			stm.setString(1, idStagiaire.toString());	
 			ResultSet rs = stm.executeQuery();
 			rs.next();
-			Promotion p = new Promotion(rs.getString("CODE"),rs.getString("LIBELLE"));
-			s = new Stagiaire(UUID.fromString(rs.getString("ID")),rs.getString("NOM"),rs.getString("PRENOM"),p,rs.getString("MOT_DE_PASSE"));
+			Promotion p = new Promotion(rs.getString("CODE").trim(),rs.getString("LIBELLE").trim());
+			s = new Stagiaire(UUID.fromString(rs.getString("ID")),rs.getString("NOM").trim(),rs.getString("PRENOM").trim(),p,rs.getString("MOT_DE_PASSE").trim());
+			AccesBase.deconnexionBase(cnx);
 		} catch (SQLException e) {
 			e.printStackTrace();
-			s=null;
+			AccesBase.deconnexionBase(cnx);
+			return null;
 		}
-		
-		AccesBase.deconnexionBase(cnx);
 		return s;
 	}
 	
@@ -112,7 +114,7 @@ public class DalStagiaire {
 	 *  Va chercher les stagiaires inscrit à un test dans la base. 
 	 *  Reçoit le test désiré en paramètre.
 	 *  Retourne un Vecteur de Stagiaire
-	 *  @param Test test
+	 *  @param Test : test
 	 *  @return Vector(Stagiaire)
 	 */
 	
@@ -125,15 +127,15 @@ public class DalStagiaire {
 			stm.setObject(1, test.getNom());	
 			ResultSet rs = stm.executeQuery();
 			while(rs.next()){
-				Promotion p = new Promotion(rs.getString("CODE"),rs.getString("LIBELLE"));
-				listeStagiaires.add(new Stagiaire((UUID)rs.getObject("ID"),rs.getString("NOM"),rs.getString("PRENOM"),p,rs.getString("MOT_DE_PASSE")));
+				Promotion p = new Promotion(rs.getString("CODE").trim(),rs.getString("LIBELLE").trim());
+				listeStagiaires.add(new Stagiaire((UUID)rs.getObject("ID"),rs.getString("NOM").trim(),rs.getString("PRENOM").trim(),p,rs.getString("MOT_DE_PASSE").trim()));
 			}
-
+		AccesBase.deconnexionBase(cnx);
 		} catch (SQLException e) {
 			e.printStackTrace();
+			AccesBase.deconnexionBase(cnx);
+			return null;
 		}
-		
-		AccesBase.deconnexionBase(cnx);
 		return listeStagiaires;
 	}
 	
