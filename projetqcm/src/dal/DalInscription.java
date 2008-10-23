@@ -167,7 +167,7 @@ public class DalInscription {
 			stm.setString(2, idStagiaire.toString());
 			ResultSet rs = stm.executeQuery();
 			rs.next();
-			insc=new Inscription()
+			insc=new Inscription(/*TODO : Requète de selection d'un test pars son nom*/null,rs.getString("DUREE"),rs.getString("MAIL_FORMATEUR"),DalStagiaire.selectStagiaire(idStagiaire));
 			AccesBase.deconnexionBase(cnx);
 		} catch (SQLException e) {
 			e.printStackTrace();
