@@ -34,7 +34,7 @@ public class DalStagiaire {
 		return listePromo;
 	}
 	
-	//Selectionner les stagiaire dont la promotion porte le libelle 'libelle'
+	//Selectionner les stagiaires dont la promotion porte le libelle 'libelle'
 	public static Vector<Stagiaire> selectStagiaires(String libelle){
 		cnx = AccesBase.getConnection();
 		Vector<Stagiaire> listeStagiaires = new Vector<Stagiaire>();
@@ -54,6 +54,26 @@ public class DalStagiaire {
 		
 		AccesBase.deconnexionBase(cnx);
 		return listeStagiaires;
+	}
+	
+	//Selectionner le stagiaire dont l'identifiant est 'id'
+	public static Stagiaire selectStagiaire(UUID id){
+		cnx = AccesBase.getConnection();
+		Stagiaire s;
+		try {
+			PreparedStatement stm = cnx.prepareStatement("select * from PROMOTION p inner join STAGIAIRE s on p.CODE = s.CODE_PROMOTION where ID = ?");
+			stm.setObject(1, id);	
+			ResultSet rs = stm.executeQuery();
+			rs.next();
+			Promotion p = new Promotion(rs.getString("CODE"),rs.getString("LIBELLE"));
+			s = new Stagiaire((UUID)rs.getObject("ID"),rs.getString("NOM"),rs.getString("PRENOM"),p,rs.getString("MOT_DE_PASSE"));
+		} catch (SQLException e) {
+			e.printStackTrace();
+			s=null;
+		}
+		
+		AccesBase.deconnexionBase(cnx);
+		return s;
 	}
 	
 }
