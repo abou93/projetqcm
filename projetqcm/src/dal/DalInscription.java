@@ -159,24 +159,24 @@ public class DalInscription {
 	 *  @return Inscription
 	 */
 	
-	public static Inscription selectInscription(UUID idStagiaire,String nomTest){
-		cnx = AccesBase.getConnection();
-		Inscription insc;
-		try {
-			PreparedStatement stm = cnx.prepareStatement("select * from INSCRIPTIONS where ID_STAGIAIRE=? and NOM_TEST=?");
-			stm.setString(1, idStagiaire.toString());
-			stm.setString(2, nomTest);
-			ResultSet rs = stm.executeQuery();
-			rs.next();
-			insc=new Inscription(DalTest.selectTest(nomTest),rs.getString("DUREE"),rs.getString("MAIL_FORMATEUR"),DalStagiaire.selectStagiaire(idStagiaire));
-			AccesBase.deconnexionBase(cnx);
-		} catch (SQLException e) {
-			e.printStackTrace();
-			AccesBase.deconnexionBase(cnx);
-			return null;
-		}
-		return insc;
-	}
+//	public static Inscription selectInscription(UUID idStagiaire,String nomTest){
+//		cnx = AccesBase.getConnection();
+//		Inscription insc;
+//		try {
+//			PreparedStatement stm = cnx.prepareStatement("select * from INSCRIPTIONS where ID_STAGIAIRE=? and NOM_TEST=?");
+//			stm.setString(1, idStagiaire.toString());
+//			stm.setString(2, nomTest);
+//			ResultSet rs = stm.executeQuery();
+//			rs.next();
+//			insc=new Inscription(DalTest.selectTest(nomTest),rs.getString("DUREE"),rs.getString("MAIL_FORMATEUR"),DalStagiaire.selectStagiaire(idStagiaire));
+//			AccesBase.deconnexionBase(cnx);
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//			AccesBase.deconnexionBase(cnx);
+//			return null;
+//		}
+//		return insc;
+//	}
 	
 	
 	/***
