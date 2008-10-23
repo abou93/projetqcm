@@ -106,9 +106,20 @@ public class Question {
 		this.reponses = reponses;
 	} 
 	
+	
+	/*****************************************************
+	*						Methodes					 *
+	******************************************************/
+	
+	
 	public Reponse getReponseAt(int index)
 	{
 		return this.reponses.elementAt(index);
+	}
+	
+	public int getNombreReponse()
+	{
+		return this.getListeReponses().size();
 	}
 	
 		

@@ -1,14 +1,9 @@
 package dal;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
-
-import classArticle.Stylo;
-
-
+import java.sql.*;
 
 import modeles.Question;
+
 
 public class DalQuestion {
 	
@@ -28,13 +23,13 @@ public class DalQuestion {
 			stm.setString(4, question.getCheminImage());
 			stm.setInt(5,numeroSection);
 			stm.execute();
-			updateQuestionReponse(question);
+			insertReponse(question);
 			AccesBase.deconnexionBase(cnx);
 			return true;
 		
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
-			
+			System.err.println(e.getMessage());
+			System.err.println("erreur insertQuestion");
 		}					
 		
 		AccesBase.deconnexionBase(cnx);
@@ -42,35 +37,31 @@ public class DalQuestion {
 	}
 	
 	
-	private static boolean updateReponse(Question question){
+	private static boolean insertReponse(Question question){
 		
 		Connection cnx;
 		PreparedStatement stm;
 		cnx=AccesBase.getConnection();
 		
 		try {
+			for (int i = 0 ; i<question.getNombreReponse();i++)
+			{
+				stm = cnx.prepareStatement("Insert into QUESTIONS_REPONSES (ID_ENONCE,NUMERO,TEXTE,REPONSE) values (?, ?, ?, ?)");
+				stm.setObject(1, question.getId());
+				stm.setInt(2,i);
+				stm.setString(3,question.getReponseAt(i).getTexte());
+				stm.setBoolean(4, question.getReponseAt(i).isEtat());
+				stm.execute();
+				AccesBase.deconnexionBase(cnx);
+				return true;
+			}
 			
-			stm = cnx.prepareStatement("Insert into QUESTIONS_REPONSES (ID_ENONCE,NUMERO,TEXTE,REPONSE) values (?, ?, ?, ?)");
-			stm.setObject(1, question.getId());
-			stm.setInt(2,question.getListeReponses().size());
-			stm.setInt(3,question.getReponseAt(index)));
-			stm.setString(4,question.getCheminImage());
-			stm.setInt(5,numeroSection);
-			stm.execute();
-			AccesBase.deconnexionBase(cnx);
-			return true;
-		
-		
+				
 		} catch (SQLException e) {
-			System.out.println(e.getMessage());
+			System.err.println(e.getMessage());
+			System.err.println("erreur insertReponse");
 			
 		}					
-		try {
-			cnx.rollback();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		AccesBase.deconnexionBase(cnx);
 		return false;
 	}
