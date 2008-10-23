@@ -1,7 +1,6 @@
 package dal;
 
 import java.sql.*;
-import java.util.Vector;
 
 import modeles.*;
 
