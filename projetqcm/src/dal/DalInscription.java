@@ -161,6 +161,7 @@ public class DalInscription {
 	public static Inscription selectInscription(UUID idStagiaire,String nomTest){
 		cnx = AccesBase.getConnection();
 		Inscription insc;
+		// coucou
 		try {
 			PreparedStatement stm = cnx.prepareStatement("select * from INSCRIPTIONS where ID_STAGIAIRE=? and NOM_TEST=?");
 			stm.setString(1, nomTest);
