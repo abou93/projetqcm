@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Enumeration;
 import java.util.UUID;
+import java.util.Vector;
 
 import modeles.*;
 
@@ -152,7 +153,7 @@ public class DalInscription {
 	
 	
 	/***
-	 *  Selectionne une inscription dans la base.
+	 *  Selectionne une inscription dans la base. Retourne l'inscription.
 	 *  @param UUID : idStagiaire
 	 *  @param String : nomTest
 	 *  @return Inscription
@@ -161,14 +162,13 @@ public class DalInscription {
 	public static Inscription selectInscription(UUID idStagiaire,String nomTest){
 		cnx = AccesBase.getConnection();
 		Inscription insc;
-		// coucou
 		try {
 			PreparedStatement stm = cnx.prepareStatement("select * from INSCRIPTIONS where ID_STAGIAIRE=? and NOM_TEST=?");
-			stm.setString(1, nomTest);
-			stm.setString(2, idStagiaire.toString());
+			stm.setString(1, idStagiaire.toString());
+			stm.setString(2, nomTest);
 			ResultSet rs = stm.executeQuery();
 			rs.next();
-			insc=new Inscription(/*TODO : Requète de selection d'un test pars son nom*/null,rs.getString("DUREE"),rs.getString("MAIL_FORMATEUR"),DalStagiaire.selectStagiaire(idStagiaire));
+			insc=new Inscription(DalTest.selectTest(nomTest),rs.getString("DUREE"),rs.getString("MAIL_FORMATEUR"),DalStagiaire.selectStagiaire(idStagiaire));
 			AccesBase.deconnexionBase(cnx);
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -176,5 +176,33 @@ public class DalInscription {
 			return null;
 		}
 		return insc;
+	}
+	
+	
+	/***
+	 *  Selectionne un tirage dans la base. Retourne les id de toutes les questions du tirage.
+	 *  @param UUID : idStagiaire
+	 *  @param String : nomTest
+	 *  @return Vector(UUID)
+	 */
+	
+	public static Vector<UUID> selectTirage(UUID idStagiaire,String nomTest){
+		cnx = AccesBase.getConnection();
+		Vector<UUID> tirage = new Vector<UUID>();
+		try {
+			PreparedStatement stm = cnx.prepareStatement("select * from TIRAGE where NOM_TEST=? and ID_STAGIAIRE=?");
+			stm.setString(1, nomTest);
+			stm.setString(2, idStagiaire.toString());
+			ResultSet rs = stm.executeQuery();
+			while(rs.next()){
+				tirage.add(UUID.fromString(rs.getString("")));
+			}
+			AccesBase.deconnexionBase(cnx);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			AccesBase.deconnexionBase(cnx);
+			return null;
+		}
+		return tirage;
 	}
 }
