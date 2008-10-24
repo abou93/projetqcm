@@ -18,6 +18,7 @@ public class CtrlFormateur {
 	static CtrlFormateur instance;
 	Vector<Test> listeTests;
 	Vector<Promotion> listePromotions;
+	//Vector<Stagiaire> listeStagiaires;
 	
 	
 	/***
@@ -27,6 +28,7 @@ public class CtrlFormateur {
 		super();
 		listeTests=new Vector<Test>();
 		listePromotions = new Vector<Promotion>();
+		//listeStagiaires = new Vector<Stagiaire>();
 		chargerListePromotions();
 	}
 	
