@@ -16,6 +16,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
+import modeles.Promotion;
+import modeles.Stagiaire;
 import modeles.Test;
 
 import controleur.CtrlFormateur;
@@ -37,7 +39,7 @@ public class fenPrincipale extends javax.swing.JFrame {
         ctrl=CtrlFormateur.getCtrlFormateur();
     	initComponents();
     	ajoutFonction();
-        
+    	initPanelQuestion();
     }
 
     /** This method is called from within the constructor to
@@ -673,6 +675,7 @@ public class fenPrincipale extends javax.swing.JFrame {
 
     
     private void ajoutFonction(){
+    	
     	jButtonChoixImage.addActionListener(new ActionListener(){
 
 			@Override
@@ -686,13 +689,39 @@ public class fenPrincipale extends javax.swing.JFrame {
 			}
     		
     	});
-    	DefaultMutableTreeNode racine = new DefaultMutableTreeNode("c’est la racine") ;
+    	
+    
+    	
+    	DefaultMutableTreeNode racine = new DefaultMutableTreeNode("ENI Ecole") ;
+    	
+    	for (Promotion p : ctrl.getListePromotions()){
+    		DefaultMutableTreeNode sousDossier = new DefaultMutableTreeNode(p.getCode());
+    		;
+    		for (Stagiaire s : ctrl.getStagiairesPromo(p)){
+    			sousDossier.add(new DefaultMutableTreeNode(s));
+    		}
+    		racine.add(sousDossier);
+    	}
+    	
+    	DefaultMutableTreeNode racineTest = new DefaultMutableTreeNode("Vide..") ;
     	jTreeListeStagaireEni.setModel(new DefaultTreeModel(racine));
+    	jTreeListeStagaireEni.expandPath(jTreeListeStagaireEni.getPathForRow(0));
+    	jTreeListeStagiaireTest.setModel(new DefaultTreeModel(racineTest));
     	
     }
     
     
-    
+    private void initPanelQuestion(){
+    	jButtonAjoutDuneReponse.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				jPanel3.add(new JPanelNouvelleReponse());
+				
+			}
+    		
+    	});
+    }
     
     
     
