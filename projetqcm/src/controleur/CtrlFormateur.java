@@ -1,10 +1,12 @@
 package controleur;
 
 import java.util.Enumeration;
+import java.util.Random;
 import java.util.Vector;
 
 import modeles.Inscription;
 import modeles.Promotion;
+import modeles.Section;
 import modeles.Stagiaire;
 import modeles.Test;
 import dal.DalInscription;
@@ -130,5 +132,65 @@ public class CtrlFormateur {
 		return DalStagiaire.selectStagiaireTest(test);
 	}
 	
+	
+	/***
+	 * Réalise l'inscription d'un stagiaire à un test. Tire au sort les questions d'une section si besoin. Enregistre l'inscription et le tirage dans la base.
+	 * @param Stagiaire : stagiaire
+	 * @param Test : test
+	 * @param String : duree
+	 * @param String : mailFormateur
+	 * @return Boolean : True si l'inscription est ok, false dans l'autre cas.
+	 */
+	public boolean inscrirStagiaireTest(Stagiaire stagiaire,Test test,String duree,String mailFormateur){
+		Inscription inscription = new Inscription(test,duree,mailFormateur,stagiaire);
+		
+		if(test.getSections().size()>0){
+			Enumeration<Section> enumSection = test.getSections().elements();
+			
+			while(enumSection.hasMoreElements()){
+				Section s = enumSection.nextElement();
+				if(s.getQuestions().size()>s.getNbrQuestion()){
+					tirage(test,inscription);
+				}
+				
+			}
+		}
+		
+		if(DalInscription.insertInscription(inscription)){
+			
+			if(DalInscription.insertTirage(inscription)){
+				stagiaire.addInscription(inscription);
+				return true;
+			}else{
+				DalInscription.deleteInscription(stagiaire.getId(), test.getNom());
+				return false;
+			}
+			
+		}else{
+			return false;
+		}
+	}
+	
+	private void tirage(Test test,Inscription inscription){
+		Enumeration<Section> enumSection = test.getSections().elements();
+		while(enumSection.hasMoreElements()){
+			Section section = enumSection.nextElement();
+			int i = section.getQuestions().size();
+			boolean[] dejaTire = new boolean[i];
+			for(int j= 0;j<i;j++){
+				dejaTire[j]=false;
+			}
+			int num = 0;
+			while(num<i){
+				Random rdm = new Random();
+				int nbrRdm = rdm.nextInt(i);
+				if(dejaTire[i]==false){
+					inscription.addIdQuestion(section.getQuestionAt(nbrRdm));
+					dejaTire[i]=true;
+					num++;
+				}
+			}
+		}
+	}
 	
 }
