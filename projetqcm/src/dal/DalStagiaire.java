@@ -23,21 +23,21 @@ public class DalStagiaire {
 	
 	/***
 	 *  Va chercher toutes les promotions dans la base.
-	 *  Retourne un vecteur de String
+	 *  Retourne un vecteur de Promotion contenant 
 	 *  @param none
-	 *  @return Vecteur de String (Noms des promotions) 
+	 *  @return Vector(Promotion)
 	 */
 	
 	//Selectionner toutes les promotions
-	public static Vector<String> selectAllPromotions(){
+	public static Vector<Promotion> selectAllPromotions(){
 		cnx = AccesBase.getConnection();
-		Vector<String> listePromo = new Vector<String>();
+		Vector<Promotion> listePromo = new Vector<Promotion>();
 		
 		try {
 			PreparedStatement stm = cnx.prepareStatement("select * from PROMOTIONS");
 			ResultSet rs = stm.executeQuery();
 			while(rs.next()){
-				listePromo.add(rs.getString("LIBELLE").trim());
+				listePromo.add(new Promotion(rs.getString("CODE").trim(),rs.getString("LIBELLE").trim()));
 			}
 			AccesBase.deconnexionBase(cnx);
 		} catch (SQLException e) {
@@ -58,7 +58,7 @@ public class DalStagiaire {
 	 */
 	
 	//Selectionner les stagiaires dont la promotion porte le libelle 'libelle'
-	public static Vector<Stagiaire> selectStagiaires(String codePromotion){
+	public static Vector<Stagiaire> selectStagiairesPromotion(String codePromotion){
 		cnx = AccesBase.getConnection();
 		Vector<Stagiaire> listeStagiaires = new Vector<Stagiaire>();
 		
