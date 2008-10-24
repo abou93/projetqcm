@@ -27,6 +27,7 @@ public class CtrlFormateur {
 		super();
 		listeTests=new Vector<Test>();
 		listePromotions = new Vector<Promotion>();
+		chargerListePromotions();
 	}
 	
 
@@ -99,7 +100,7 @@ public class CtrlFormateur {
 	/***
 	 * Charge la liste des promotions depuis la base.
 	 */
-	public void chargerListePromotions(){
+	private void chargerListePromotions(){
 		listePromotions = DalStagiaire.selectAllPromotions();
 	}
 	
@@ -162,20 +163,26 @@ public class CtrlFormateur {
 				return true;
 			}else{
 				if(DalInscription.insertTirage(inscription)){
-				stagiaire.addInscription(inscription);
-				return true;
-			}else{
-				DalInscription.deleteInscription(stagiaire.getId(), test.getNom());
-				return false;
+					stagiaire.addInscription(inscription);
+					return true;
+				}else{
+					DalInscription.deleteInscription(stagiaire.getId(), test.getNom());
+					stagiaire.supprInscription(inscription);
+					return false;
+				}
 			}
-			}
-			
 			
 		}else{
 			return false;
 		}
 	}
 	
+	
+	/***
+	 * Réalise le tirage au sort des questions d'un section.
+	 * @param Test : test
+	 * @param Inscription : inscription
+	 */
 	private void tirage(Test test,Inscription inscription){
 		Enumeration<Section> enumSection = test.getSections().elements();
 		while(enumSection.hasMoreElements()){
