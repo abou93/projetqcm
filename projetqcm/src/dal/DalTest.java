@@ -326,5 +326,38 @@ public class DalTest {
 	}
 	
 	
+	/***
+	 * Récupère la liste de tout les tests la base<br>
+	 * Retourne une liste de test
+	 * @param none
+	 * @return Vector
+	 */
+	public static Vector<Test> selectAllTest()
+	{
+		Vector<Test> listeTest = new Vector<Test>();
+		Connection cnx;
+		PreparedStatement stm;
+		ResultSet rs;
+		cnx=AccesBase.getConnection();
+		
+		try {
+			
+			stm = cnx.prepareStatement(	"select * from TESTS");
+			rs=stm.executeQuery();
+			
+			while(rs.next())
+			{
+				Test test = new Test(rs.getString("NOM"),rs.getInt("TEMPS"),rs.getInt("SEUIL"));
+				listeTest.add(test);
+			}
+				
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+			System.err.println("erreur selectSection");
+		}					
+		
+		AccesBase.deconnexionBase(cnx);
+		return listeTest;
+	}
 	
 }
