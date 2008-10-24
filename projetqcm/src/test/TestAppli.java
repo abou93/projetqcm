@@ -41,7 +41,7 @@ public class TestAppli {
 		System.out.println(test.getSection(0).getQuestionAt(0).toString());
 		System.out.println(test.toString());
 		
-		Vector<Stagiaire> s = DalStagiaire.selectStagiaires("DL90");
+		Vector<Stagiaire> s = DalStagiaire.selectStagiairesPromotion("DL90");
 		Enumeration<Stagiaire> enu = s.elements();
 		while(enu.hasMoreElements()){
 			Stagiaire sta = enu.nextElement();
