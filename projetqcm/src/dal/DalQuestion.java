@@ -242,7 +242,7 @@ public class DalQuestion {
 		
 		try {
 			
-			stm = cnx.prepareStatement("select QUESTIONS_ENONCES where NUMERO_SECTION = ? ");
+			stm = cnx.prepareStatement("select * from QUESTIONS_ENONCES where NUMERO_SECTION = ? ");
 			stm.setInt(1, section.getNumero());
 			rs=stm.executeQuery();
 			
@@ -281,7 +281,7 @@ public class DalQuestion {
 		
 		try {
 			
-			stm = cnx.prepareStatement("select QUESTIONS_REPONSES where ID_ENONCE = ? ");
+			stm = cnx.prepareStatement("select * from QUESTIONS_REPONSES where ID_ENONCE = ? ");
 			stm.setString(1, question.getId().toString());
 			rs=stm.executeQuery();
 			
@@ -321,7 +321,7 @@ public class DalQuestion {
 		
 		try {
 			
-			stm = cnx.prepareStatement("select TYPE_QUESTION where NUMERO = ? ");
+			stm = cnx.prepareStatement("select * from TYPE_QUESTION where NUMERO = ? ");
 			stm.setInt(1, numero);
 			rs=stm.executeQuery();
 			while(rs.next())

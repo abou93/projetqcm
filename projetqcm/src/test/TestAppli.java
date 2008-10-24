@@ -35,7 +35,7 @@ public class TestAppli {
 
 		
 		
-		Test test = new Test("Essai",20,1);
+		/*Test test = new Test("Essai",20,1);
 		Section sect = new Section("Section1",1);
 		Question quest = new Question("Comment ca marche",new Type());
 		quest.addReponse(new Reponse("tres bien",1,false,quest));
@@ -52,13 +52,27 @@ public class TestAppli {
 		DalQuestion.insertQuestion(quest);
 		for(Reponse r : quest.getListeReponses()){
 			DalQuestion.insertReponse(r);
+		}*/
+		
+		Test test = DalTest.selectTestByNom("Essai");
+		Vector<Section> sect = DalTest.selectSectionByTest("Essai");
+		for(Section s : sect){
+			s.setQuestions(DalQuestion.selectQuestions(s));
+			for(Question q : s.getQuestions()){
+				q.setListesReponses(DalQuestion.selectReponse(q));
+			}
 		}
 		
-		System.out.println(quest.toString());
-		
-		for(Reponse r : quest.getListeReponses()){
-			System.out.println(r.toString());
+		for(Section s : sect){
+			for (Question q : s.getQuestions()){
+				System.out.println(q.toString());
+				for (Reponse r : q.getListeReponses()){
+					System.out.println(r.toString());
+				}
+			}
 		}
+		
+		
 		
 		
 		Vector<Stagiaire> s = DalStagiaire.selectStagiairesPromotion("DL90");

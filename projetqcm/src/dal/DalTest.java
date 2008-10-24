@@ -266,7 +266,7 @@ public class DalTest {
 		
 		try {
 			
-			stm = cnx.prepareStatement("select TESTS where NOM = ? ");
+			stm = cnx.prepareStatement("select * from TESTS where NOM = ? ");
 			stm.setString(1, nomTest.trim());
 			rs=stm.executeQuery();
 			
@@ -302,7 +302,7 @@ public class DalTest {
 		
 		try {
 			
-			stm = cnx.prepareStatement(	"select SECTIONS inner join TESTS_SECTIONS on SECTIONS.NUMERO = TESTS_SECTIONS.NUMERO_SECTION " + 
+			stm = cnx.prepareStatement(	"select *from SECTIONS inner join TESTS_SECTIONS on SECTIONS.NUMERO = TESTS_SECTIONS.NUMERO_SECTION " + 
 										"where NOM_TEST = ? ");
 			stm.setString(1, nomTest);
 			rs=stm.executeQuery();
