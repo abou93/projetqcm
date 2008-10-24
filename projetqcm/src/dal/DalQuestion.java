@@ -38,7 +38,7 @@ public class DalQuestion {
 		cnx=AccesBase.getConnection();
 		
 		try {
-			stm = cnx.prepareStatement("Insert into QUESTIONS_ENONCES (ID,ENONCE,TYPE,IMAGE,NUMERO_SECTION) values (?, ?, ?, ?, ?)");
+			stm = cnx.prepareStatement("Insert into QUESTIONS_ENONCES (ID,ENONCE,TYPE_QUESTION,IMAGE_QUESTION,NUMERO_SECTION) values (?, ?, ?, ?, ?)");
 			stm.setString(1, question.getId().toString());
 			stm.setString(2,question.getEnonce());
 			stm.setInt(3, question.getType().getNumero());
@@ -109,7 +109,7 @@ public class DalQuestion {
 		cnx=AccesBase.getConnection();
 		
 		try {
-			stm = cnx.prepareStatement("update QUESTIONS_ENONCES set ENONCE = ?,TYPE = ? ,IMAGE =?,NUMERO_SECTION=? where ID = ?");
+			stm = cnx.prepareStatement("update QUESTIONS_ENONCES set ENONCE = ?,TYPE_QUESTION = ? ,IMAGE_QUESTION =?,NUMERO_SECTION=? where ID = ?");
 			stm.setString(1,question.getEnonce());
 			stm.setInt(2, question.getType().getNumero());
 			stm.setString(3, question.getCheminImage());
@@ -251,8 +251,8 @@ public class DalQuestion {
 				Question question = new Question();
 				question.setId(UUID.fromString(rs.getString("ID")));
 				question.setEnonce(rs.getString("ENONCE"));
-				question.setType(selectType(rs.getInt("TYPE")));
-				question.setCheminImage(rs.getString("IMAGE"));
+				question.setType(selectType(rs.getInt("TYPE_QUESTION")));
+				question.setCheminImage(rs.getString("IMAGE_QUESTION"));
 				listeQuestions.add(question);
 			}
 				
@@ -321,7 +321,7 @@ public class DalQuestion {
 		
 		try {
 			
-			stm = cnx.prepareStatement("select TYPE where NUMERO = ? ");
+			stm = cnx.prepareStatement("select TYPE_QUESTION where NUMERO = ? ");
 			stm.setInt(1, numero);
 			rs=stm.executeQuery();
 			while(rs.next())

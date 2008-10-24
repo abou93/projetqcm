@@ -6,7 +6,9 @@ import java.util.Vector;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import dal.DalQuestion;
 import dal.DalStagiaire;
+import dal.DalTest;
 import modeles.*;
 
 public class TestAppli {
@@ -31,15 +33,33 @@ public class TestAppli {
 			e1.printStackTrace();
 		}
 
+		
+		
 		Test test = new Test("Essai",20,1);
 		Section sect = new Section("Section1",1);
 		Question quest = new Question("Comment ca marche",new Type());
-		
+		quest.addReponse(new Reponse("tres bien",1,false,quest));
+		quest.addReponse(new Reponse("assez bien",2,true,quest));
+		quest.addReponse(new Reponse("pas bien",3,false,quest));
+		quest.setSection(sect);
+		quest.setType(DalQuestion.selectType(0));
 		sect.addQuestion(quest);
 		test.addSection(sect);
 		
-		System.out.println(test.getSection(0).getQuestionAt(0).toString());
-		System.out.println(test.toString());
+			
+		DalTest.insertTest(test);
+		DalTest.insertSection(sect);
+		DalQuestion.insertQuestion(quest);
+		for(Reponse r : quest.getListeReponses()){
+			DalQuestion.insertReponse(r);
+		}
+		
+		System.out.println(quest.toString());
+		
+		for(Reponse r : quest.getListeReponses()){
+			System.out.println(r.toString());
+		}
+		
 		
 		Vector<Stagiaire> s = DalStagiaire.selectStagiairesPromotion("DL90");
 		Enumeration<Stagiaire> enu = s.elements();
@@ -48,6 +68,9 @@ public class TestAppli {
 			System.out.println(sta.toString().trim());
 			System.out.println(DalStagiaire.selectStagiaire(sta.getId()).toString());
 		}
+		
+		
+		
 		
 	TestFrame f = new TestFrame();
 	f.setVisible(true);

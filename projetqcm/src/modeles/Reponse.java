@@ -90,5 +90,18 @@ public class Reponse {
 	}
 
 	
+	/*****************************************************
+	*						Méthodes					 *
+	******************************************************/
+	
+	public String toString()
+	{
+		StringBuilder builder = new StringBuilder();
+		builder.append("Reponse " + this.getNumero() + "\n");
+		builder.append(this.getTexte()+ "\n");
+		builder.append(this.isEtat());
+		return builder.toString();
+	}
+	
 	
 }

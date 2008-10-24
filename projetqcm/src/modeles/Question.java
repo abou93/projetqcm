@@ -133,6 +133,12 @@ public class Question {
 		return this.getListeReponses().size();
 	}
 	
+	public void addReponse(Reponse reponse)
+	{
+		this.getListeReponses().add(reponse);
+	}
+	
+	
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("Question " + this.getId().toString()+ "\n");
