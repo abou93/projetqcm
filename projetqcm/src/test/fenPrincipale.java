@@ -13,6 +13,8 @@ import java.util.Vector;
 
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 
 import modeles.Test;
 
@@ -684,7 +686,8 @@ public class fenPrincipale extends javax.swing.JFrame {
 			}
     		
     	});
-    	
+    	DefaultMutableTreeNode racine = new DefaultMutableTreeNode("c’est la racine") ;
+    	jTreeListeStagaireEni.setModel(new DefaultTreeModel(racine));
     	
     }
     
