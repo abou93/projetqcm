@@ -26,6 +26,7 @@ public class fenPrincipale extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         jTabbedPanelQcm = new javax.swing.JTabbedPane();
         PanelTest = new javax.swing.JPanel();
@@ -39,6 +40,23 @@ public class fenPrincipale extends javax.swing.JFrame {
         jTextFieldNomTest = new javax.swing.JTextField();
         jTextFieldTempsTest = new javax.swing.JTextField();
         jTextFieldSeuilTest = new javax.swing.JTextField();
+        jLabelmin = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jToggleButton1 = new javax.swing.JToggleButton();
+        jPanelInscriptionTest = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        jTreeListeStagaireEni = new javax.swing.JTree();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        jTreeListeStagiaireTest = new javax.swing.JTree();
+        jButtonIsncrireEleve = new javax.swing.JButton();
+        jButtonSupIncriptionEleve = new javax.swing.JButton();
+        jLabelListeStagiaireInscritTest = new javax.swing.JLabel();
+        jLabelListeStagiaireEni = new javax.swing.JLabel();
+        jTextFieldMailFormateur = new javax.swing.JTextField();
+        jSpinnerDureeInscription = new javax.swing.JSpinner();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jToggleButton2 = new javax.swing.JToggleButton();
         PanelSection = new javax.swing.JPanel();
         PanelQuestion = new javax.swing.JPanel();
         MenuQcm = new javax.swing.JMenuBar();
@@ -46,17 +64,19 @@ public class fenPrincipale extends javax.swing.JFrame {
         jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Gestion de test QCM");
+        setResizable(false);
 
         labelListeTest.setText("Liste des tests :");
 
         jListTests.setModel(new javax.swing.AbstractListModel() {
-            String[] strings = { "Test 1", "Tests 2"};
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
             public int getSize() { return strings.length; }
             public Object getElementAt(int i) { return strings[i]; }
         });
         jScrollPane1.setViewportView(jListTests);
 
-        jPanelProprietesTest.setBorder(javax.swing.BorderFactory.createTitledBorder("Propriétés"));
+        jPanelProprietesTest.setBorder(javax.swing.BorderFactory.createTitledBorder("PropriÃ©tÃ©s"));
 
         jLabelNomTest.setText("Nom :");
 
@@ -64,27 +84,35 @@ public class fenPrincipale extends javax.swing.JFrame {
 
         jLabelSeuilTest.setText("Seuil :");
 
+        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, jListTests, org.jdesktop.beansbinding.ELProperty.create("${selectedElement}"), jTextFieldNomTest, org.jdesktop.beansbinding.BeanProperty.create("text"));
+        bindingGroup.addBinding(binding);
+
+        jLabelmin.setText("min");
+
+        jLabel1.setText("%");
+
         javax.swing.GroupLayout jPanelProprietesTestLayout = new javax.swing.GroupLayout(jPanelProprietesTest);
         jPanelProprietesTest.setLayout(jPanelProprietesTestLayout);
         jPanelProprietesTestLayout.setHorizontalGroup(
             jPanelProprietesTestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanelProprietesTestLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
+                .addContainerGap()
+                .addGroup(jPanelProprietesTestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabelTempsTest)
+                    .addComponent(jLabelNomTest)
+                    .addComponent(jLabelSeuilTest))
+                .addGap(39, 39, 39)
                 .addGroup(jPanelProprietesTestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTextFieldNomTest, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanelProprietesTestLayout.createSequentialGroup()
-                        .addComponent(jLabelNomTest)
-                        .addGap(18, 18, 18)
-                        .addComponent(jTextFieldNomTest, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanelProprietesTestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelProprietesTestLayout.createSequentialGroup()
-                            .addComponent(jLabelSeuilTest)
-                            .addGap(18, 18, 18)
-                            .addComponent(jTextFieldSeuilTest))
-                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelProprietesTestLayout.createSequentialGroup()
-                            .addComponent(jLabelTempsTest)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(jTextFieldTempsTest, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(78, Short.MAX_VALUE))
+                        .addGroup(jPanelProprietesTestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jTextFieldSeuilTest, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextFieldTempsTest, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 61, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanelProprietesTestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabelmin))))
+                .addContainerGap(85, Short.MAX_VALUE))
         );
         jPanelProprietesTestLayout.setVerticalGroup(
             jPanelProprietesTestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -96,12 +124,97 @@ public class fenPrincipale extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelProprietesTestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelTempsTest)
-                    .addComponent(jTextFieldTempsTest, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextFieldTempsTest, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelmin))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelProprietesTestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabelSeuilTest)
-                    .addComponent(jTextFieldSeuilTest, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(45, Short.MAX_VALUE))
+                    .addComponent(jTextFieldSeuilTest, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addContainerGap(21, Short.MAX_VALUE))
+        );
+
+        jToggleButton1.setText("Imprimer");
+
+        jPanelInscriptionTest.setBorder(javax.swing.BorderFactory.createTitledBorder("Inscriptions : "));
+
+        jScrollPane2.setViewportView(jTreeListeStagaireEni);
+
+        jScrollPane3.setViewportView(jTreeListeStagiaireTest);
+
+        jButtonIsncrireEleve.setText(">>");
+
+        jButtonSupIncriptionEleve.setText("<<");
+
+        jLabelListeStagiaireInscritTest.setText("Stagiaire(s) inscrit(s) au test :");
+
+        jLabelListeStagiaireEni.setText("Liste des stagiaires ENI : ");
+
+        jLabel4.setText("DurÃ©e :");
+
+        jLabel5.setText("Mail formateur :");
+
+        jToggleButton2.setText("Mot de passe");
+
+        javax.swing.GroupLayout jPanelInscriptionTestLayout = new javax.swing.GroupLayout(jPanelInscriptionTest);
+        jPanelInscriptionTest.setLayout(jPanelInscriptionTestLayout);
+        jPanelInscriptionTestLayout.setHorizontalGroup(
+            jPanelInscriptionTestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelInscriptionTestLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanelInscriptionTestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelInscriptionTestLayout.createSequentialGroup()
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanelInscriptionTestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jButtonIsncrireEleve)
+                            .addComponent(jButtonSupIncriptionEleve, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(jLabelListeStagiaireEni))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelInscriptionTestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabelListeStagiaireInscritTest))
+                .addGap(34, 34, 34)
+                .addGroup(jPanelInscriptionTestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel4))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelInscriptionTestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jSpinnerDureeInscription, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanelInscriptionTestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jToggleButton2)
+                        .addComponent(jTextFieldMailFormateur, javax.swing.GroupLayout.PREFERRED_SIZE, 156, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(24, 24, 24))
+        );
+        jPanelInscriptionTestLayout.setVerticalGroup(
+            jPanelInscriptionTestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanelInscriptionTestLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanelInscriptionTestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabelListeStagiaireInscritTest)
+                    .addComponent(jLabelListeStagiaireEni))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelInscriptionTestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelInscriptionTestLayout.createSequentialGroup()
+                        .addGroup(jPanelInscriptionTestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(jTextFieldMailFormateur, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanelInscriptionTestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanelInscriptionTestLayout.createSequentialGroup()
+                                .addGap(41, 41, 41)
+                                .addComponent(jButtonIsncrireEleve, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButtonSupIncriptionEleve, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanelInscriptionTestLayout.createSequentialGroup()
+                                .addGap(16, 16, 16)
+                                .addGroup(jPanelInscriptionTestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jSpinnerDureeInscription, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel4))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
+                        .addComponent(jToggleButton2))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 255, Short.MAX_VALUE)
+                    .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 255, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout PanelTestLayout = new javax.swing.GroupLayout(PanelTest);
@@ -114,9 +227,12 @@ public class fenPrincipale extends javax.swing.JFrame {
                     .addGroup(PanelTestLayout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(33, 33, 33)
-                        .addComponent(jPanelProprietesTest, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(labelListeTest))
-                .addContainerGap(262, Short.MAX_VALUE))
+                        .addGroup(PanelTestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jPanelProprietesTest, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(labelListeTest)
+                    .addComponent(jPanelInscriptionTest, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         PanelTestLayout.setVerticalGroup(
             PanelTestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -125,9 +241,14 @@ public class fenPrincipale extends javax.swing.JFrame {
                 .addComponent(labelListeTest)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(PanelTestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanelProprietesTest, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(PanelTestLayout.createSequentialGroup()
+                        .addComponent(jPanelProprietesTest, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jToggleButton1))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(236, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jPanelInscriptionTest, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(6, 6, 6))
         );
 
         jTabbedPanelQcm.addTab("Tests", PanelTest);
@@ -136,11 +257,11 @@ public class fenPrincipale extends javax.swing.JFrame {
         PanelSection.setLayout(PanelSectionLayout);
         PanelSectionLayout.setHorizontalGroup(
             PanelSectionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 742, Short.MAX_VALUE)
+            .addGap(0, 774, Short.MAX_VALUE)
         );
         PanelSectionLayout.setVerticalGroup(
             PanelSectionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 471, Short.MAX_VALUE)
+            .addGap(0, 577, Short.MAX_VALUE)
         );
 
         jTabbedPanelQcm.addTab("Sections", PanelSection);
@@ -149,11 +270,11 @@ public class fenPrincipale extends javax.swing.JFrame {
         PanelQuestion.setLayout(PanelQuestionLayout);
         PanelQuestionLayout.setHorizontalGroup(
             PanelQuestionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 742, Short.MAX_VALUE)
+            .addGap(0, 774, Short.MAX_VALUE)
         );
         PanelQuestionLayout.setVerticalGroup(
             PanelQuestionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 471, Short.MAX_VALUE)
+            .addGap(0, 577, Short.MAX_VALUE)
         );
 
         jTabbedPanelQcm.addTab("Questions", PanelQuestion);
@@ -172,16 +293,18 @@ public class fenPrincipale extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPanelQcm, javax.swing.GroupLayout.DEFAULT_SIZE, 747, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jTabbedPanelQcm, javax.swing.GroupLayout.PREFERRED_SIZE, 779, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPanelQcm, javax.swing.GroupLayout.DEFAULT_SIZE, 496, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jTabbedPanelQcm, javax.swing.GroupLayout.PREFERRED_SIZE, 602, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        bindingGroup.bind();
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -202,19 +325,37 @@ public class fenPrincipale extends javax.swing.JFrame {
     private javax.swing.JPanel PanelQuestion;
     private javax.swing.JPanel PanelSection;
     private javax.swing.JPanel PanelTest;
+    private javax.swing.JButton jButtonIsncrireEleve;
+    private javax.swing.JButton jButtonSupIncriptionEleve;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabelListeStagiaireEni;
+    private javax.swing.JLabel jLabelListeStagiaireInscritTest;
     private javax.swing.JLabel jLabelNomTest;
     private javax.swing.JLabel jLabelSeuilTest;
     private javax.swing.JLabel jLabelTempsTest;
+    private javax.swing.JLabel jLabelmin;
     private javax.swing.JList jListTests;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
+    private javax.swing.JPanel jPanelInscriptionTest;
     private javax.swing.JPanel jPanelProprietesTest;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JSpinner jSpinnerDureeInscription;
     private javax.swing.JTabbedPane jTabbedPanelQcm;
+    private javax.swing.JTextField jTextFieldMailFormateur;
     private javax.swing.JTextField jTextFieldNomTest;
     private javax.swing.JTextField jTextFieldSeuilTest;
     private javax.swing.JTextField jTextFieldTempsTest;
+    private javax.swing.JToggleButton jToggleButton1;
+    private javax.swing.JToggleButton jToggleButton2;
+    private javax.swing.JTree jTreeListeStagaireEni;
+    private javax.swing.JTree jTreeListeStagiaireTest;
     private javax.swing.JLabel labelListeTest;
+    private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 
 }

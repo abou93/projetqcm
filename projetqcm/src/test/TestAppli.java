@@ -85,10 +85,9 @@ public class TestAppli {
 		}
 		
 		
+		new fenPrincipale().setVisible(true);
 		
-		
-	TestFrame f = new TestFrame();
-	f.setVisible(true);
+	
 		
 	}
 
