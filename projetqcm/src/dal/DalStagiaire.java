@@ -23,7 +23,7 @@ public class DalStagiaire {
 	
 	/***
 	 *  Va chercher toutes les promotions dans la base.
-	 *  Retourne un vecteur de Promotion contenant 
+	 *  Retourne un vecteur de Promotion
 	 *  @param none
 	 *  @return Vector(Promotion)
 	 */
