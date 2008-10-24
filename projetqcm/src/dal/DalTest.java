@@ -1,6 +1,7 @@
 package dal;
 
 import java.sql.*;
+import java.util.Vector;
 
 import modeles.*;
 
@@ -78,6 +79,38 @@ public class DalTest {
 			System.err.println(e.getMessage());
 			System.err.println("erreur insertSection");
 			
+			AccesBase.deconnexionBase(cnx);
+			return false;
+		}					
+			
+	}
+	
+	
+	/***
+	 *  Reçoit un numero de section et un nom de test pour l'inséré dans la base de donnée
+	 *  Retourne true si ok, false si nok <br>
+	 *  Permet de lié un test a différentes sections
+	 *  @param String nomTest <br>
+	 *  	   int numeroSection 
+	 *  @return Boolean      
+	 */
+	public static boolean insertTests_Sections(String nomTest, int numeroSection){
+		
+		Connection cnx;
+		PreparedStatement stm;
+		cnx=AccesBase.getConnection();
+		
+		try {
+			stm = cnx.prepareStatement("Insert into TESTS_SECTIONS (NOM_TEST,NUMERO_SECTION) values (?, ?)");
+			stm.setString(1,nomTest);
+			stm.setInt(2,numeroSection);
+			stm.execute();
+			AccesBase.deconnexionBase(cnx);
+			return true;
+		
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+			System.err.println("erreur insertTestSection");
 			AccesBase.deconnexionBase(cnx);
 			return false;
 		}					
@@ -218,7 +251,7 @@ public class DalTest {
 	
 
 	/***
-	 * Récupère le test dans la base pour la question passée en paramètre <br>
+	 * Récupère le test dans la base pour le nom de test passé en paramètre <br>
 	 * Retourne un test
 	 * @param String nomTest
 	 * @return Test
@@ -252,6 +285,46 @@ public class DalTest {
 		AccesBase.deconnexionBase(cnx);
 		return test;
 	}
+	
+	/***
+	 * Récupère une liste de section dans la base pour le test passé en paramètre <br>
+	 * Retourne une liste de Section
+	 * @param String nomTest
+	 * @return Vector
+	 */
+	public static Vector<Section> selectSectionByTest(String nomTest)
+	{
+		Vector<Section> listeSectionsDuTest = new Vector<Section>();
+		Connection cnx;
+		PreparedStatement stm;
+		ResultSet rs;
+		cnx=AccesBase.getConnection();
+		
+		try {
+			
+			stm = cnx.prepareStatement(	"select SECTIONS inner join TESTS_SECTIONS on SECTIONS.NUMERO = TESTS_SECTIONS.NUMERO_SECTION " + 
+										"where NOM_TEST = ? ");
+			stm.setString(1, nomTest);
+			rs=stm.executeQuery();
+			
+			while(rs.next())
+			{
+				Section section = new Section();
+				section.setNumero(rs.getInt("NUMERO"));
+				section.setNom(rs.getString("NOM"));
+				section.setNbrQuestion(rs.getInt("NBR_QUESTION"));
+				listeSectionsDuTest.add(section);
+			}
+				
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+			System.err.println("erreur selectSection");
+		}					
+		
+		AccesBase.deconnexionBase(cnx);
+		return listeSectionsDuTest;
+	}
+	
 	
 	
 }
