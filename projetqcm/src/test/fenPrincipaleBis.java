@@ -6,18 +6,40 @@
 
 package test;
 
-import javax.swing.JDialog;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.util.Vector;
+
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+
+import modeles.Promotion;
+import modeles.Stagiaire;
+import modeles.Test;
+
+import controleur.CtrlFormateur;
 
 /**
  *
  * @author  slefort
  */
-public class fenPrincipale extends javax.swing.JFrame {
+public class fenPrincipaleBis extends javax.swing.JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	CtrlFormateur ctrl;
+	
     /** Creates new form fenPrincipale */
-    public fenPrincipale() {
-        initComponents();
-        
+    public fenPrincipaleBis() {
+        ctrl=CtrlFormateur.getCtrlFormateur();
+    	initComponents();
+    	ajoutFonction();
+    	initPanelQuestion();
     }
 
     /** This method is called from within the constructor to
@@ -99,7 +121,6 @@ public class fenPrincipale extends javax.swing.JFrame {
         jTextFieldNomSectionPanelQuestion = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jButtonAjoutDuneReponse = new javax.swing.JButton();
-        jPanelReponseAAjouter = new javax.swing.JPanel();
         jScrollPane7 = new javax.swing.JScrollPane();
         jTreeListeQuestionDispo = new javax.swing.JTree();
         jScrollPane8 = new javax.swing.JScrollPane();
@@ -118,11 +139,16 @@ public class fenPrincipale extends javax.swing.JFrame {
 
         labelListeTest.setText("Liste des tests :");
 
-        jListTests.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jListTests.setModel(new javax.swing.AbstractListModel() {
+        	private static final long serialVersionUID = 1L;
+			Vector<Test> tests = ctrl.getListeTests();
+            public int getSize() { return tests.size(); }
+            public Object getElementAt(int i) { return tests.elementAt(i); }
+        });
         jListTests.setToolTipText("Liste des tests existants");
         jScrollPane1.setViewportView(jListTests);
 
-        jPanelProprietesTest.setBorder(javax.swing.BorderFactory.createTitledBorder("Propriétés"));
+        jPanelProprietesTest.setBorder(javax.swing.BorderFactory.createTitledBorder("Propri�t�s"));
 
         jLabelNomTest.setText("Nom :");
 
@@ -218,7 +244,7 @@ public class fenPrincipale extends javax.swing.JFrame {
                     .addGroup(jPanelProprietesTestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jTextFieldSeuilTest, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel1)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 48, Short.MAX_VALUE)
                 .addGroup(jPanelProprietesTestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jToggleButton1)
@@ -229,10 +255,8 @@ public class fenPrincipale extends javax.swing.JFrame {
 
         jPanelInscriptionTest.setBorder(javax.swing.BorderFactory.createTitledBorder("Inscriptions : "));
 
-        jTreeListeStagaireEni.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jScrollPane2.setViewportView(jTreeListeStagaireEni);
 
-        jTreeListeStagiaireTest.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jScrollPane3.setViewportView(jTreeListeStagiaireTest);
 
         jButtonIsncrireEleve.setText(">>");
@@ -317,25 +341,23 @@ public class fenPrincipale extends javax.swing.JFrame {
             .addGroup(PanelTestLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(PanelTestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanelInscriptionTest, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(PanelTestLayout.createSequentialGroup()
-                        .addGroup(PanelTestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(labelListeTest))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanelProprietesTest, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jPanelProprietesTest, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(labelListeTest)
+                    .addComponent(jPanelInscriptionTest, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
         PanelTestLayout.setVerticalGroup(
             PanelTestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelTestLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
-                .addGroup(PanelTestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(PanelTestLayout.createSequentialGroup()
-                        .addComponent(labelListeTest)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jPanelProprietesTest, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(labelListeTest)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(PanelTestLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanelProprietesTest, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanelInscriptionTest, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(18, 18, 18))
@@ -343,7 +365,11 @@ public class fenPrincipale extends javax.swing.JFrame {
 
         jTabbedPanelQcm.addTab("Tests", PanelTest);
 
-        jListSectionDisponible.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jListSectionDisponible.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
         jListSectionDisponible.setToolTipText("Liste des sections disponibles pour le test");
         jScrollPane4.setViewportView(jListSectionDisponible);
 
@@ -362,7 +388,11 @@ public class fenPrincipale extends javax.swing.JFrame {
         jPanel1.add(jLabel6);
         jPanel1.add(jSpinnerNbrQuestionTest);
 
-        jListSectionDuTest.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jListSectionDuTest.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
         jListSectionDuTest.setToolTipText("Liste des sections associées au test");
         jScrollPane5.setViewportView(jListSectionDuTest);
 
@@ -376,7 +406,7 @@ public class fenPrincipale extends javax.swing.JFrame {
         jTextField3.setEditable(false);
         jTextField3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
 
-        jButtonAjoutSection.setText("<<");
+        jButtonAjoutSection.setText(">>");
         jButtonAjoutSection.setToolTipText("Ajout d'une section au test");
 
         jButtonEnleverSection.setText("<<");
@@ -395,9 +425,8 @@ public class fenPrincipale extends javax.swing.JFrame {
             .addGroup(PanelSectionLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(PanelSectionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(PanelSectionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(PanelSectionLayout.createSequentialGroup()
                         .addGap(18, 18, 18)
@@ -411,10 +440,10 @@ public class fenPrincipale extends javax.swing.JFrame {
                                 .addComponent(jButtonSupprimerSection)))
                         .addGap(18, 18, 18))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelSectionLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 158, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 176, Short.MAX_VALUE)
                         .addGroup(PanelSectionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jButtonAjoutSection)
-                            .addComponent(jButtonEnleverSection))
+                            .addComponent(jButtonEnleverSection)
+                            .addComponent(jButtonAjoutSection))
                         .addGap(165, 165, 165)))
                 .addGroup(PanelSectionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -442,18 +471,18 @@ public class fenPrincipale extends javax.swing.JFrame {
                 .addGroup(PanelSectionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(PanelSectionLayout.createSequentialGroup()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(97, 97, 97)
-                        .addComponent(jButtonAjoutSection, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButtonEnleverSection, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 171, Short.MAX_VALUE)
+                        .addGap(59, 59, 59)
+                        .addComponent(jButtonAjoutSection, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButtonEnleverSection, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 70, Short.MAX_VALUE)
                         .addGroup(PanelSectionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButtonNouveauSection)
                             .addComponent(jButtonSupprimerSection)
                             .addComponent(jButtonEnregistrerSection)))
-                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 494, Short.MAX_VALUE)
-                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 494, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                    .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 336, Short.MAX_VALUE)
+                    .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(169, Short.MAX_VALUE))
         );
 
         jTabbedPanelQcm.addTab("Sections", PanelSection);
@@ -462,9 +491,10 @@ public class fenPrincipale extends javax.swing.JFrame {
 
         jLabel12.setText("Enoncé :");
 
-        jEditorPaneEnonceQuestion.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jEditorPaneEnonceQuestion.setToolTipText("Enonce de la question");
         jScrollPane6.setViewportView(jEditorPaneEnonceQuestion);
+
+        jComboBoxListeTypeQuestion.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel13.setText("Type :");
 
@@ -515,21 +545,19 @@ public class fenPrincipale extends javax.swing.JFrame {
         jTextFieldNomSectionPanelQuestion.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Réponses"));
-        jPanel3.setLayout(new java.awt.BorderLayout());
+        jPanel3.setLayout(new java.awt.GridLayout(10, 1));
 
         jButtonAjoutDuneReponse.setText("Ajout d'une réponse");
-        jPanel3.add(jButtonAjoutDuneReponse, java.awt.BorderLayout.NORTH);
+        jPanel3.add(jButtonAjoutDuneReponse);
 
-        jPanelReponseAAjouter.setLayout(new java.awt.GridLayout(10, 1));
-        jPanel3.add(jPanelReponseAAjouter, java.awt.BorderLayout.CENTER);
-
-        jTreeListeQuestionDispo.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jTreeListeQuestionDispo.setToolTipText("Liste des questions disponibles par section");
-        jTreeListeQuestionDispo.setSelectionModel(null);
         jScrollPane7.setViewportView(jTreeListeQuestionDispo);
 
-        jListQuestionDeLaSection.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jListQuestionDeLaSection.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jListQuestionDeLaSection.setModel(new javax.swing.AbstractListModel() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public Object getElementAt(int i) { return strings[i]; }
+        });
         jListQuestionDeLaSection.setToolTipText("Liste des questions de la section en cours");
         jScrollPane8.setViewportView(jListQuestionDeLaSection);
 
@@ -550,11 +578,11 @@ public class fenPrincipale extends javax.swing.JFrame {
             .addGroup(PanelQuestionLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(PanelQuestionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelQuestionLayout.createSequentialGroup()
-                        .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, 38, Short.MAX_VALUE)
+                    .addGroup(PanelQuestionLayout.createSequentialGroup()
+                        .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, 34, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextFieldNomTestPanelQuestion, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(257, 257, 257)
+                        .addGap(261, 261, 261)
                         .addComponent(jTextFieldNomSectionPanelQuestion, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(161, 161, 161))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelQuestionLayout.createSequentialGroup()
@@ -586,15 +614,15 @@ public class fenPrincipale extends javax.swing.JFrame {
             .addGroup(PanelQuestionLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(PanelQuestionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldNomSectionPanelQuestion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextFieldNomTestPanelQuestion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(PanelQuestionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 263, Short.MAX_VALUE))
-                .addGap(6, 6, 6)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(PanelQuestionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(PanelQuestionLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -645,16 +673,68 @@ public class fenPrincipale extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
+    
+    private void ajoutFonction(){
+    	
+    	jButtonChoixImage.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				JFileChooser boite = new JFileChooser();
+				boite.setCurrentDirectory(new File("C:\\"));
+				boite.setMultiSelectionEnabled(false);
+				boite.setFileFilter(new FileNameExtensionFilter("Fichier JPEG","jpg"));
+				boite.showOpenDialog(null);
+			}
+    		
+    	});
+    	
+    
+    	
+    	DefaultMutableTreeNode racine = new DefaultMutableTreeNode("ENI Ecole") ;
+    	
+    	for (Promotion p : ctrl.getListePromotions()){
+    		DefaultMutableTreeNode sousDossier = new DefaultMutableTreeNode(p.getCode());
+    		;
+    		for (Stagiaire s : ctrl.getStagiairesPromo(p)){
+    			sousDossier.add(new DefaultMutableTreeNode(s));
+    		}
+    		racine.add(sousDossier);
+    	}
+    	
+    	DefaultMutableTreeNode racineTest = new DefaultMutableTreeNode("Vide..") ;
+    	jTreeListeStagaireEni.setModel(new DefaultTreeModel(racine));
+    	jTreeListeStagaireEni.expandPath(jTreeListeStagaireEni.getPathForRow(0));
+    	jTreeListeStagiaireTest.setModel(new DefaultTreeModel(racineTest));
+    	
+    }
+    
+    
+    private void initPanelQuestion(){
+    	jButtonAjoutDuneReponse.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				jPanel3.add(new JPanelNouvelleReponse());
+				
+			}
+    		
+    	});
+    }
+    
+    
+    
+   /**
     * @param args the command line arguments
     */
-    public static void main(String args[]) {
+  /*  public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new fenPrincipale().setVisible(true);
             }
         });
-    }
+    }*/
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar MenuQcm;
@@ -709,7 +789,6 @@ public class fenPrincipale extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanelInscriptionTest;
     private javax.swing.JPanel jPanelProprietesTest;
-    private javax.swing.JPanel jPanelReponseAAjouter;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
