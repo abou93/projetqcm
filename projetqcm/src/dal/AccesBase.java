@@ -15,23 +15,30 @@ public class AccesBase {
 	}
 	
 	/*****************************************************
-	*						Methodes					 *
+	*						Methodes					 
+	 * @throws ClassNotFoundException 
+	 * @throws SQLException *
 	******************************************************/
 	
 	public static Connection getConnection()
 	{
 		Connection ctn=null; 
-		try
-		{
-		Class.forName(ResourceBundle.getBundle("parametres").getString("nomPiloteSQLServer"));
+		
+		try {
+			Class.forName(ResourceBundle.getBundle("parametres").getString("nomPiloteSQLServer"));
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		    
 		// ouverture de la connexion
-		ctn= DriverManager.getConnection(ResourceBundle.getBundle("parametres").getString("chaineConnectionSQLServer"));
+		try {
+			ctn= DriverManager.getConnection(ResourceBundle.getBundle("parametres").getString("chaineConnectionSQLServer"));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		catch (Exception ex)
-		{
-			return null;
-		}
+		
 		return ctn;
 	}
 	

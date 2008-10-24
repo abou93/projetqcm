@@ -29,11 +29,14 @@ public class DalStagiaire {
 	 */
 	
 	//Selectionner toutes les promotions
-	public static Vector<Promotion> selectAllPromotions(){
+	public static Vector<Promotion> selectAllPromotions() {
+		
 		cnx = AccesBase.getConnection();
 		Vector<Promotion> listePromo = new Vector<Promotion>();
 		
 		try {
+			
+			
 			PreparedStatement stm = cnx.prepareStatement("select * from PROMOTIONS");
 			ResultSet rs = stm.executeQuery();
 			while(rs.next()){

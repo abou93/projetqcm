@@ -103,7 +103,8 @@ public class CtrlFormateur {
 	 * Charge la liste des promotions depuis la base.
 	 */
 	private void chargerListePromotions(){
-		listePromotions = DalStagiaire.selectAllPromotions();
+		Vector<Promotion> v = DalStagiaire.selectAllPromotions();
+		if (v != null) listePromotions=v; 
 	}
 	
 	

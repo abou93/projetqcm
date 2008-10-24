@@ -54,7 +54,7 @@ public class TestAppli {
 			DalQuestion.insertReponse(r);
 		}*/
 		
-		Test test = DalTest.selectTestByNom("Essai");
+		/*Test test = DalTest.selectTestByNom("Essai");
 		Vector<Section> sect = DalTest.selectSectionByTest("Essai");
 		for(Section s : sect){
 			s.setQuestions(DalQuestion.selectQuestions(s));
@@ -82,7 +82,7 @@ public class TestAppli {
 			Stagiaire sta = enu.nextElement();
 			System.out.println(sta.toString().trim());
 			System.out.println(DalStagiaire.selectStagiaire(sta.getId()).toString());
-		}
+		}*/
 		
 		
 		new fenPrincipaleBis().setVisible(true);
