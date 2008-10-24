@@ -84,7 +84,7 @@ public class Test {
 	}
 	
 	public String toString(){
-		return ("Test " + this.getNom() + " d'une durée de " + this.getTemps() + " minute(s). Seuil de réussite : " + this.getSeuil() + "%");
+		return (this.getNom());
 	}
 	
 }
