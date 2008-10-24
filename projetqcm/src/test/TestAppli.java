@@ -1,8 +1,11 @@
 package test;
 
+import java.awt.Graphics2D;
+import java.awt.SplashScreen;
 import java.util.Enumeration;
 import java.util.Vector;
 
+import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -85,9 +88,21 @@ public class TestAppli {
 		}*/
 		
 		
-		new fenPrincipaleBis().setVisible(true);
 		
-	
+		 final SplashScreen splash = SplashScreen.getSplashScreen();
+	        if (splash == null) {
+	            System.out.println("SplashScreen.getSplashScreen() returned null");
+	            return;
+	        }
+	        Graphics2D g = splash.createGraphics();
+	        if (g == null) {
+	            System.out.println("g is null");
+	            return;
+	        }
+
+	        new fenPrincipaleBis().setVisible(true);
+		
+		
 		
 	}
 
