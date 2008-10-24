@@ -66,6 +66,7 @@ public class TestAppli {
 		for(Section s : sect){
 			for (Question q : s.getQuestions()){
 				System.out.println(q.toString());
+				System.out.println(q.getType().getLibelle());
 				for (Reponse r : q.getListeReponses()){
 					System.out.println(r.toString());
 				}
