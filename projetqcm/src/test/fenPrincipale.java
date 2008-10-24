@@ -6,7 +6,13 @@
 
 package test;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.Vector;
+
+import javax.swing.JFileChooser;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import modeles.Test;
 
@@ -28,6 +34,7 @@ public class fenPrincipale extends javax.swing.JFrame {
     public fenPrincipale() {
         ctrl=CtrlFormateur.getCtrlFormateur();
     	initComponents();
+    	ajoutFonction();
         
     }
 
@@ -662,16 +669,40 @@ public class fenPrincipale extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    /**
+    
+    private void ajoutFonction(){
+    	jButtonChoixImage.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				JFileChooser boite = new JFileChooser();
+				boite.setCurrentDirectory(new File("C:\\"));
+				boite.setMultiSelectionEnabled(false);
+				boite.setFileFilter(new FileNameExtensionFilter("Fichier JPEG","jpg"));
+				boite.showOpenDialog(null);
+			}
+    		
+    	});
+    	
+    	
+    }
+    
+    
+    
+    
+    
+    
+   /**
     * @param args the command line arguments
     */
-    public static void main(String args[]) {
+  /*  public static void main(String args[]) {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new fenPrincipale().setVisible(true);
             }
         });
-    }
+    }*/
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar MenuQcm;
