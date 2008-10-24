@@ -157,14 +157,19 @@ public class CtrlFormateur {
 		}
 		
 		if(DalInscription.insertInscription(inscription)){
-			
-			if(DalInscription.insertTirage(inscription)){
+			if(inscription.getTirage()==null){
+				stagiaire.addInscription(inscription);
+				return true;
+			}else{
+				if(DalInscription.insertTirage(inscription)){
 				stagiaire.addInscription(inscription);
 				return true;
 			}else{
 				DalInscription.deleteInscription(stagiaire.getId(), test.getNom());
 				return false;
 			}
+			}
+			
 			
 		}else{
 			return false;
