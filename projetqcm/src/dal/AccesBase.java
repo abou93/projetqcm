@@ -15,15 +15,14 @@ public class AccesBase {
 	}
 	
 	/*****************************************************
-	*						Methodes					 
-	 * @throws ClassNotFoundException 
-	 * @throws SQLException *
+	*						Methodes					 *
 	******************************************************/
 	
 	public static Connection getConnection()
 	{
 		Connection ctn=null; 
 		
+		// recupere le pilote
 		try {
 			Class.forName(ResourceBundle.getBundle("parametres").getString("nomPiloteSQLServer"));
 		} catch (ClassNotFoundException e) {
@@ -40,17 +39,17 @@ public class AccesBase {
 		}
 		
 		return ctn;
-	}
+	}// Fin getConnection
+	
 	
 	public static void deconnexionBase(Connection cnx){
 		
 		try {
 			cnx.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			System.out.println(e.getMessage());
+			System.err.println(e.getMessage());
 		}
 	
-	}
+	}// Fin deconnexionBase
 	
 }

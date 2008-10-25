@@ -2,7 +2,14 @@ package test;
 
 import java.awt.Graphics2D;
 import java.awt.SplashScreen;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Enumeration;
+import java.util.Properties;
+import java.util.ResourceBundle;
 import java.util.Vector;
 
 import javax.swing.JFrame;
@@ -13,6 +20,8 @@ import dal.DalQuestion;
 import dal.DalStagiaire;
 import dal.DalTest;
 import modeles.*;
+import securite.hashPassword;
+import sun.jkernel.Bundle;
 
 public class TestAppli {
 
@@ -87,9 +96,32 @@ public class TestAppli {
 			System.out.println(DalStagiaire.selectStagiaire(sta.getId()).toString());
 		}*/
 		
+		hashPassword calculhash = new hashPassword();
+		String passe = "LEFORT Steve Password";
+		String passeHash = null;
 		
+		try {
 		
-		 final SplashScreen splash = SplashScreen.getSplashScreen();
+			passeHash = calculhash.getHash(passe);
+			System.out.println(passe);
+			System.out.println(passeHash);
+			String passeBad = "MOTPASSE";
+			String mot = ResourceBundle.getBundle("securite").getString("motdepasse");
+			System.out.println("Properties :" + mot);
+			
+					
+			
+			
+			
+			System.out.println(passeHash.equals(calculhash.getHash(passeBad)));
+			System.out.println(passeHash.equals(calculhash.getHash("LEFORT Steve Password")));
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		/* final SplashScreen splash = SplashScreen.getSplashScreen();
 	        if (splash == null) {
 	            System.out.println("SplashScreen.getSplashScreen() returned null");
 	            return;
@@ -100,7 +132,7 @@ public class TestAppli {
 	            return;
 	        }
 
-	        new fenPrincipaleBis().setVisible(true);
+	        new fenPrincipaleBis().setVisible(true);*/
 		
 		
 		
