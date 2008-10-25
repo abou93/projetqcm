@@ -16,12 +16,10 @@ import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import dal.DalQuestion;
-import dal.DalStagiaire;
-import dal.DalTest;
+import dal.*;
 import modeles.*;
-import securite.IOProperties;
-import securite.hashPassword;
+import securite.*;
+
 import sun.jkernel.Bundle;
 
 public class TestAppli {
