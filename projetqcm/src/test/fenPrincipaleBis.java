@@ -38,7 +38,7 @@ public class fenPrincipaleBis extends javax.swing.JFrame {
     public fenPrincipaleBis() {
         ctrl=CtrlFormateur.getCtrlFormateur();
     	initComponents();
-    	ajoutFonction();
+    	initPanelTest();
     	initPanelQuestion();
     }
 
@@ -673,24 +673,8 @@ public class fenPrincipaleBis extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    
-    private void ajoutFonction(){
-    	
-    	jButtonChoixImage.addActionListener(new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				JFileChooser boite = new JFileChooser();
-				boite.setCurrentDirectory(new File("C:\\"));
-				boite.setMultiSelectionEnabled(false);
-				boite.setFileFilter(new FileNameExtensionFilter("Fichier JPEG","jpg"));
-				boite.showOpenDialog(null);
-			}
-    		
-    	});
-    	
-    
+       
+    private void initPanelTest(){
     	
     	DefaultMutableTreeNode racine = new DefaultMutableTreeNode("ENI Ecole") ;
     	
@@ -712,6 +696,7 @@ public class fenPrincipaleBis extends javax.swing.JFrame {
     
     
     private void initPanelQuestion(){
+    	
     	jButtonAjoutDuneReponse.addActionListener(new ActionListener(){
 
 			@Override
@@ -721,6 +706,21 @@ public class fenPrincipaleBis extends javax.swing.JFrame {
 			}
     		
     	});
+    	
+    	jButtonChoixImage.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				JFileChooser boite = new JFileChooser();
+				boite.setCurrentDirectory(new File("C:\\"));
+				boite.setMultiSelectionEnabled(false);
+				boite.setFileFilter(new FileNameExtensionFilter("Fichier JPEG","jpg"));
+				boite.showOpenDialog(null);
+			}
+    		
+    	});
+    	
     }
     
     

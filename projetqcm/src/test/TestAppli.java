@@ -1,7 +1,11 @@
 package test;
 
+import java.awt.AWTException;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.SplashScreen;
+import java.awt.SystemTray;
+import java.awt.TrayIcon;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -12,6 +16,7 @@ import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.Vector;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -94,6 +99,24 @@ public class TestAppli {
 			System.out.println(sta.toString().trim());
 			System.out.println(DalStagiaire.selectStagiaire(sta.getId()).toString());
 		}*/
+		
+		
+		// Affiche une icone dans la barre de tache		
+		if (SystemTray.isSupported()) {
+			ImageIcon i = new ImageIcon("C:/Users/steve/Downloads/iconex_v_samples/v_collections_png/16x16/16x16plain/flag_wales.png");
+			Image im = i.getImage();
+			TrayIcon tic = new TrayIcon(im,"Info Bulle");
+			SystemTray tray = SystemTray.getSystemTray();
+			try {
+				tray.add(tic);
+				// tray.remove(tic);  Pour enlever l'icone
+			} catch (AWTException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		 
 		
 		hashPassword calculhash = new hashPassword();
 		String passe = "LEFORT Steve Password";
