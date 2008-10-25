@@ -20,6 +20,7 @@ import dal.DalQuestion;
 import dal.DalStagiaire;
 import dal.DalTest;
 import modeles.*;
+import securite.IOProperties;
 import securite.hashPassword;
 import sun.jkernel.Bundle;
 
@@ -109,12 +110,17 @@ public class TestAppli {
 			String mot = ResourceBundle.getBundle("securite").getString("motdepasse");
 			System.out.println("Properties :" + mot);
 			
-					
+			IOProperties secur = new IOProperties();
+			/*Properties securitePass = new Properties();
+			securitePass.setProperty("motDePasseFormateur",passeHash);
+			secur.saveProperties(securitePass,"D:/password.properties", "passwordGestion QCM");
 			
+			secur.displayProperties(securitePass);*/
+			Properties p = secur.loadProperties("D:/password.properties");
 			
-			
+			System.out.println(p.getProperty("motDePasseFormateur"));
 			System.out.println(passeHash.equals(calculhash.getHash(passeBad)));
-			System.out.println(passeHash.equals(calculhash.getHash("LEFORT Steve Password")));
+			System.out.println(passeHash.equals(p.getProperty("motDePasseFormateur").trim()));
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
