@@ -61,9 +61,9 @@ public class IOProperties
 
 	
 	/**
-	 * Cette méthode affiche cahque paire [clé,valuer] d'un fichier Properties
+	 * Cette méthode affiche chaque paire [clé,valeur] d'un fichier Properties
 	 * 
-	 * @param props Le fichier à afficher
+	 * @param Properties fichier  - Le fichier à afficher
 	 */
 	public void displayProperties(Properties fichier) 
 	{
