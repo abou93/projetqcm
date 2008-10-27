@@ -194,10 +194,11 @@ public class TestAppli {
 //		fond.add(text);
 		
 		fond.setVisible(true);
-		fond.getText2().requestFocusInWindow();
+		
 		fond.getQuit().requestFocusInWindow();
 		fond.getValid().requestFocusInWindow();
 		fond.getText().requestFocusInWindow();
+		fond.getText2().requestFocusInWindow();
 		
 		fond.getQuit().addActionListener(new ActionListener(){
 
@@ -209,15 +210,7 @@ public class TestAppli {
 			
 		});
 		
-		fond.getValid().addActionListener(new ActionListener(){
-
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				new fenPrincipale().setVisible(true);
-				
-			}
-			
-		});
+		
 		
 //	   new fenPrincipale().setVisible(true);
 		

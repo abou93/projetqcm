@@ -5,9 +5,12 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.ResourceBundle;
 
 import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
@@ -17,6 +20,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
+
+import securite.hashPassword;
+import sun.jkernel.Bundle;
 
 /*
  * Created on Jul 19, 2005
@@ -67,7 +73,7 @@ public class testsplash  extends JFrame {
 		JPanel btns = new JPanel();
 		btns.setLayout(new BorderLayout());
 		
-		 text = new JTextField();
+		 text = new JTextField("formateur");
 		 text2 = new JPasswordField();
 		 lab1 = new JLabel("Login : ");
 		 lab2 = new JLabel("Mot de Passe : ");
@@ -89,8 +95,42 @@ public class testsplash  extends JFrame {
 		
 		imagePanel.add(panel);
 		c.add(imagePanel);
+	
+		btnValid.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				hashPassword hash = new hashPassword();
+				try {
+				String passeSaisi = hash.getHash(text2.getText());
+				String passeDefaut =hash.getHash(ResourceBundle.getBundle("securite").getString("motdepasse")); 	
+
+				if(passeSaisi.equals(passeDefaut)){
+					new fenPrincipale().setVisible(true);
+					testsplash.this.dispose();
+				}
+				
+				
+				} catch (Exception e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				
+				
+				
+			}
+			
+		});
+	
+	
+	
 	}
 
+	
+	
+	
+	
 	/*public static void main(String[] args) {
 		String imagePath = "C:/Images/SplashScreen2.png";
 		testsplash fond = new testsplash(imagePath);
