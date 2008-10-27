@@ -146,8 +146,6 @@ public class fenPrincipale extends javax.swing.JFrame {
  
     private void initPanelSection(){
     	
-    	ctrl.chargerListeSection();
-    	jListSectionDisponible.setListData(ctrl.getListeSection());
     	
 
     	// Listener sur la jList des sections disponible
@@ -159,10 +157,18 @@ public class fenPrincipale extends javax.swing.JFrame {
 				jTextFieldNomSection.setText(s.getNom());
 				jTextFieldNumeroSection.setText(String.valueOf(s.getNumero()));
 				jSpinnerNbrQuestionTest.setValue(s.getNbrQuestion());
+				ctrl.setSectionEnCour(s);
 			}
     		
     	});
     	
+    	jTextNomTestPanelSection.setText(ctrl.getTestEnCour().getNom());
+    	
+    	ctrl.chargerListeSection();
+    	jListSectionDisponible.setListData(ctrl.getListeSection());
+    	jListSectionDisponible.setSelectedIndex(jListSectionDisponible.getFirstVisibleIndex());
+    	
+    		
     }
   
     /*****************************************************
@@ -193,6 +199,9 @@ public class fenPrincipale extends javax.swing.JFrame {
 				boite.showOpenDialog(null);
 			}
  		});
+ 		
+ 		jTextFieldNomTestPanelQuestion.setText(ctrl.getTestEnCour().getNom());
+ 		jTextFieldNomSectionPanelQuestion.setText(ctrl.getSectionEnCour().getNom());
  	
  }
  
@@ -281,7 +290,7 @@ public class fenPrincipale extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        jTextNomTestPanelSection = new javax.swing.JTextField();
         jButtonAjoutSection = new javax.swing.JButton();
         jButtonEnleverSection = new javax.swing.JButton();
         jButtonNouveauSection = new javax.swing.JButton();
@@ -599,8 +608,8 @@ public class fenPrincipale extends javax.swing.JFrame {
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         jLabel9.setText("TEST :");
 
-        jTextField3.setEditable(false);
-        jTextField3.setFont(new java.awt.Font("Tahoma", 1, 11));
+        jTextNomTestPanelSection.setEditable(false);
+        jTextNomTestPanelSection.setFont(new java.awt.Font("Tahoma", 1, 11));
 
         jButtonAjoutSection.setIcon(new javax.swing.ImageIcon("C:\\Images\\Forward32.png")); // NOI18N
         jButtonAjoutSection.setToolTipText("Ajout d'une section au test");
@@ -651,7 +660,7 @@ public class fenPrincipale extends javax.swing.JFrame {
                 .addGap(244, 244, 244)
                 .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGap(40, 40, 40)
-                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jTextNomTestPanelSection, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(307, 307, 307))
         );
         PanelSectionLayout.setVerticalGroup(
@@ -660,7 +669,7 @@ public class fenPrincipale extends javax.swing.JFrame {
                 .addGap(44, 44, 44)
                 .addGroup(PanelSectionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextNomTestPanelSection, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(PanelSectionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -991,7 +1000,7 @@ public class fenPrincipale extends javax.swing.JFrame {
     private javax.swing.JSpinner jSpinnerDureeInscription;
     private javax.swing.JSpinner jSpinnerNbrQuestionTest;
     private javax.swing.JTabbedPane jTabbedPanelQcm;
-    private javax.swing.JTextField jTextField3;
+    private javax.swing.JTextField jTextNomTestPanelSection;
     private javax.swing.JTextField jTextFieldMailFormateur;
     private javax.swing.JTextField jTextFieldNomSection;
     private javax.swing.JTextField jTextFieldNomSectionPanelQuestion;
