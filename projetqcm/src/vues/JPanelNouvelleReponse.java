@@ -4,7 +4,7 @@
  * Created on 24 octobre 2008, 16:15
  */
 
-package test;
+package vues;
 
 /**
  *

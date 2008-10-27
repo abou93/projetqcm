@@ -1,4 +1,4 @@
-package test;
+package vues;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
@@ -33,7 +33,7 @@ import sun.jkernel.Bundle;
  * @author Fery.P
  *
  */
-public class testsplash  extends JFrame {
+public class SplashScreen  extends JFrame {
 	private Container c;
 	private JPanel imagePanel;
 	private String filePath;
@@ -46,7 +46,7 @@ public class testsplash  extends JFrame {
 	JButton btnValid;
 	JButton btnQuit;
 
-	public testsplash(String filePath) {
+	public SplashScreen(String filePath) {
 		super("Image de fond");
 		this.filePath = filePath;
 		initialize();
@@ -107,7 +107,7 @@ public class testsplash  extends JFrame {
 
 				if(passeSaisi.equals(passeDefaut)){
 					new fenPrincipale().setVisible(true);
-					testsplash.this.dispose();
+					SplashScreen.this.dispose();
 				}
 				
 				

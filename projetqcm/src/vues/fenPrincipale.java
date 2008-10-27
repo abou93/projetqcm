@@ -4,7 +4,7 @@
  * Created on 24 octobre 2008, 10:27
  */
 
-package test;
+package vues;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,6 +16,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
+
 import controleur.CtrlFormateur;
 
 import modeles.Promotion;
@@ -26,8 +27,10 @@ import modeles.Stagiaire;
  * @author  slefort
  */
 public class fenPrincipale extends javax.swing.JFrame {
+	
 	CtrlFormateur ctrl;
-    /** Creates new form fenPrincipale */
+    
+	
     public fenPrincipale() {
     	ctrl=CtrlFormateur.getCtrlFormateur();
     	initComponents();

@@ -16,6 +16,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 
+import vues.JPanelNouvelleReponse;
+
 import modeles.Promotion;
 import modeles.Stagiaire;
 import modeles.Test;
