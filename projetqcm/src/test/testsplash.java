@@ -1,15 +1,21 @@
 package test;
 
+import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.GridLayout;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 /*
@@ -25,6 +31,14 @@ public class testsplash  extends JFrame {
 	private Container c;
 	private JPanel imagePanel;
 	private String filePath;
+	
+	JTextField text;
+	JPasswordField text2;
+	JLabel lab1;
+	JLabel lab2;
+	JLabel lab3;
+	JButton btnValid;
+	JButton btnQuit;
 
 	public testsplash(String filePath) {
 		super("Image de fond");
@@ -46,18 +60,34 @@ public class testsplash  extends JFrame {
 			}
 		};
 		imagePanel.setPreferredSize(new Dimension(640, 400));
+		imagePanel.setLayout(null);
 		
-		JTextField text = new JTextField();
-		text.setPreferredSize(new Dimension(150,20));
-		text.setLocation(50, 50);
+		JPanel panel = new JPanel();
+		panel.setLayout(new GridLayout(6,1));
+		JPanel btns = new JPanel();
+		btns.setLayout(new BorderLayout());
 		
-		
-//		JTextField text2 = new JTextField();
-//		text2.setPreferredSize(new Dimension(100,30));
-//		panel1.add(text2);
-		
+		 text = new JTextField();
+		 text2 = new JPasswordField();
+		 lab1 = new JLabel("Login : ");
+		 lab2 = new JLabel("Mot de Passe : ");
+		 lab3 = new JLabel("");
+		 btnValid = new JButton("Valider");
+		 btnQuit = new JButton("Quitter");
+
+		btns.add(btnValid,BorderLayout.WEST);
+		btns.add(btnQuit,BorderLayout.EAST);
 				
-		imagePanel.add(text);
+		panel.add(lab1);
+		panel.add(text);
+		panel.add(lab2);
+		panel.add(text2);
+		panel.add(lab3);
+		panel.add(btns);
+		
+		panel.setBounds(285,160,180,130);
+		
+		imagePanel.add(panel);
 		c.add(imagePanel);
 	}
 
@@ -70,6 +100,30 @@ public class testsplash  extends JFrame {
 		fond.add(new JPanelNouvelleReponse());
 		fond.setVisible(true);
 	}*/
+	
+	public JPasswordField getText2(){
+		return text2;
+	}
+	
+	public JTextField getText(){
+		return text;
+	}
+	
+	public JButton getQuit(){
+		return btnQuit;
+	}
+	
+	public JButton getValid(){
+		return btnValid;
+	}
+	
+	public JLabel getLab1(){
+		return lab1;
+	}
+	
+	public JLabel getLab2(){
+		return lab2;
+	}
 }
 
 
