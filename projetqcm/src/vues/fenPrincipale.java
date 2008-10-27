@@ -28,18 +28,36 @@ import modeles.Stagiaire;
  */
 public class fenPrincipale extends javax.swing.JFrame {
 	
+	
 	CtrlFormateur ctrl;
     
+	/*****************************************************
+	*				Constructeur						 *
+	******************************************************/
 	
     public fenPrincipale() {
-    	ctrl=CtrlFormateur.getCtrlFormateur();
-    	initComponents();
-    	initPanelTest();
-    	initPanelQuestion();
-        
+    	
+    	ctrl=CtrlFormateur.getCtrlFormateur(); // Recupere l'instance du controleur
+    	
+    	initComponents(); // Initialise les composants
+    	
+    	initBarreMenu(); // Initialise la barre de menu
+    	initPanelTest(); // Initialise le panel Test
+    	initPanelSection(); // Initialise le panel Section
+    	initPanelQuestion(); // Initialise le panel Question
+    	        
     }
 
- private void initPanelTest(){
+    /*****************************************************
+	*			Initialisation	des panels 				 *
+	*			 (Listener, ctrl, etc ...)				 *
+	******************************************************/
+    
+    /*****************************************************
+	*			Initialisation du panel Test			 *
+	******************************************************/
+    
+    private void initPanelTest(){
     	
     	DefaultMutableTreeNode racine = new DefaultMutableTreeNode("ENI Ecole") ;
     	
@@ -59,20 +77,31 @@ public class fenPrincipale extends javax.swing.JFrame {
     	
     }
     
-    
-    private void initPanelQuestion(){
+    /*****************************************************
+	*			Initialisation du panel Section			 *
+	******************************************************/
+ 
+    private void initPanelSection(){
     	
-    	jButtonAjoutDuneReponse.addActionListener(new ActionListener(){
+    }
+  
+    /*****************************************************
+	*			Initialisation du panel Question		 *
+	******************************************************/
+ 
+ 	private void initPanelQuestion(){
+ 	
+ 		jButtonAjoutDuneReponse.addActionListener(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				jScrollPaneReponse.add(new JPanelNouvelleReponse());
 				
 			}
-    		
-    	});
-    	
-    	jButtonChoixImage.addActionListener(new ActionListener(){
+ 		
+ 		});
+ 	
+ 		jButtonChoixImage.addActionListener(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -83,14 +112,25 @@ public class fenPrincipale extends javax.swing.JFrame {
 				boite.setFileFilter(new FileNameExtensionFilter("Fichier JPEG","jpg"));
 				boite.showOpenDialog(null);
 			}
-    		
-    	});
+ 		});
+ 	
+ }
+ 
+      
+    /*****************************************************
+	*			Initialisation de la barre de menu		 *
+	******************************************************/
+ 	
+ 	
+ 	private void initBarreMenu(){
     	
     }
     
+   
     
-    
-    
+ 	/*****************************************************
+	*	Initialisation Composant Generer via NetBeans 	 *
+	******************************************************/
     
     /** This method is called from within the constructor to
      * initialize the form.
@@ -202,7 +242,7 @@ public class fenPrincipale extends javax.swing.JFrame {
         jListTests.setToolTipText("Liste des tests existants");
         jScrollPane1.setViewportView(jListTests);
 
-        jPanelProprietesTest.setBorder(javax.swing.BorderFactory.createTitledBorder("PropriÃ©tÃ©s"));
+        jPanelProprietesTest.setBorder(javax.swing.BorderFactory.createTitledBorder("Propriétés"));
         jPanelProprietesTest.setToolTipText("Nouveau test");
 
         jLabelNomTest.setText("Nom :");
@@ -230,7 +270,8 @@ public class fenPrincipale extends javax.swing.JFrame {
         jButtonEnregistrerTest.setToolTipText("Sauvegarder le  test");
 
         jButtonNouveauTest.setIcon(new javax.swing.ImageIcon("C:\\Images\\Add32.png")); // NOI18N
-
+        jButtonNouveauTest.setToolTipText("Nouveau test");
+        
         jButtonImprimerTest.setIcon(new javax.swing.ImageIcon("C:\\Images\\Print32.png")); // NOI18N
         jButtonImprimerTest.setToolTipText("Imprimer le test");
 
@@ -330,7 +371,7 @@ public class fenPrincipale extends javax.swing.JFrame {
 
         jLabelListeStagiaireEni.setText("Liste des stagiaires ENI : ");
 
-        jLabel4.setText("DurÃ©e :");
+        jLabel4.setText("Durée :");
 
         jLabel5.setText("Mail formateur :");
 
@@ -479,7 +520,7 @@ public class fenPrincipale extends javax.swing.JFrame {
         jButtonEnleverSection.setToolTipText("Enleve la section du test");
 
         jButtonNouveauSection.setIcon(new javax.swing.ImageIcon("C:\\Images\\Add32.png")); // NOI18N
-        jButtonNouveauSection.setToolTipText("Nouvel section pour le test sÃ©lÃ©ctionnÃ©");
+        jButtonNouveauSection.setToolTipText("Nouvelle section pour le test sélèctionné");
 
         jButtonEnregistrerSection.setIcon(new javax.swing.ImageIcon("C:\\Images\\Floppy32.png")); // NOI18N
         jButtonEnregistrerSection.setToolTipText("Enregistrer la section");
@@ -561,10 +602,10 @@ public class fenPrincipale extends javax.swing.JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Question"));
 
-        jLabel12.setText("EnoncÃ© :");
+        jLabel12.setText("Enoncé :");
 
         jEditorPaneEnonceQuestion.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jEditorPaneEnonceQuestion.setToolTipText("Enonce de la question");
+        jEditorPaneEnonceQuestion.setToolTipText("Enoncé de la question");
         jScrollPane6.setViewportView(jEditorPaneEnonceQuestion);
 
         jLabel13.setText("Type :");
@@ -615,7 +656,7 @@ public class fenPrincipale extends javax.swing.JFrame {
         jTextFieldNomSectionPanelQuestion.setEditable(false);
         jTextFieldNomSectionPanelQuestion.setFont(new java.awt.Font("Tahoma", 1, 11));
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("RÃ©ponses"));
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Réponses"));
 
         jButtonAjoutDuneReponse.setIcon(new javax.swing.ImageIcon("C:\\Images\\Add32.png")); // NOI18N
         jButtonAjoutDuneReponse.setToolTipText("Ajouter une reponse");
@@ -783,7 +824,10 @@ public class fenPrincipale extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
    
-
+    /*****************************************************
+	*			Declarations des composants    			 *
+	******************************************************/
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuBar MenuQcm;
     private javax.swing.JPanel PanelQuestion;
