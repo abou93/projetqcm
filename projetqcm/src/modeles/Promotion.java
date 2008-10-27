@@ -33,5 +33,9 @@ public class Promotion {
 		return libelle;
 	}
 	
+	public String toString(){
+		return this.getCode();
+	}
+	
 	
 }
