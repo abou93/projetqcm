@@ -245,6 +245,35 @@ public class DalTest {
 	}
 	
 	
+	/***
+	 * 
+	 * @param nomTest
+	 * @param numSection
+	 * @return
+	 */
+	public static boolean deleteTest_Section(String nomTest, int numSection){
+		Connection cnx;
+		PreparedStatement stm;
+		cnx=AccesBase.getConnection();
+		
+		try {
+			stm = cnx.prepareStatement("delete TESTS_SECTIONS where NOM_TEST = ? and NUMERO_SECTION = ? ");
+			stm.setString(1, nomTest);
+			stm.setInt(2, numSection);
+			stm.execute();
+			AccesBase.deconnexionBase(cnx);
+			return true;
+		
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+			System.err.println("erreur deleteTest_section");
+		}					
+		
+		AccesBase.deconnexionBase(cnx);
+		return false;
+	}
+	
+	
 	/*****************************************************
 	*					Methodes Select 				 *
 	******************************************************/
@@ -302,7 +331,7 @@ public class DalTest {
 		
 		try {
 			
-			stm = cnx.prepareStatement(	"select *from SECTIONS inner join TESTS_SECTIONS on SECTIONS.NUMERO = TESTS_SECTIONS.NUMERO_SECTION " + 
+			stm = cnx.prepareStatement(	"select * from SECTIONS inner join TESTS_SECTIONS on SECTIONS.NUMERO = TESTS_SECTIONS.NUMERO_SECTION " + 
 										"where NOM_TEST = ? ");
 			stm.setString(1, nomTest);
 			rs=stm.executeQuery();
@@ -318,11 +347,47 @@ public class DalTest {
 				
 		} catch (SQLException e) {
 			System.err.println(e.getMessage());
-			System.err.println("erreur selectSection");
+			System.err.println("erreur selectSectionByTest");
 		}					
 		
 		AccesBase.deconnexionBase(cnx);
 		return listeSectionsDuTest;
+	}
+	
+	/***
+	 * Récupère la section dont le numéro est passé en paramètre.
+	 * @param Integer : numSection
+	 * @return Section : section
+	 */
+	public static Section selectSection(int numSection)
+	{
+		Connection cnx;
+		PreparedStatement stm;
+		ResultSet rs;
+		cnx=AccesBase.getConnection();
+		Section section;
+		
+		try {
+			
+			stm = cnx.prepareStatement(	"select * from SECTIONS where NUMERO = ? ");
+			stm.setInt(1, numSection);
+			rs=stm.executeQuery();
+			
+			rs.next();
+			section= new Section();
+			section.setNumero(rs.getInt("NUMERO"));
+			section.setNom(rs.getString("NOM"));
+			section.setNbrQuestion(rs.getInt("NBR_QUESTION"));
+			
+				
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+			System.err.println("erreur selectSection");
+			section=null;
+		}					
+		
+		AccesBase.deconnexionBase(cnx);
+		return section;
 	}
 	
 	
@@ -358,6 +423,39 @@ public class DalTest {
 		
 		AccesBase.deconnexionBase(cnx);
 		return listeTest;
+	}
+	
+	
+	public static Vector<Section> selectAllSection()
+	{
+		Connection cnx;
+		PreparedStatement stm;
+		ResultSet rs;
+		cnx=AccesBase.getConnection();
+		Vector<Section> listeSections = new Vector<Section>();
+		
+		try {
+			
+			stm = cnx.prepareStatement(	"select * from SECTIONS");
+			rs=stm.executeQuery();
+			
+			while(rs.next()){
+				Section section= new Section();
+				section.setNumero(rs.getInt("NUMERO"));
+				section.setNom(rs.getString("NOM"));
+				section.setNbrQuestion(rs.getInt("NBR_QUESTION"));
+				listeSections.add(section);
+			}
+			
+			
+				
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+			System.err.println("erreur selectSection");
+		}					
+		
+		AccesBase.deconnexionBase(cnx);
+		return listeSections;
 	}
 	
 }
