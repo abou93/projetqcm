@@ -341,4 +341,81 @@ public class DalQuestion {
 	}
 	
 	
+	/***
+	 * Récupère la question dont l'ID correspond à l'ID passé en paramètre.
+	 * @param UUID : idQuestion
+	 * @return Question : question
+	 */
+	public static Question selectQuestion(UUID idQuestion)
+	{
+		
+		Connection cnx;
+		PreparedStatement stm;
+		ResultSet rs;
+		cnx=AccesBase.getConnection();
+		Question question;
+		
+		try {
+			
+			stm = cnx.prepareStatement("select * from QUESTIONS where ID = ? ");
+			stm.setString(1, idQuestion.toString());
+			rs=stm.executeQuery();
+			
+			rs.next();
+			question = new Question();
+			question.setId(UUID.fromString(rs.getString("ID")));
+			question.setEnonce(rs.getString("ENONCE"));
+			question.setType(selectType(rs.getInt("TYPE_QUESTION")));
+			question.setCheminImage(rs.getString("IMAGE_QUESTION"));
+				
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+			System.err.println("erreur selectQuestions");
+			question=null;
+		}					
+		
+		AccesBase.deconnexionBase(cnx);
+		return question;
+	}
+	
+	
+	/***
+	 * Récupère une réponse d'une question donnée.
+	 * @param UUID : idQuestion
+	 * @param Integer : numeroReponse
+	 * @return Reponse : reponse
+	 */
+	public static Reponse selectReponseQuestion(UUID idQuestion,int numeroReponse)
+	{
+		
+		Connection cnx;
+		PreparedStatement stm;
+		ResultSet rs;
+		cnx=AccesBase.getConnection();
+		Reponse reponse;
+		
+		try {
+			
+			stm = cnx.prepareStatement("select * from REPONSES where ID_ENONCE = ? and NUMERO = ?");
+			stm.setString(1, idQuestion.toString());
+			stm.setInt(2, numeroReponse);
+			rs=stm.executeQuery();
+			
+			rs.next();
+			reponse = new Reponse();
+			reponse.setEtat(rs.getBoolean("REPONSE"));
+			reponse.setTexte(rs.getString("TEXTE"));
+			reponse.setNumero(numeroReponse);
+				
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+			System.err.println("erreur selectReponseQuestion");
+			reponse=null;
+		}					
+		
+		AccesBase.deconnexionBase(cnx);
+		return reponse;
+	}
+	
+	
 }
