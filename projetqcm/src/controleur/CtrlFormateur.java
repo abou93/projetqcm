@@ -32,6 +32,8 @@ public class CtrlFormateur {
 	Test testEnCour = null;
 	Section sectionEnCour = null;
 	
+	
+	
 	/*****************************************************
 	*						Accesseur					 *
 	******************************************************/

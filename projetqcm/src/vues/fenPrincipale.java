@@ -146,8 +146,6 @@ public class fenPrincipale extends javax.swing.JFrame {
  
     private void initPanelSection(){
     	
-    	
-
     	// Listener sur la jList des sections disponible
     	// Mets à jour les zones de textes correspondantes
     	jListSectionDisponible.addListSelectionListener(new ListSelectionListener(){
@@ -161,6 +159,8 @@ public class fenPrincipale extends javax.swing.JFrame {
 			}
     		
     	});
+    	
+    	//jBU
     	
     	jTextNomTestPanelSection.setText(ctrl.getTestEnCour().getNom());
     	
@@ -317,8 +317,8 @@ public class fenPrincipale extends javax.swing.JFrame {
         jListQuestionDeLaSection = new javax.swing.JList();
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
-        jButtonAjoutSection1 = new javax.swing.JButton();
-        jButtonEnleverSection1 = new javax.swing.JButton();
+        jButtonAjoutQuestion = new javax.swing.JButton();
+        jButtonEnleverReponse = new javax.swing.JButton();
         MenuQcm = new javax.swing.JMenuBar();
         jMenuMenu = new javax.swing.JMenu();
         jMenuItemQuittez = new javax.swing.JMenuItem();
@@ -793,11 +793,11 @@ public class fenPrincipale extends javax.swing.JFrame {
 
         jLabel15.setText("Liste des questions disponibles :");
 
-        jButtonAjoutSection1.setIcon(new javax.swing.ImageIcon("C:\\Images\\Forward32.png")); // NOI18N
-        jButtonAjoutSection1.setToolTipText("Ajout d'une ou plusieurs question(s) dans la section");
+        jButtonAjoutQuestion.setIcon(new javax.swing.ImageIcon("C:\\Images\\Forward32.png")); // NOI18N
+        jButtonAjoutQuestion.setToolTipText("Ajout d'une ou plusieurs question(s) dans la section");
 
-        jButtonEnleverSection1.setIcon(new javax.swing.ImageIcon("C:\\Images\\Back32.png")); // NOI18N
-        jButtonEnleverSection1.setToolTipText("Enleve la question de la section");
+        jButtonEnleverReponse.setIcon(new javax.swing.ImageIcon("C:\\Images\\Back32.png")); // NOI18N
+        jButtonEnleverReponse.setToolTipText("Enleve la question de la section");
 
         javax.swing.GroupLayout PanelQuestionLayout = new javax.swing.GroupLayout(PanelQuestion);
         PanelQuestion.setLayout(PanelQuestionLayout);
@@ -826,8 +826,8 @@ public class fenPrincipale extends javax.swing.JFrame {
                                     .addComponent(jScrollPane7, javax.swing.GroupLayout.PREFERRED_SIZE, 299, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(PanelQuestionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jButtonEnleverSection1)
-                                    .addComponent(jButtonAjoutSection1))
+                                    .addComponent(jButtonEnleverReponse)
+                                    .addComponent(jButtonAjoutQuestion))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(PanelQuestionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(PanelQuestionLayout.createSequentialGroup()
@@ -856,9 +856,9 @@ public class fenPrincipale extends javax.swing.JFrame {
                 .addGroup(PanelQuestionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(PanelQuestionLayout.createSequentialGroup()
                         .addGap(84, 84, 84)
-                        .addComponent(jButtonAjoutSection1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jButtonAjoutQuestion, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButtonEnleverSection1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jButtonEnleverReponse, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(PanelQuestionLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(PanelQuestionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -933,10 +933,10 @@ public class fenPrincipale extends javax.swing.JFrame {
     private javax.swing.JPanel PanelTest;
     private javax.swing.JButton jButtonAjoutDuneReponse;
     private javax.swing.JButton jButtonAjoutSection;
-    private javax.swing.JButton jButtonAjoutSection1;
+    private javax.swing.JButton jButtonAjoutQuestion;
     private javax.swing.JButton jButtonChoixImage;
     private javax.swing.JButton jButtonEnleverSection;
-    private javax.swing.JButton jButtonEnleverSection1;
+    private javax.swing.JButton jButtonEnleverReponse;
     private javax.swing.JButton jButtonEnregistrerSection;
     private javax.swing.JButton jButtonEnregistrerTest;
     private javax.swing.JButton jButtonImprimerTest;
