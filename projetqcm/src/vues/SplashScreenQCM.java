@@ -12,6 +12,8 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -27,13 +29,8 @@ import javax.swing.JTextField;
 
 import securite.hashPassword;
 
-/*
- * Created on Jul 19, 2005
- *
- */
-
 /**
- * @author Fery.P
+ * @author D.Team
  *
  */
 public class SplashScreenQCM  extends JFrame {
@@ -41,6 +38,8 @@ public class SplashScreenQCM  extends JFrame {
 	private JPanel imagePanel;
 	private String filePath;
 	
+	
+	//Composants du splashscreen
 	JTextField text;
 	JPasswordField text2;
 	JLabel lab1;
@@ -49,12 +48,16 @@ public class SplashScreenQCM  extends JFrame {
 	JButton btnValid;
 	JButton btnQuit;
 
+	
+	//Constructeur
 	public SplashScreenQCM(String filePath) {
 		super("Image de fond");
 		this.filePath = filePath;
 		initialize();
 	}
 
+	
+	//Initialisation
 	private void initialize() {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		c = getContentPane();
@@ -76,13 +79,13 @@ public class SplashScreenQCM  extends JFrame {
 		JPanel btns = new JPanel();
 		btns.setLayout(new BorderLayout());
 		
-		 text = new JTextField("formateur");
-		 text2 = new JPasswordField();
-		 lab1 = new JLabel("Login : ");
-		 lab2 = new JLabel("Mot de Passe : ");
-		 lab3 = new JLabel("");
-		 btnValid = new JButton("Valider");
-		 btnQuit = new JButton("Quitter");
+		text = new JTextField("formateur");
+		text2 = new JPasswordField();
+		lab1 = new JLabel("Login : ");
+		lab2 = new JLabel("Mot de Passe : ");
+		lab3 = new JLabel("");
+		btnValid = new JButton("Valider");
+		btnQuit = new JButton("Quitter");
 
 		btns.add(btnValid,BorderLayout.WEST);
 		btns.add(btnQuit,BorderLayout.EAST);
@@ -110,6 +113,8 @@ public class SplashScreenQCM  extends JFrame {
         Point loc = new Point( pt.x - 320, pt.y - 200 );
 		this.setLocation(loc);
 	
+		
+		//Listener sur le bouton valider
 		btnValid.addActionListener(new ActionListener(){
 
 			@Override
@@ -132,6 +137,8 @@ public class SplashScreenQCM  extends JFrame {
 			
 		});
 		
+		
+		//Listener sur le bouton quitter
 		btnQuit.addActionListener(new ActionListener(){
 
 			@Override
@@ -142,24 +149,23 @@ public class SplashScreenQCM  extends JFrame {
 			
 		});
 	
-	
+		
+		text2.addKeyListener(new KeyAdapter(){
+			
+			public void keyPressed(KeyEvent e){
+				if(e.getKeyCode()==KeyEvent.VK_ENTER){
+					btnValid.doClick();
+				}
+			}
+		});
 	
 	}
 
 	
 	
-	
-	
-	/*public static void main(String[] args) {
-		String imagePath = "C:/Images/SplashScreen2.png";
-		testsplash fond = new testsplash(imagePath);
-		fond.setUndecorated(true);
-		fond.pack();
-		fond.setLocation(200,200);
-		fond.add(new JPanelNouvelleReponse());
-		fond.setVisible(true);
-	}*/
-	
+	/***
+	 * Accesseurs aux composant du splashscreen
+	 */
 	public JPasswordField getText2(){
 		return text2;
 	}
