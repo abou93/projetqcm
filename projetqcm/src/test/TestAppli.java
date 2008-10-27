@@ -23,7 +23,7 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
 import securite.*;
-import vues.SplashScreen;
+import vues.SplashScreenQCM;
 
 
 public class TestAppli {
@@ -173,7 +173,7 @@ public class TestAppli {
 
 		
 		String imagePath = "C:/Images/SplashScreen2.png";
-		SplashScreen fond = new SplashScreen(imagePath);
+		SplashScreenQCM fond = new SplashScreenQCM(imagePath);
 		fond.setUndecorated(true);
 		fond.pack();
 		
