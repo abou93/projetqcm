@@ -287,7 +287,7 @@ public class DalTest {
 	 */
 	public static Test selectTestByNom(String nomTest)
 	{
-		Test test = new Test();
+		Test test=null;
 		Connection cnx;
 		PreparedStatement stm;
 		ResultSet rs;
@@ -301,6 +301,7 @@ public class DalTest {
 			
 			while(rs.next())
 			{
+				test=new Test();
 				test.setNom(nomTest);
 				test.setSeuil(rs.getInt("SEUIL"));
 				test.setTemps(rs.getInt("TEMPS"));
@@ -309,6 +310,7 @@ public class DalTest {
 		} catch (SQLException e) {
 			System.err.println(e.getMessage());
 			System.err.println("erreur selectTest");
+			test=null;
 		}					
 		
 		AccesBase.deconnexionBase(cnx);
