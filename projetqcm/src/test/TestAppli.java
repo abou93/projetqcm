@@ -3,6 +3,13 @@ package test;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.GraphicsConfiguration;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
+import java.awt.Point;
+import java.awt.Rectangle;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
@@ -168,7 +175,17 @@ public class TestAppli {
 		testsplash fond = new testsplash(imagePath);
 		fond.setUndecorated(true);
 		fond.pack();
-		fond.setLocation(200,200);
+		
+		//Centrer le splashscreen
+		GraphicsEnvironment ge = GraphicsEnvironment.
+        getLocalGraphicsEnvironment();
+        GraphicsDevice[] gs = ge.getScreenDevices();
+        GraphicsDevice gd = gs[0];
+        GraphicsConfiguration[] gc = gd.getConfigurations();
+		Rectangle r = gc[0].getBounds();
+        Point pt = new Point( (int)r.width/2, (int)r.height/2 );
+        Point loc = new Point( pt.x - 320, pt.y - 200 );
+		fond.setLocation(loc);
 		
 //		fond.add(new JPanelNouvelleReponse());
 //		JTextField text = new JTextField();
@@ -177,6 +194,30 @@ public class TestAppli {
 //		fond.add(text);
 		
 		fond.setVisible(true);
+		fond.getText2().requestFocusInWindow();
+		fond.getQuit().requestFocusInWindow();
+		fond.getValid().requestFocusInWindow();
+		fond.getText().requestFocusInWindow();
+		
+		fond.getQuit().addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+				
+			}
+			
+		});
+		
+		fond.getValid().addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new fenPrincipale().setVisible(true);
+				
+			}
+			
+		});
 		
 //	   new fenPrincipale().setVisible(true);
 		
