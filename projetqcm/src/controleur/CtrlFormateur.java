@@ -276,23 +276,28 @@ public class CtrlFormateur {
 	/***
 	 * Supprime une section définitivement.
 	 * @param Section : section
-	 * @return Boolean
+	 * @return Boolean : True si la section et ses question ont bien été supprimées, false dans l'autre cas.
 	 */
 	public boolean supprimerSection(Test test,Section section){
+		boolean b;
 		if(DalTest.deleteTest_Section(test.getNom(),section.getNumero())){
 			for(Question q:section.getQuestions()){
 				for(Reponse r:q.getListeReponses()){
-					DalQuestion.deleteReponse(r);
+					b = DalQuestion.deleteReponse(r);
 				}
-			DalQuestion.deleteQuestion(q);
+			b = DalQuestion.deleteQuestion(q);
 			}
 			if(DalTest.deleteSection(section)){
 				listeSectionsParTest.remove(section);
 				listeSections.remove(section);
-				return true;
+				b = true;
+			}else{
+				b = false;
 			}
+		}else{
+			b = false;
 		}
-		return false;
+		return b;
 	}
 	
 	
@@ -310,5 +315,85 @@ public class CtrlFormateur {
 	 */
 	public Vector<Section> getListeSection(){
 		return listeSections;
+	}
+	
+	
+	/***
+	 * Affecte une section à un test.
+	 * @param Section : section
+	 * @param Test : test
+	 * @return Boolean : True si la section à bien été affectée au test, false dans l'autre cas.
+	 */
+	public boolean affecterSectionTest(Section section,Test test){
+		if(DalTest.insertTests_Sections(test.getNom(), section.getNumero())){
+			test.addSection(section);
+			return true;
+		}
+		return false;
+	}
+	
+	
+	/***
+	 * Enlever une section d'un test.
+	 * @param Section : section
+	 * @param Test : test
+	 * @return Boolean : True si la section à bien été enlevée du test, false dans l'autre cas.
+	 */
+	public boolean enleverSectionTest(Section section,Test test){
+		if(DalTest.deleteTest_Section(test.getNom(), section.getNumero())){
+			test.supprSection(section);
+			return true;
+		}
+		return false;
+	}
+	
+	
+	/***
+	 * Renvoi la liste de question pour la section désirée.
+	 * @param Section : section
+	 * @return Vector(Section)
+	 */
+	public Vector<Question> questionParSection(Section section){
+		return DalQuestion.selectQuestions(section);
+	}
+	
+	
+	/***
+	 * Supprimer une question.
+	 * @param Question : question
+	 * @return Boolean : True si la question est bien supprimée, false dans l'autre cas.
+	 */
+	public boolean supprQuestion(Question question){
+		for(Reponse r:question.getListeReponses()){
+			DalQuestion.deleteReponse(r);
+		}
+		if(DalQuestion.deleteQuestion(question)){
+			return true;
+		}
+		return false;
+	}
+	
+	
+	/***
+	 * Enregistre une question avec ses réponses.
+	 * @param Question : question
+	 * @return Boolean : True si la question et toutes ses réponses ont bien été enregistrées, false dans l'autre cas.
+	 */
+	public boolean enregistrerQuestion(Question question){
+		boolean b;
+		if(DalQuestion.selectQuestion(question.getId())==null){
+			b = DalQuestion.insertQuestion(question);
+		}else{
+			b = DalQuestion.updateQuestion(question);
+		}
+		
+		for(Reponse r:question.getListeReponses()){
+			if(DalQuestion.selectReponseQuestion(question.getId(), r.getNumero())==null){
+				b = DalQuestion.insertReponse(r);
+			}else{
+				b = DalQuestion.updateReponse(r);
+			}
+		}
+		return b;
 	}
 }
