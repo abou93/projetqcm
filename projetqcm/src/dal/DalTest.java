@@ -412,7 +412,7 @@ public class DalTest {
 			
 			while(rs.next())
 			{
-				Test test = new Test(rs.getString("NOM"),rs.getInt("TEMPS"),rs.getInt("SEUIL"));
+				Test test = new Test(rs.getString("NOM").trim(),rs.getInt("TEMPS"),rs.getInt("SEUIL"));
 				listeTest.add(test);
 			}
 				

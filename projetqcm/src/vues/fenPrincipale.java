@@ -9,6 +9,7 @@ package vues;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.Vector;
 
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -18,8 +19,7 @@ import javax.swing.tree.DefaultTreeModel;
 
 import controleur.CtrlFormateur;
 
-import modeles.Promotion;
-import modeles.Stagiaire;
+import modeles.*;
 
 /**
  *
@@ -60,11 +60,16 @@ public class fenPrincipale extends javax.swing.JFrame {
     private void initPanelTest(){
 
     	
+    	/***
+    	 * Liste des tests
+    	 */	
+    	ctrl.chargerListeTests();
+    	jListTests.setListData(ctrl.getListeTests());
+    	
     	DefaultMutableTreeNode racine = new DefaultMutableTreeNode("ENI Ecole") ;
     	
     	for (Promotion p : ctrl.getListePromotions()){
     		DefaultMutableTreeNode sousDossier = new DefaultMutableTreeNode(p.getCode());
-    		;
     		for (Stagiaire s : ctrl.getStagiairesPromo(p)){
     			sousDossier.add(new DefaultMutableTreeNode(s));
     		}
@@ -73,7 +78,7 @@ public class fenPrincipale extends javax.swing.JFrame {
     	
     	DefaultMutableTreeNode racineTest = new DefaultMutableTreeNode("Vide..") ;
     	jTreeListeStagaireEni.setModel(new DefaultTreeModel(racine));
-    	jTreeListeStagaireEni.expandPath(jTreeListeStagaireEni.getPathForRow(0));
+    	jTreeListeStagaireEni.expandPath(jTreeListeStagaireEni.getPathForRow(1));
     	jTreeListeStagiaireTest.setModel(new DefaultTreeModel(racineTest));
     	
     }
