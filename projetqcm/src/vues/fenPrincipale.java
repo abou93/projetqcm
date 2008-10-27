@@ -153,15 +153,18 @@ public class fenPrincipale extends javax.swing.JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				DefaultMutableTreeNode racineInsc = null;
 				TreePath path = jTreeListeStagiaireTest.getPathForRow(0);
 				if(path.toString().equals("[Vide..]")){
-					DefaultMutableTreeNode racineInsc = new DefaultMutableTreeNode("Inscrits");
+					racineInsc = new DefaultMutableTreeNode("Inscrits");
 					jTreeListeStagiaireTest.setModel(new DefaultTreeModel(racineInsc));
+				}else{
+					racineInsc = (DefaultMutableTreeNode)jTreeListeStagiaireTest.getModel();
 				}
-				Object o = jTreeListeStagaireEni.getLastSelectedPathComponent();
-				System.out.println(o.toString());
-				if(o instanceof Promotion){
-					System.out.println(o.toString());
+	
+				if(((DefaultMutableTreeNode)jTreeListeStagaireEni.getLastSelectedPathComponent()).getUserObject() instanceof Promotion){
+					DefaultMutableTreeNode racinePromo = new DefaultMutableTreeNode(((DefaultMutableTreeNode)jTreeListeStagaireEni.getLastSelectedPathComponent()).getUserObject());
+					racineInsc.add(racinePromo);
 				}
 			}
     		
