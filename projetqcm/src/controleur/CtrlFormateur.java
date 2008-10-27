@@ -169,9 +169,14 @@ public class CtrlFormateur {
 	 * @return Boolean : True si le test à bien été supprimé, false dans l'autre cas.
 	 */
 	public boolean supprimerTest(Test test){
-		if(DalTest.deleteTest(test)){
+		if(DalTest.selectTestByNom(test.getNom())==null){
 			listeTests.remove(test);
 			return true;
+		}else{
+			if(DalTest.deleteTest(test)){
+				listeTests.remove(test);
+				return true;
+			}
 		}
 		return false;
 	}
