@@ -81,7 +81,7 @@ public class fenPrincipale extends javax.swing.JFrame {
 					jTextFieldNomTest.setText(((Test)jListTests.getSelectedValue()).getNom());
 					jSliderTemps.setValue(((Test)jListTests.getSelectedValue()).getTemps());
 					jSliderSeuil.setValue(((Test)jListTests.getSelectedValue()).getSeuil());
-					//TODO mettre en mémoire le test sélectionné
+					ctrl.setTestEnCour((Test)jListTests.getSelectedValue());
 				}
 			}
     	});
