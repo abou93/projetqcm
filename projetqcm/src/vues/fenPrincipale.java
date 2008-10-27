@@ -145,8 +145,23 @@ public class fenPrincipale extends javax.swing.JFrame {
 	******************************************************/
  
     private void initPanelSection(){
+    	
     	ctrl.chargerListeSection();
     	jListSectionDisponible.setListData(ctrl.getListeSection());
+    	
+
+    	// Listener sur la jList des sections disponible
+    	// Mets à jour les zones de textes correspondantes
+    	jListSectionDisponible.addListSelectionListener(new ListSelectionListener(){
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				Section s = (Section) jListSectionDisponible.getSelectedValue();
+				jTextFieldNomSection.setText(s.getNom());
+				jTextFieldNumeroSection.setText(String.valueOf(s.getNumero()));
+				jSpinnerNbrQuestionTest.setValue(s.getNbrQuestion());
+			}
+    		
+    	});
     	
     }
   

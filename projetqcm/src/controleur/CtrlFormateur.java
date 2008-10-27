@@ -18,6 +18,10 @@ import dal.DalTest;
 
 public class CtrlFormateur {
 	
+	/*****************************************************
+	*					Attributs privé					 *
+	******************************************************/
+	
 	static CtrlFormateur instance;
 	Vector<Test> listeTests;
 	Vector<Promotion> listePromotions;
@@ -25,10 +29,52 @@ public class CtrlFormateur {
 	Vector<Section> listeSections;
 	//Vector<Stagiaire> listeStagiaires;
 	
+	Test testEnCour = null;
+	Section sectionEnCour = null;
+	
+	/*****************************************************
+	*						Accesseur					 *
+	******************************************************/
+	
+	public Test getTestEnCour() {
+		return testEnCour;
+	}
+
+
+	public void setTestEnCour(Test testEnCour) {
+		this.testEnCour = testEnCour;
+	}
+
+
+	public Section getSectionEnCour() {
+		return sectionEnCour;
+	}
+
+
+	public void setSectionEnCour(Section sectionEnCour) {
+		this.sectionEnCour = sectionEnCour;
+	}
 	
 	/***
-	 * Constructeur du controleur CtrlFormateur
+	 * Accesseur permettant d'accéder à la liste des promotions.
+	 * @return Vector(Test)
 	 */
+	public Vector<Promotion> getListePromotions() {
+		return listePromotions;
+	}
+	
+	/***
+	 * Accesseur permettant d'accéder à la liste des tests.
+	 * @return Vector(Test)
+	 */
+	public Vector<Test> getListeTests() {
+		return listeTests;
+	}
+
+	/*****************************************************
+	*					Constructeur					 *
+	******************************************************/
+	
 	private CtrlFormateur(){
 		super();
 		listeTests=new Vector<Test>();
@@ -40,15 +86,10 @@ public class CtrlFormateur {
 	}
 	
 
-	/***
-	 * Accesseur permettant d'accéder à la liste des tests.
-	 * @return Vector(Test)
-	 */
-	public Vector<Test> getListeTests() {
-		return listeTests;
-	}
-
-
+	/*****************************************************
+	*					Méthodes						 *
+	******************************************************/
+	
 	/***
 	 * Méthode singleton permettant de récupérer l'instance du controleur. Si cette instance existe la méthode la renvoie sinon la méthode la créer.
 	 * @return instance du controleur CtrlFormateur
@@ -121,16 +162,6 @@ public class CtrlFormateur {
 		Vector<Promotion> v = DalStagiaire.selectAllPromotions();
 		if (v != null) listePromotions=v; 
 	}
-	
-	
-	/***
-	 * Accesseur permettant d'accéder à la liste des promotions.
-	 * @return Vector(Test)
-	 */
-	public Vector<Promotion> getListePromotions() {
-		return listePromotions;
-	}
-	
 	
 	/***
 	 * Liste les stagiaires pour la promotion désirée.
