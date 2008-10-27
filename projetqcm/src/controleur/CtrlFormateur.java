@@ -6,10 +6,13 @@ import java.util.Vector;
 
 import modeles.Inscription;
 import modeles.Promotion;
+import modeles.Question;
+import modeles.Reponse;
 import modeles.Section;
 import modeles.Stagiaire;
 import modeles.Test;
 import dal.DalInscription;
+import dal.DalQuestion;
 import dal.DalStagiaire;
 import dal.DalTest;
 
@@ -18,6 +21,8 @@ public class CtrlFormateur {
 	static CtrlFormateur instance;
 	Vector<Test> listeTests;
 	Vector<Promotion> listePromotions;
+	Vector<Section> listeSectionsParTest;
+	Vector<Section> listeSections;
 	//Vector<Stagiaire> listeStagiaires;
 	
 	
@@ -28,6 +33,8 @@ public class CtrlFormateur {
 		super();
 		listeTests=new Vector<Test>();
 		listePromotions = new Vector<Promotion>();
+		listeSectionsParTest = new Vector<Section>();
+		listeSections = new Vector<Section>();
 		//listeStagiaires = new Vector<Stagiaire>();
 		chargerListePromotions();
 	}
@@ -68,6 +75,14 @@ public class CtrlFormateur {
 	 */
 	public void nouveauTest(){
 		listeTests.add(new Test("Nouveau test",60,50));
+	}
+	
+	
+	/***
+	 * Ajoute une nouvelle section à la liste des sections.
+	 */
+	public void nouvelleSection(){
+		listeSections.add(new Section("Nouvelle section"));
 	}
 	
 	
@@ -208,4 +223,92 @@ public class CtrlFormateur {
 		}
 	}
 	
+	
+	/***
+	 * Supprime une inscription pour un stagiaire et pour un test donné.
+	 * @param Stagiaire : stagiaire
+	 * @param Test : test
+	 */
+	public void supprInscription(Stagiaire stagiaire,Test test){
+		if(DalInscription.deleteInscription(stagiaire.getId(), test.getNom())){
+			if(DalInscription.deleteTirage(stagiaire.getId(), test.getNom())){
+				for(Inscription insc : stagiaire.getInscriptions()){
+					if(insc.getTest().getNom()==test.getNom()){
+						stagiaire.supprInscription(insc);
+					}
+				}
+			}
+		}
+		
+	}
+	
+	
+	/***
+	 * Charge la liste de section du test désiré.
+	 * @param Test : test
+	 */
+	public void chargerListeSectionsParTest(Test test){
+		listeSectionsParTest = DalTest.selectSectionByTest(test.getNom());
+	}
+	
+
+	/***
+	 * Accesseur permettant d'acceder à la liste des sections pour un test.
+	 * @return
+	 */
+	public Vector<Section> getSectionParTest(){
+		return listeSectionsParTest;
+	}
+	
+	/***
+	 * Enregistre la section passée en paramètre.
+	 * @param Section : section
+	 * @return Boolean : True si l'enregistrement est OK, false dans l'autre cas.
+	 */
+	public boolean enregistrerSection(Section section){
+		if(DalTest.selectSection(section.getNumero())==null){
+			return DalTest.insertSection(section);
+		}else{
+			return DalTest.updateSection(section);
+		}
+	}
+	
+	/***
+	 * Supprime une section définitivement.
+	 * @param Section : section
+	 * @return Boolean
+	 */
+	public boolean supprimerSection(Test test,Section section){
+		if(DalTest.deleteTest_Section(test.getNom(),section.getNumero())){
+			for(Question q:section.getQuestions()){
+				for(Reponse r:q.getListeReponses()){
+					DalQuestion.deleteReponse(r);
+				}
+			DalQuestion.deleteQuestion(q);
+			}
+			if(DalTest.deleteSection(section)){
+				listeSectionsParTest.remove(section);
+				listeSections.remove(section);
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	
+	/***
+	 * Charge la liste de toutes les sections
+	 */
+	public void chargerListeSection(){
+		listeSections = DalTest.selectAllSection();
+	}
+	
+	
+	/***
+	 * Accesseur permettant d'acceder à la liste de toutes les sections
+	 * @return Vector(Section)
+	 */
+	public Vector<Section> getListeSection(){
+		return listeSections;
+	}
 }
