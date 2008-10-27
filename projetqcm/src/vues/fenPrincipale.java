@@ -16,6 +16,8 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreePath;
+import javax.swing.tree.TreeSelectionModel;
 
 
 import controleur.CtrlFormateur;
@@ -67,8 +69,7 @@ public class fenPrincipale extends javax.swing.JFrame {
     	ctrl.chargerListeTests();
     	jListTests.setListData(ctrl.getListeTests());
     	
-    	
-    	//Changement de test sélectionner dans la liste des tests.
+    	//Changement de test sélectionné dans la liste des tests.
     	jListTests.addListSelectionListener(new ListSelectionListener(){
 
 			@Override
@@ -77,10 +78,12 @@ public class fenPrincipale extends javax.swing.JFrame {
 					jTextFieldNomTest.setText(((Test)jListTests.getSelectedValue()).getNom());
 					jSliderTemps.setValue(((Test)jListTests.getSelectedValue()).getTemps());
 					jSliderSeuil.setValue(((Test)jListTests.getSelectedValue()).getSeuil());
+					//TODO mettre en mémoire le test sélectionné
 				}
 			}
     	});
     	
+    	jListTests.setSelectedIndex(jListTests.getFirstVisibleIndex());
     	
     	//Clic sur Nouveau test
     	jButtonNouveauTest.addActionListener(new ActionListener(){
@@ -123,10 +126,11 @@ public class fenPrincipale extends javax.swing.JFrame {
     		
     	});
     	
-    	DefaultMutableTreeNode racine = new DefaultMutableTreeNode("ENI Ecole") ;
     	
+    	//Lister les promotions et les stagiaires de l'ENI
+    	DefaultMutableTreeNode racine = new DefaultMutableTreeNode("ENI Ecole") ;
     	for (Promotion p : ctrl.getListePromotions()){
-    		DefaultMutableTreeNode sousDossier = new DefaultMutableTreeNode(p.getCode());
+    		DefaultMutableTreeNode sousDossier = new DefaultMutableTreeNode(p);
     		for (Stagiaire s : ctrl.getStagiairesPromo(p)){
     			sousDossier.add(new DefaultMutableTreeNode(s));
     		}
@@ -135,8 +139,29 @@ public class fenPrincipale extends javax.swing.JFrame {
     	
     	DefaultMutableTreeNode racineTest = new DefaultMutableTreeNode("Vide..") ;
     	jTreeListeStagaireEni.setModel(new DefaultTreeModel(racine));
-    	jTreeListeStagaireEni.expandPath(jTreeListeStagaireEni.getPathForRow(1));
+    	//jTreeListeStagaireEni.expandPath(jTreeListeStagaireEni.getPathForRow(1));
     	jTreeListeStagiaireTest.setModel(new DefaultTreeModel(racineTest));
+    	
+    	jTreeListeStagaireEni.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
+    	
+    	//Clic sur inscrir un stagiaire au test en cours
+    	jButtonIsncrireEleve.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				TreePath path = jTreeListeStagiaireTest.getPathForRow(0);
+				if(path.toString().equals("[Vide..]")){
+					DefaultMutableTreeNode racineInsc = new DefaultMutableTreeNode("Inscrits");
+					jTreeListeStagiaireTest.setModel(new DefaultTreeModel(racineInsc));
+				}
+				Object o = jTreeListeStagaireEni.getLastSelectedPathComponent();
+				System.out.println(o.toString());
+				if(o instanceof Promotion){
+					System.out.println(o.toString());
+				}
+			}
+    		
+    	});
     	
     }
     
