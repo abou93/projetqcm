@@ -42,7 +42,7 @@ public class TestAppli {
 
 		
 		//SplashScreen
-		JFrame f = new JFrame();
+		/*JFrame f = new JFrame();
 		f.setBounds(500, 400, 640, 400);
 		f.setUndecorated(true);
 		JLabel l = new JLabel();
@@ -52,7 +52,7 @@ public class TestAppli {
 		splash.add(l);
 		splash.setBorder(BorderFactory.createRaisedBevelBorder());
 		f.add(splash);
-		f.setVisible(true);
+		f.setVisible(true);*/
 		
 		
 		/*Test test = new Test("Essai",20,1);
@@ -122,7 +122,7 @@ public class TestAppli {
 		
 		 
 		
-		hashPassword calculhash = new hashPassword();
+		/*hashPassword calculhash = new hashPassword();
 		String passe = "LEFORT Steve Password";
 		String passeHash = null;
 		
@@ -161,9 +161,16 @@ public class TestAppli {
 	        if (g == null) {
 	            System.out.println("g is null");
 	            return;
-	        }
+	        }*/
 
-	        new fenPrincipaleBis().setVisible(true);*/
+		String imagePath = "C:/Images/SplashScreen2.png";
+		testsplash fond = new testsplash(imagePath);
+		fond.setUndecorated(true);
+		fond.pack();
+		fond.setLocation(200,200);
+		fond.add(new JPanelNouvelleReponse());
+		fond.setVisible(true);
+	    new fenPrincipale().setVisible(true);
 		
 		
 		

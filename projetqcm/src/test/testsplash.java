@@ -48,7 +48,7 @@ public class testsplash  extends JFrame {
 		c.add(imagePanel);
 	}
 
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		String imagePath = "C:/Images/SplashScreen2.png";
 		testsplash fond = new testsplash(imagePath);
 		fond.setUndecorated(true);
@@ -56,7 +56,7 @@ public class testsplash  extends JFrame {
 		fond.setLocation(200,200);
 		fond.add(new JPanelNouvelleReponse());
 		fond.setVisible(true);
-	}
+	}*/
 }
 
 
