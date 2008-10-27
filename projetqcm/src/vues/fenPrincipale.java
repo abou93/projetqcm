@@ -9,9 +9,10 @@ package vues;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.util.Vector;
 
 import javax.swing.JFileChooser;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
@@ -65,6 +66,62 @@ public class fenPrincipale extends javax.swing.JFrame {
     	 */	
     	ctrl.chargerListeTests();
     	jListTests.setListData(ctrl.getListeTests());
+    	
+    	
+    	//Changement de test sélectionner dans la liste des tests.
+    	jListTests.addListSelectionListener(new ListSelectionListener(){
+
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				if(jListTests.getSelectedValue()!=null){
+					jTextFieldNomTest.setText(((Test)jListTests.getSelectedValue()).getNom());
+					jSliderTemps.setValue(((Test)jListTests.getSelectedValue()).getTemps());
+					jSliderSeuil.setValue(((Test)jListTests.getSelectedValue()).getSeuil());
+				}
+			}
+    	});
+    	
+    	
+    	//Clic sur Nouveau test
+    	jButtonNouveauTest.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ctrl.nouveauTest();
+				jListTests.setListData(ctrl.getListeTests());
+				jListTests.setSelectedIndex(jListTests.getLastVisibleIndex());
+			}
+    		
+    	});
+    	
+    	
+    	//Clic sur Supprimer Test
+    	jButtonSupprimerTest.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ctrl.supprimerTest((Test)jListTests.getSelectedValue());
+				jListTests.setListData(ctrl.getListeTests());
+				jListTests.setSelectedIndex(jListTests.getLastVisibleIndex());
+			}
+    		
+    	});
+    	
+    	
+    	//Clic sur Enregistrer Test
+    	jButtonEnregistrerTest.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Test test = (Test)jListTests.getSelectedValue();
+				test.setNom(jTextFieldNomTest.getText().trim());
+				test.setSeuil(jSliderSeuil.getValue());
+				test.setTemps(jSliderTemps.getValue());
+				ctrl.enregistrerTest((Test)jListTests.getSelectedValue());
+				jListTests.setListData(ctrl.getListeTests());
+			}
+    		
+    	});
     	
     	DefaultMutableTreeNode racine = new DefaultMutableTreeNode("ENI Ecole") ;
     	
