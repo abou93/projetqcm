@@ -196,12 +196,12 @@ public class CtrlFormateur {
 				dejaTire[j]=false;
 			}
 			int num = 0;
-			while(num<i){
+			while(num<section.getNbrQuestion()){
 				Random rdm = new Random();
 				int nbrRdm = rdm.nextInt(i);
-				if(dejaTire[i]==false){
+				if(dejaTire[nbrRdm]==false){
 					inscription.addIdQuestion(section.getQuestionAt(nbrRdm));
-					dejaTire[i]=true;
+					dejaTire[nbrRdm]=true;
 					num++;
 				}
 			}
