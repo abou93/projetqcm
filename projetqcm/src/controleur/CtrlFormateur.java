@@ -26,6 +26,8 @@ public class CtrlFormateur {
 	Vector<Test> listeTests;
 	Vector<Promotion> listePromotions;
 	Vector<Section> listeSectionsParTest;
+	
+
 	Vector<Section> listeSections;
 	//Vector<Stagiaire> listeStagiaires;
 	
@@ -56,6 +58,24 @@ public class CtrlFormateur {
 	public void setSectionEnCour(Section sectionEnCour) {
 		this.sectionEnCour = sectionEnCour;
 	}
+	
+	public Vector<Section> getListeSectionsParTest() {
+		return listeSectionsParTest;
+	}
+
+
+	public void addSectionListeSectionsParTest(Section section) {
+		if (!(this.listeSectionsParTest.contains(section)))
+			{ 
+			this.listeSectionsParTest.add(section);
+			}
+	}
+	
+	public void supSectionListeSectionsParTest(Section section) {
+		
+		this.listeSectionsParTest.remove(section);
+	}
+
 	
 	/***
 	 * Accesseur permettant d'accéder à la liste des promotions.

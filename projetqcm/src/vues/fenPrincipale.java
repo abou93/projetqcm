@@ -11,6 +11,8 @@ import java.awt.event.ActionListener;
 import java.io.File;
 
 import javax.swing.JFileChooser;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -47,6 +49,7 @@ public class fenPrincipale extends javax.swing.JFrame {
     	initPanelTest(); // Initialise le panel Test
     	initPanelSection(); // Initialise le panel Section
     	initPanelQuestion(); // Initialise le panel Question
+    	initJtabbedPane();
     	this.setResizable(false); 
     }
 
@@ -176,7 +179,11 @@ public class fenPrincipale extends javax.swing.JFrame {
     	jListSectionDisponible.addListSelectionListener(new ListSelectionListener(){
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
-				Section s = (Section) jListSectionDisponible.getSelectedValue();
+				Section s = null ;
+				if (e.getSource()==jListSectionDisponible){
+				s = (Section) jListSectionDisponible.getSelectedValue();}
+				if (e.getSource()==jListSectionDuTest){
+				s = (Section) jListSectionDuTest.getSelectedValue();}
 				jTextFieldNomSection.setText(s.getNom());
 				jTextFieldNumeroSection.setText(String.valueOf(s.getNumero()));
 				jSpinnerNbrQuestionTest.setValue(s.getNbrQuestion());
@@ -185,14 +192,40 @@ public class fenPrincipale extends javax.swing.JFrame {
     		
     	});
     	
-    	//jBU
+    	jButtonAjoutSection.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Section s = (Section) jListSectionDisponible.getSelectedValue();
+				ctrl.addSectionListeSectionsParTest(s);
+				jListSectionDuTest.setListData(ctrl.getListeSectionsParTest());
+			}
+    		
+    	});
     	
+    	jButtonEnleverSection.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Section s = (Section) jListSectionDuTest.getSelectedValue();
+				ctrl.supSectionListeSectionsParTest(s);
+				jListSectionDuTest.setListData(ctrl.getListeSectionsParTest());
+			}
+    		
+    	});
+    	
+    	if(ctrl.getTestEnCour()!= null){
     	jTextNomTestPanelSection.setText(ctrl.getTestEnCour().getNom());
+    	}
     	
     	ctrl.chargerListeSection();
     	jListSectionDisponible.setListData(ctrl.getListeSection());
     	jListSectionDisponible.setSelectedIndex(jListSectionDisponible.getFirstVisibleIndex());
     	
+    	if(ctrl.getTestEnCour()!= null){
+    	ctrl.chargerListeSectionsParTest(ctrl.getTestEnCour());
+    	jListSectionDuTest.setListData(ctrl.getListeSectionsParTest());
+    	}
     		
     }
   
@@ -225,8 +258,11 @@ public class fenPrincipale extends javax.swing.JFrame {
 			}
  		});
  		
- 		jTextFieldNomTestPanelQuestion.setText(ctrl.getTestEnCour().getNom());
- 		jTextFieldNomSectionPanelQuestion.setText(ctrl.getSectionEnCour().getNom());
+ 		if((ctrl.getTestEnCour()!= null)&(ctrl.getSectionEnCour()!=null)){
+ 			jTextFieldNomTestPanelQuestion.setText(ctrl.getTestEnCour().getNom());
+ 	 		jTextFieldNomSectionPanelQuestion.setText(ctrl.getSectionEnCour().getNom());
+ 		}
+ 		
  	
  }
  
@@ -249,7 +285,38 @@ public class fenPrincipale extends javax.swing.JFrame {
  		
     }
     
+ 	/*****************************************************
+	*			Initialisation du jTabbedPane			 *
+	******************************************************/
    
+ 	private void initJtabbedPane(){
+ 		
+ 		jTabbedPanelQcm.addChangeListener(new ChangeListener(){
+
+			@Override
+			public void stateChanged(ChangeEvent e) {
+				int tab = jTabbedPanelQcm.getSelectedIndex();
+				
+				switch(tab)
+				{
+				case 1 :if(ctrl.getTestEnCour()!= null)
+						{
+			    			jTextNomTestPanelSection.setText(ctrl.getTestEnCour().getNom());
+						}
+						break;
+				case 2 :if((ctrl.getTestEnCour()!= null)&(ctrl.getSectionEnCour()!=null))
+						{
+			 				jTextFieldNomTestPanelQuestion.setText(ctrl.getTestEnCour().getNom());
+			 				jTextFieldNomSectionPanelQuestion.setText(ctrl.getSectionEnCour().getNom());
+			 			}
+						break;
+					
+				}
+			}
+ 			
+ 		});
+ 	}
+ 	
     
  	/*****************************************************
 	*	Initialisation Composant Generer via NetBeans 	 *

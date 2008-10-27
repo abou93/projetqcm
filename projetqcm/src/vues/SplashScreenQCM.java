@@ -113,8 +113,7 @@ public class SplashScreenQCM  extends JFrame {
         pt = new Point( (int)r.width/2, (int)r.height/2 );
         Point loc = new Point( pt.x - 320, pt.y - 200 );
 		this.setLocation(loc);
-	
-		
+				
 		//Listener sur le bouton valider
 		btnValid.addActionListener(new ActionListener(){
 
