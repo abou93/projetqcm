@@ -44,7 +44,7 @@ public class fenPrincipale extends javax.swing.JFrame {
     	initPanelTest(); // Initialise le panel Test
     	initPanelSection(); // Initialise le panel Section
     	initPanelQuestion(); // Initialise le panel Question
-    	        
+    	this.setResizable(false); 
     }
 
 
@@ -88,6 +88,8 @@ public class fenPrincipale extends javax.swing.JFrame {
 	******************************************************/
  
     private void initPanelSection(){
+    	ctrl.chargerListeSection();
+    	jListSectionDisponible.setListData(ctrl.getListeSection());
     	
     }
   
@@ -129,7 +131,16 @@ public class fenPrincipale extends javax.swing.JFrame {
  	
  	
  	private void initBarreMenu(){
-    	
+
+ 		
+ 		jMenuItemQuittez.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				fenPrincipale.this.dispose();				
+			}
+    		
+    	});
+ 		
+ 		
     }
     
    
@@ -490,7 +501,7 @@ public class fenPrincipale extends javax.swing.JFrame {
         jListSectionDisponible.setToolTipText("Liste des sections disponibles pour le test");
         jScrollPane4.setViewportView(jListSectionDisponible);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder("PropriÃ©tÃ©s")));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder("Propriétés")));
         jPanel1.setLayout(new java.awt.GridLayout(3, 2));
 
         jLabel2.setText("Nom :");
@@ -506,7 +517,7 @@ public class fenPrincipale extends javax.swing.JFrame {
         jPanel1.add(jSpinnerNbrQuestionTest);
 
         jListSectionDuTest.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jListSectionDuTest.setToolTipText("Liste des sections associÃ©es au test");
+        jListSectionDuTest.setToolTipText("Liste des sections associées au test");
         jScrollPane5.setViewportView(jListSectionDuTest);
 
         jLabel7.setText("Liste des sections disponibles :");

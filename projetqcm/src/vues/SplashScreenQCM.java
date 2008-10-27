@@ -37,7 +37,7 @@ public class SplashScreenQCM  extends JFrame {
 	private Container c;
 	private JPanel imagePanel;
 	private String filePath;
-	
+	private Point pt;
 	
 	//Composants du splashscreen
 	JTextField text;
@@ -59,6 +59,7 @@ public class SplashScreenQCM  extends JFrame {
 	
 	//Initialisation
 	private void initialize() {
+		
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		c = getContentPane();
 		imagePanel = new JPanel() {
@@ -109,7 +110,7 @@ public class SplashScreenQCM  extends JFrame {
         GraphicsDevice gd = gs[0];
         GraphicsConfiguration[] gc = gd.getConfigurations();
 		Rectangle r = gc[0].getBounds();
-        Point pt = new Point( (int)r.width/2, (int)r.height/2 );
+        pt = new Point( (int)r.width/2, (int)r.height/2 );
         Point loc = new Point( pt.x - 320, pt.y - 200 );
 		this.setLocation(loc);
 	
@@ -125,7 +126,10 @@ public class SplashScreenQCM  extends JFrame {
 				String passeDefaut =hash.getHash(ResourceBundle.getBundle("securite").getString("motdepasse")); 	
 
 				if(passeSaisi.equals(passeDefaut)){
-					new fenPrincipale().setVisible(true);
+					fenPrincipale f = new fenPrincipale();
+					Point loc = new Point( pt.x - f.getWidth()/2,pt.y - f.getHeight()/2);
+					f.setLocation(loc);
+					f.setVisible(true);
 					SplashScreenQCM.this.dispose();
 				}
 
@@ -149,7 +153,7 @@ public class SplashScreenQCM  extends JFrame {
 			
 		});
 	
-		
+		// Listener sur la zone de password
 		text2.addKeyListener(new KeyAdapter(){
 			
 			public void keyPressed(KeyEvent e){

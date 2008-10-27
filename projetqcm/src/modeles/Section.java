@@ -104,5 +104,9 @@ public class Section {
 		return this.getQuestions().elementAt(index);
 	}
 	
-	
+	public String toString()
+	{
+		return this.getNom();
+			
+	}
 }
