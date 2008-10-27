@@ -51,28 +51,17 @@ public class testsplash  extends JFrame {
 		};
 		imagePanel.setPreferredSize(new Dimension(640, 400));
 		
-		JPanel panel1 = new JPanel();
-		panel1.setLayout(new GridLayout());
-		panel1.setPreferredSize(new Dimension(640,400));
-		panel1.setLocation(0, 0);
-		
-		JPanel panel2 = new JPanel();
-		panel2.setLayout(new GridLayout(4,1));
-		panel2.setSize(250, 75);
-		
 		JTextField text = new JTextField();
 		text.setPreferredSize(new Dimension(150,20));
 		text.setLocation(50, 50);
-		panel2.add(text);
 		
-		panel1.add(panel2);
 		
 //		JTextField text2 = new JTextField();
 //		text2.setPreferredSize(new Dimension(100,30));
 //		panel1.add(text2);
 		
 				
-		imagePanel.add(panel1);
+		imagePanel.add(text);
 		c.add(imagePanel);
 	}
 
