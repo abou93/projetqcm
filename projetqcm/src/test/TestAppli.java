@@ -1,31 +1,14 @@
 package test;
 
-import java.awt.AWTException;
-import java.awt.Graphics2D;
-import java.awt.Image;
-import java.awt.SplashScreen;
-import java.awt.SystemTray;
-import java.awt.TrayIcon;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.Enumeration;
+
 import java.util.Properties;
 import java.util.ResourceBundle;
-import java.util.Vector;
 
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import dal.*;
-import modeles.*;
 import securite.*;
 
-import sun.jkernel.Bundle;
 
 public class TestAppli {
 
@@ -102,19 +85,19 @@ public class TestAppli {
 		
 		
 		// Affiche une icone dans la barre de tache		
-		if (SystemTray.isSupported()) {
-			ImageIcon i = new ImageIcon("C:/Users/steve/Downloads/iconex_v_samples/v_collections_png/16x16/16x16plain/flag_wales.png");
-			Image im = i.getImage();
-			TrayIcon tic = new TrayIcon(im,"Info Bulle");
-			SystemTray tray = SystemTray.getSystemTray();
-			try {
-				tray.add(tic);
-				// tray.remove(tic);  Pour enlever l'icone
-			} catch (AWTException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+//		if (SystemTray.isSupported()) {
+//			ImageIcon i = new ImageIcon("C:/Users/steve/Downloads/iconex_v_samples/v_collections_png/16x16/16x16plain/flag_wales.png");
+//			Image im = i.getImage();
+//			TrayIcon tic = new TrayIcon(im,"Info Bulle");
+//			SystemTray tray = SystemTray.getSystemTray();
+//			try {
+//				tray.add(tic);
+//				// tray.remove(tic);  Pour enlever l'icone
+//			} catch (AWTException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//		}
 		
 		 
 		
@@ -132,16 +115,16 @@ public class TestAppli {
 			System.out.println("Properties :" + mot);
 			
 			IOProperties secur = new IOProperties();
-			/*Properties securitePass = new Properties();
+			Properties securitePass = new Properties();
 			securitePass.setProperty("motDePasseFormateur",passeHash);
-			secur.saveProperties(securitePass,"D:/password.properties", "passwordGestion QCM");
+			secur.saveProperties(securitePass,"C:/password.properties", "passwordGestion QCM");
 			
-			secur.displayProperties(securitePass);*/
-			Properties p = secur.loadProperties("D:/password.properties");
+			secur.displayProperties(securitePass);
+			//Properties p = secur.loadProperties("D:/password.properties");
 			
-			System.out.println(p.getProperty("motDePasseFormateur"));
+			//System.out.println(p.getProperty("motDePasseFormateur"));
 			System.out.println(passeHash.equals(calculhash.getHash(passeBad)));
-			System.out.println(passeHash.equals(p.getProperty("motDePasseFormateur").trim()));
+			//System.out.println(passeHash.equals(p.getProperty("motDePasseFormateur").trim()));
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
