@@ -1,9 +1,17 @@
 package test;
 
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
+import javax.swing.BorderFactory;
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -32,6 +40,19 @@ public class TestAppli {
 			e1.printStackTrace();
 		}
 
+		
+		//SplashScreen
+		JFrame f = new JFrame();
+		f.setBounds(500, 400, 640, 400);
+		f.setUndecorated(true);
+		JLabel l = new JLabel();
+		l.setPreferredSize(new Dimension(640,400));
+		l.setIcon(new ImageIcon("SplashScreen2.png"));
+		JPanel splash = new JPanel();
+		splash.add(l);
+		splash.setBorder(BorderFactory.createRaisedBevelBorder());
+		f.add(splash);
+		f.setVisible(true);
 		
 		
 		/*Test test = new Test("Essai",20,1);
