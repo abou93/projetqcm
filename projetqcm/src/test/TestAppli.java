@@ -168,9 +168,13 @@ public class TestAppli {
 		fond.setUndecorated(true);
 		fond.pack();
 		fond.setLocation(200,200);
-		fond.add(new JPanelNouvelleReponse());
+		//fond.add(new JPanelNouvelleReponse());
+//		JTextField text = new JTextField();
+//		text.setPreferredSize(new Dimension(100,25));
+		//text.setBounds(20, 20, 100, 25);
+		//fond.add(text);
 		fond.setVisible(true);
-	    new fenPrincipale().setVisible(true);
+	   // new fenPrincipale().setVisible(true);
 		
 		
 		
