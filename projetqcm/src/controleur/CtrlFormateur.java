@@ -81,13 +81,14 @@ public class CtrlFormateur {
 		if (!(this.listeSectionsParTest.contains(section)))
 			{ 
 			this.listeSectionsParTest.add(section);
-			this.enleverSectionTest(section, this.getTestEnCour());
+			this.affecterSectionTest(section, this.getTestEnCour());
 			}
 	}
 	
 	public void supSectionListeSectionsParTest(Section section) {
 		
 		this.listeSectionsParTest.remove(section);
+		DalTest.deleteTest_Section(this.getTestEnCour().getNom(), section.getNumero());
 	}
 
 	
@@ -408,6 +409,9 @@ public class CtrlFormateur {
 	 */
 	public void chargerListeSection(){
 		listeSections = DalTest.selectAllSection();
+		for(Section s : listeSections){
+			s.setQuestions(DalQuestion.selectQuestions(s));
+		}
 	}
 	
 	

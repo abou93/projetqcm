@@ -369,7 +369,7 @@ public class DalTest {
 		PreparedStatement stm;
 		ResultSet rs;
 		cnx=AccesBase.getConnection();
-		Section section;
+		Section section = null;
 		
 		try {
 			

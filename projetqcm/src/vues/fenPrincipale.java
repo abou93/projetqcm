@@ -19,6 +19,7 @@ import java.util.Vector;
 import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -305,9 +306,14 @@ public class fenPrincipale extends javax.swing.JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Section s = (Section) jListSectionDisponible.getSelectedValue();
-				ctrl.addSectionListeSectionsParTest(s);
-				jListSectionDuTest.setListData(ctrl.getListeSectionsParTest());
-				ctrl.affecterSectionTest(s, ctrl.getTestEnCour());
+				if(s.getQuestions().size()>0)
+				{
+					ctrl.addSectionListeSectionsParTest(s);
+					jListSectionDuTest.setListData(ctrl.getListeSectionsParTest());
+					
+				}
+				else JOptionPane.showMessageDialog(fenPrincipale.this,"La section doit contenir des questions","Erreur affectation",0);
+					
 			}
     		
     	});
@@ -341,7 +347,7 @@ public class fenPrincipale extends javax.swing.JFrame {
 			public void actionPerformed(ActionEvent e) {
 				Section s = ctrl.getSectionEnCour();
 				s.setNom(jTextFieldNomSection.getText());
-				s.setNumero((Integer)jSpinnerNbrQuestionTest.getValue());
+				s.setNumero(ctrl.getListeSection().size());
 				s.setNbrQuestion((Integer)jSpinnerNbrQuestionTest.getValue());
 				ctrl.enregistrerSection(s);
 			}
@@ -426,7 +432,7 @@ public class fenPrincipale extends javax.swing.JFrame {
     	}
     	jTreeListeQuestionDispo.setModel(new DefaultTreeModel(racine));
  		
-    	jListQuestionDeLaSection.setListData(ctrl.questionParSection(ctrl.getSectionEnCour()));
+    	jListQuestionDeLaSection.setListData(ctrl.getSectionEnCour().getQuestions());
  		jListQuestionDeLaSection.setSelectedIndex(jListQuestionDeLaSection.getFirstVisibleIndex());
  		ctrl.setQuestionEnCour((Question)jListQuestionDeLaSection.getSelectedValue());
  		
@@ -484,6 +490,13 @@ public class fenPrincipale extends javax.swing.JFrame {
 			 				jTextFieldNomTestPanelQuestion.setText(ctrl.getTestEnCour().getNom());
 			 				jTextFieldNomSectionPanelQuestion.setText(ctrl.getSectionEnCour().getNom());
 			 			}
+						jListQuestionDeLaSection.setListData(ctrl.getSectionEnCour().getQuestions());
+						jListQuestionDeLaSection.setSelectedIndex(jListQuestionDeLaSection.getFirstVisibleIndex());
+						if ((Question)jListQuestionDeLaSection.getSelectedValue()!=null){
+						ctrl.setQuestionEnCour((Question)jListQuestionDeLaSection.getSelectedValue());
+				 		jComboBoxListeTypeQuestion.setSelectedItem(jListQuestionDeLaSection.getSelectedValue()); 		
+				 		jEditorPaneEnonceQuestion.setText(ctrl.getQuestionEnCour().getEnonce());}
+						else jEditorPaneEnonceQuestion.setText("");
 						break;
 					
 				}
