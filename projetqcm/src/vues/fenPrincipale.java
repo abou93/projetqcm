@@ -30,6 +30,7 @@ import javax.swing.tree.*;
 
 import modeles.*;
 
+import securite.hashPassword;
 import vues.JPanelNouvelleReponse;
 import controleur.CtrlFormateur;
 
@@ -77,7 +78,7 @@ public class fenPrincipale extends javax.swing.JFrame {
     ***********************************************************************************************************
     *** 																			 						***
    	***									Initialisation du panel tests										***
-   	***				Gere tous les aspects liés au test ( creation, suppresion, enregistrement				***
+   	***				Gere tous les aspects liés aux tests ( creation, suppresion, enregistrement				***
    	***				L'inscription des stagiaires est géré dans ce panel	 									***
    	***																			 							***
    	***********************************************************************************************************
@@ -358,7 +359,13 @@ public class fenPrincipale extends javax.swing.JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Stagiaire stagiaire = (Stagiaire)((DefaultMutableTreeNode)jTreeListeStagaireEni.getLastSelectedPathComponent()).getUserObject();
-				String nouveauMotDePasse = JOptionPane.showInputDialog(null, "Entrez le nouveau mot de passe de " + stagiaire.toString() + " : ", "Changer le mot de passe.", JOptionPane.INFORMATION_MESSAGE);
+				String nouveauMotDePasse = JOptionPane.showInputDialog(null, "Entrez le nouveau mot de passe de " + stagiaire.toString() + " : ", "Changer le mot de passe", JOptionPane.INFORMATION_MESSAGE);
+				hashPassword hash = new hashPassword();
+				try {
+					nouveauMotDePasse = hash.getHash(nouveauMotDePasse);
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
 				ctrl.changerMotPasseStagiaire(stagiaire,nouveauMotDePasse);				
 			}
     		
@@ -372,8 +379,8 @@ public class fenPrincipale extends javax.swing.JFrame {
     ***********************************************************************************************************
     *** 																			 						***
     ***									Initialisation du panel Sections									***
-    ***				Gere tous les aspects liés au section ( creation, suppresion, enregistrement )			***
-    ***				L'affectation des sections au tests s'effectue dans ce panel							***
+    ***				Gere tous les aspects liés aux sections ( creation, suppresion, enregistrement )		***
+    ***				L'affectation des sections aux tests s'effectue dans ce panel							***
     ***																			 							***
     ***********************************************************************************************************
     ***********************************************************************************************************/
