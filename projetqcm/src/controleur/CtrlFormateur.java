@@ -411,6 +411,9 @@ public class CtrlFormateur {
 		listeSections = DalTest.selectAllSection();
 		for(Section s : listeSections){
 			s.setQuestions(DalQuestion.selectQuestions(s));
+			for(Question q : s.getQuestions()){
+				q.setListesReponses(DalQuestion.selectReponse(q));
+			}
 		}
 	}
 	
