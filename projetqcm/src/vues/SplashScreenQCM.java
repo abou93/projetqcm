@@ -53,7 +53,7 @@ public class SplashScreenQCM  extends JFrame {
 	
 	//Constructeur
 	public SplashScreenQCM(String filePath) {
-		super("Image de fond");
+		super("Gestion de tests QCM");
 		this.filePath = filePath;
 		initialize();
 	}

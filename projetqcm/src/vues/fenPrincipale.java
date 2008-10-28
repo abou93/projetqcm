@@ -54,7 +54,9 @@ public class fenPrincipale extends javax.swing.JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	CtrlFormateur ctrl;
-    
+    int nbrReponse = 0;
+    String[] lettres = {"A","B","C","D","E","F","G","H","I","J"};
+	
 	/*****************************************************
 	*				Constructeur						 *
 	******************************************************/
@@ -556,11 +558,13 @@ public class fenPrincipale extends javax.swing.JFrame {
  			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				jPanelReponse.add(new JPanelNouvelleReponse("A","",false));
-				jPanelReponse.validate();
-				jPanelReponse.repaint();
+				if(nbrReponse<10){
+					jPanelReponse.add(new JPanelNouvelleReponse(lettres[nbrReponse],"",false));
+					jPanelReponse.validate();
+					jPanelReponse.repaint();
+					nbrReponse ++;
+				}
 			}
- 		
  		});
  	
  		jButtonChoixImage.addActionListener(new ActionListener(){
@@ -608,12 +612,17 @@ public class fenPrincipale extends javax.swing.JFrame {
     	}
     	jTreeListeQuestionDispo.setModel(new DefaultTreeModel(racine));
  		
-    	jListQuestionDeLaSection.setListData(ctrl.getSectionEnCour().getQuestions());
- 		jListQuestionDeLaSection.setSelectedIndex(jListQuestionDeLaSection.getFirstVisibleIndex());
- 		ctrl.setQuestionEnCour((Question)jListQuestionDeLaSection.getSelectedValue());
+    	if(ctrl.getSectionEnCour()!=null){
+    		jListQuestionDeLaSection.setListData(ctrl.getSectionEnCour().getQuestions());
+    		jListQuestionDeLaSection.setSelectedIndex(jListQuestionDeLaSection.getFirstVisibleIndex());
+    		ctrl.setQuestionEnCour((Question)jListQuestionDeLaSection.getSelectedValue());
+    		if(ctrl.getQuestionEnCour()!=null){
+    			jComboBoxListeTypeQuestion.setSelectedItem(jListQuestionDeLaSection.getSelectedValue()); 		
+    			jEditorPaneEnonceQuestion.setText(ctrl.getQuestionEnCour().getEnonce());
+    		}
+    	}
+    	
  		
- 		jComboBoxListeTypeQuestion.setSelectedItem(jListQuestionDeLaSection.getSelectedValue()); 		
- 		jEditorPaneEnonceQuestion.setText(ctrl.getQuestionEnCour().getEnonce());
  		 		
  		if((ctrl.getTestEnCour()!= null)&(ctrl.getSectionEnCour()!=null)){
  			jTextFieldNomSectionPanelQuestion.setText(ctrl.getSectionEnCour().getNom());

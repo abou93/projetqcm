@@ -29,6 +29,7 @@ public class JPanelNouvelleReponse extends javax.swing.JPanel {
     	jCheckBoxReponseVrai.setSelected(checked);
     	jTextAreaNouvelleReponse.setText(texte);
     	jLabel1.setText(lettre);
+    	jLabel1.setFont(new Font("Tahoma",Font.BOLD,12));
     }
 
     /** This method is called from within the constructor to
@@ -45,7 +46,6 @@ public class JPanelNouvelleReponse extends javax.swing.JPanel {
         jCheckBoxReponseVrai = new javax.swing.JCheckBox();
         jButtonSupprimerReponse = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jCheckBoxReponseVrai1 = new javax.swing.JCheckBox();
 
         jTextAreaNouvelleReponse.setColumns(20);
         jTextAreaNouvelleReponse.setRows(5);
@@ -69,7 +69,7 @@ public class JPanelNouvelleReponse extends javax.swing.JPanel {
                         .addContainerGap()
                         .addComponent(jCheckBoxReponseVrai)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 322, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonSupprimerReponse, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -93,7 +93,6 @@ public class JPanelNouvelleReponse extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonSupprimerReponse;
     private javax.swing.JCheckBox jCheckBoxReponseVrai;
-    private javax.swing.JCheckBox jCheckBoxReponseVrai1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextAreaNouvelleReponse;
