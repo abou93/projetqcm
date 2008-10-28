@@ -460,10 +460,12 @@ public class fenPrincipale extends javax.swing.JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Section s = (Section) jListSectionDuTest.getSelectedValue();
-				ctrl.supSectionListeSectionsParTest(s);
-				jListSectionDuTest.setListData(ctrl.getListeSectionsParTest());
-				
+				if (jListSectionDuTest.getSelectedValue()!=null)
+				{
+					Section s = (Section) jListSectionDuTest.getSelectedValue();
+					ctrl.supSectionListeSectionsParTest(s);
+					jListSectionDuTest.setListData(ctrl.getListeSectionsParTest());
+				}
 			}
     		
     	});
@@ -494,6 +496,8 @@ public class fenPrincipale extends javax.swing.JFrame {
 				s.setNumero(ctrl.getListeSection().size());
 				s.setNbrQuestion((Integer)jSpinnerNbrQuestionTest.getValue());
 				ctrl.enregistrerSection(s);
+				jListSectionDisponible.setListData(ctrl.getListeSection());
+				jListSectionDisponible.setSelectedIndex(jListSectionDisponible.getLastVisibleIndex());
 			}
     	});
     	
@@ -504,7 +508,11 @@ public class fenPrincipale extends javax.swing.JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				
 				ctrl.supprimerSection(ctrl.getTestEnCour(), ctrl.getSectionEnCour());
+				jListSectionDisponible.setListData(ctrl.getListeSection());
+				jListSectionDisponible.setSelectedIndex(jListSectionDisponible.getLastVisibleIndex());
+				
 			}
     		
     	});
@@ -665,6 +673,9 @@ public class fenPrincipale extends javax.swing.JFrame {
 				case 1 :if(ctrl.getTestEnCour()!= null)
 						{
 			    			jTextNomTestPanelSection.setText(ctrl.getTestEnCour().getNom());
+			    		   	ctrl.chargerListeSectionsParTest(ctrl.getTestEnCour());
+			    		   	jListSectionDuTest.setListData(ctrl.getListeSectionsParTest());
+			    		
 			    			
 						}
 						break;
