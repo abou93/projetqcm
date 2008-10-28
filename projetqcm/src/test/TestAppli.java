@@ -213,7 +213,7 @@ public class TestAppli {
 		
 		
 		
-//	   new fenPrincipale().setVisible(true);
+	   new fenPrincipale().setVisible(true);
 		
 		
 		

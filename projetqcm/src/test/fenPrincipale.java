@@ -4,7 +4,7 @@
  * Created on 24 octobre 2008, 10:27
  */
 
-package vues;
+package test;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
