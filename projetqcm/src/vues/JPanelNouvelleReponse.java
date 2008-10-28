@@ -1,19 +1,19 @@
+/*
+ * JPanelNouvelleReponse.java
+ *
+ * Created on 24 octobre 2008, 16:15
+ */
+
 package vues;
 
 /**
  *
  * @author  slefort
  */
-
 public class JPanelNouvelleReponse extends javax.swing.JPanel {
 
-    
-    /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	
-	public JPanelNouvelleReponse() {
+    /** Creates new form JPanelNouvelleReponse */
+    public JPanelNouvelleReponse() {
         initComponents();
     }
 
@@ -45,7 +45,7 @@ public class JPanelNouvelleReponse extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jCheckBoxReponseVrai)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(6, 6, 6)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonSupprimerReponse, javax.swing.GroupLayout.PREFERRED_SIZE, 28, Short.MAX_VALUE)
@@ -54,16 +54,12 @@ public class JPanelNouvelleReponse extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(40, 40, 40)
-                        .addComponent(jCheckBoxReponseVrai))
-                    .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(34, 34, 34)
-                        .addComponent(jButtonSupprimerReponse, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jCheckBoxReponseVrai)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jScrollPane1, 0, 0, Short.MAX_VALUE)
+                        .addComponent(jButtonSupprimerReponse, javax.swing.GroupLayout.PREFERRED_SIZE, 33, Short.MAX_VALUE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents

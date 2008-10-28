@@ -6,9 +6,11 @@
 
 package test;
 
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -20,6 +22,7 @@ import java.util.Vector;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -39,6 +42,7 @@ import modeles.Section;
 import modeles.Stagiaire;
 import modeles.Test;
 import modeles.Type;
+import securite.hashPassword;
 import vues.JPanelNouvelleReponse;
 import controleur.CtrlFormateur;
 
@@ -73,14 +77,24 @@ public class fenPrincipale extends javax.swing.JFrame {
     }
 
 
-    /*****************************************************
-	*			Initialisation	des panels 				 *
-	*			 (Listener, ctrl, etc ...)				 *
-	******************************************************/
+	/**********************************************************************************************************
+    ***********************************************************************************************************
+    *** 																			 						***
+  	***									Initialisation des panels de l'application							***
+  	***					Ajout des listener, initialisation des jTree, jList, jText, etc ...					***
+  	***																			 							***
+  	***********************************************************************************************************
+  	***********************************************************************************************************/
     
-    /*****************************************************
-	*			Initialisation du panel Test			 *
-	******************************************************/
+    /**********************************************************************************************************
+    ***********************************************************************************************************
+    *** 																			 						***
+   	***									Initialisation du panel tests										***
+   	***				Gere tous les aspects liés aux tests ( creation, suppresion, enregistrement				***
+   	***				L'inscription des stagiaires est géré dans ce panel	 									***
+   	***																			 							***
+   	***********************************************************************************************************
+   	***********************************************************************************************************/
     
     
     //Rempli la liste des stagiaires inscrits à un test
@@ -219,9 +233,10 @@ public class fenPrincipale extends javax.swing.JFrame {
 				if(jTreeListeStagaireEni.getSelectionCount()==0){
 					jTreeListeStagaireEni.setSelectionRow(0);
 				}
+				
 				DefaultMutableTreeNode racineInsc = null;
 				TreePath path = jTreeListeStagiaireTest.getPathForRow(0);
-				//jTreeListeStagaireEni.getPathForRow(0).toString().equals("ENI Ecole")
+				
 				if(path.toString().equals("[Vide..]") & !jTreeListeStagaireEni.getLastSelectedPathComponent().toString().equals("ENI Ecole")){
 					racineInsc = new DefaultMutableTreeNode("Inscrits");
 					jTreeListeStagiaireTest.setModel(new DefaultTreeModel(racineInsc));
@@ -234,22 +249,28 @@ public class fenPrincipale extends javax.swing.JFrame {
 					int verif = 0;
 					DefaultMutableTreeNode racinePromo = new DefaultMutableTreeNode(((DefaultMutableTreeNode)jTreeListeStagaireEni.getLastSelectedPathComponent()).getUserObject());
 					Enumeration<DefaultMutableTreeNode> enume = racineInsc.children();
+					
 					if(enume.hasMoreElements()){
+						
 						while(enume.hasMoreElements()){
 							Promotion p = (Promotion)enume.nextElement().getUserObject();
 							if(p.getCode().equals(((Promotion)racinePromo.getUserObject()).getCode())){
 								verif++;
 							}
 						}
+						
 					}
+					
 					if(verif==0){
 						racineInsc.add(racinePromo);
 						Promotion p = (Promotion)racinePromo.getUserObject();
 						for(Stagiaire s:p.getListeStagiaires()){
+							
 							ctrl.inscrirStagiaireTest(s, ctrl.getTestEnCour(), calculDate(), jTextFieldMailFormateur.getText());
 							DefaultMutableTreeNode racineStagiaire = new DefaultMutableTreeNode(s);
 							racinePromo.add(racineStagiaire);
 						}
+						
 						jTreeListeStagiaireTest.setModel(new DefaultTreeModel(racineInsc));
 					}
 				}else if ((((DefaultMutableTreeNode)jTreeListeStagaireEni.getLastSelectedPathComponent()).getUserObject() instanceof Stagiaire)){
@@ -257,11 +278,15 @@ public class fenPrincipale extends javax.swing.JFrame {
 					DefaultMutableTreeNode racinePromo = new DefaultMutableTreeNode(((DefaultMutableTreeNode)((DefaultMutableTreeNode)jTreeListeStagaireEni.getLastSelectedPathComponent()).getParent()).getUserObject());
 					DefaultMutableTreeNode racineStagiaire = new DefaultMutableTreeNode(((DefaultMutableTreeNode)jTreeListeStagaireEni.getLastSelectedPathComponent()).getUserObject());
 					Enumeration<DefaultMutableTreeNode> enume = racineInsc.children();
+					
 					if(enume.hasMoreElements()){
+						
 						while(enume.hasMoreElements()){
 							DefaultMutableTreeNode node = enume.nextElement();
 							Promotion p = (Promotion)node.getUserObject();
+							
 							if(p.getCode().equals(((Promotion)racinePromo.getUserObject()).getCode())){
+								
 								if(ctrl.inscrirStagiaireTest((Stagiaire)racineStagiaire.getUserObject(), ctrl.getTestEnCour(),  calculDate(), jTextFieldMailFormateur.getText())){
 									node.add(racineStagiaire);
 								}
@@ -270,6 +295,7 @@ public class fenPrincipale extends javax.swing.JFrame {
 						}
 					}
 					if(!verif){
+						
 						if(ctrl.inscrirStagiaireTest((Stagiaire)racineStagiaire.getUserObject(), ctrl.getTestEnCour(),  calculDate(), jTextFieldMailFormateur.getText())){
 							racinePromo.add(racineStagiaire);
 							racineInsc.add(racinePromo);
@@ -288,15 +314,19 @@ public class fenPrincipale extends javax.swing.JFrame {
 				if(((DefaultMutableTreeNode)jTreeListeStagiaireTest.getLastSelectedPathComponent()).getUserObject() instanceof Promotion){
 					DefaultMutableTreeNode promoSelectionnee = (DefaultMutableTreeNode)jTreeListeStagiaireTest.getLastSelectedPathComponent();
 					Enumeration<DefaultMutableTreeNode> enume = promoSelectionnee.children();
+					
 					while(enume.hasMoreElements()){
 						ctrl.supprInscription((Stagiaire)enume.nextElement().getUserObject(), ctrl.getTestEnCour());
 					}
+					
 					((DefaultTreeModel)jTreeListeStagiaireTest.getModel()).removeNodeFromParent((MutableTreeNode)jTreeListeStagiaireTest.getSelectionPath().getLastPathComponent());
 					jTreeListeStagiaireTest.setSelectionRow(0);
+					
 					if(jTreeListeStagiaireTest.getModel().getChildCount(jTreeListeStagiaireTest.getLastSelectedPathComponent())==0){
 						DefaultMutableTreeNode racineVide = new DefaultMutableTreeNode("Vide..");
 						jTreeListeStagiaireTest.setModel(new DefaultTreeModel(racineVide));
 					}
+					
 				}else if (((DefaultMutableTreeNode)jTreeListeStagiaireTest.getLastSelectedPathComponent()).getUserObject() instanceof Stagiaire){
 					DefaultMutableTreeNode stagiaireSelectionnee = (DefaultMutableTreeNode)jTreeListeStagiaireTest.getLastSelectedPathComponent();
 					TreeNode promoSelectionnee = ((DefaultMutableTreeNode)jTreeListeStagiaireTest.getLastSelectedPathComponent()).getParent();
@@ -319,20 +349,65 @@ public class fenPrincipale extends javax.swing.JFrame {
     		
     	});
     	
+    	//Gerer le changement de sélection dans le jtree StagiaireEni
     	jTreeListeStagaireEni.addMouseListener(new MouseAdapter(){
+
+			public void mouseClicked(MouseEvent e) {
+				if(jTreeListeStagaireEni.getSelectionCount()>0){
+					if (((DefaultMutableTreeNode)jTreeListeStagaireEni.getLastSelectedPathComponent()).getUserObject() instanceof Stagiaire){
+						jButtonMotDePasseEleve.setEnabled(true);
+					}else{
+						jButtonMotDePasseEleve.setEnabled(false);
+					}
+				}
+				
+			}
+    	});
+    	
+    	
+    	//Clic sur le bouton de changement de mot de passe du stagiaire
+    	jButtonMotDePasseEleve.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Stagiaire stagiaire = (Stagiaire)((DefaultMutableTreeNode)jTreeListeStagaireEni.getLastSelectedPathComponent()).getUserObject();
+				String nouveauMotDePasse = JOptionPane.showInputDialog(null, "Entrez le nouveau mot de passe de " + stagiaire.toString() + " : ", "Changer le mot de passe", JOptionPane.INFORMATION_MESSAGE);
+				hashPassword hash = new hashPassword();
+				try {
+					nouveauMotDePasse = hash.getHash(nouveauMotDePasse);
+				} catch (Exception e1) {
+					e1.printStackTrace();
+				}
+				ctrl.changerMotPasseStagiaire(stagiaire,nouveauMotDePasse);				
+			}
     		
     	});
+
     	
     }
     
-    /*****************************************************
-	*			Initialisation du panel Section			 *
-	******************************************************/
+    
+    /**********************************************************************************************************
+    ***********************************************************************************************************
+    *** 																			 						***
+    ***									Initialisation du panel Sections									***
+    ***				Gere tous les aspects liés aux sections ( creation, suppresion, enregistrement )		***
+    ***				L'affectation des sections aux tests s'effectue dans ce panel							***
+    ***																			 							***
+    ***********************************************************************************************************
+    ***********************************************************************************************************/
  
     private void initPanelSection(){
     	
+    	 	
+    	/*****************************************************
+    	*			Listener du panel section				 *
+    	******************************************************/
+    		
+    	
     	// Listener sur la jList des sections disponible
     	// Mets à jour les zones de textes correspondantes
+    	
     	jListSectionDisponible.addListSelectionListener(new ListSelectionListener(){
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
@@ -352,6 +427,8 @@ public class fenPrincipale extends javax.swing.JFrame {
     		
     	});
     	
+    	// Listener sur le bouton d'ajout de section
+    	// Ajoute la section dans la liste des sections du test
     	
     	jButtonAjoutSection.addActionListener(new ActionListener(){
 
@@ -370,6 +447,9 @@ public class fenPrincipale extends javax.swing.JFrame {
     		
     	});
     	
+    	// Listener sur le bouton enlever la section
+    	// Enleve la section du test (liste et Base de donnée)
+    	
     	jButtonEnleverSection.addActionListener(new ActionListener(){
 
 			@Override
@@ -382,6 +462,9 @@ public class fenPrincipale extends javax.swing.JFrame {
     		
     	});
     	
+    	// Listener sur le bouton nouvelle section
+    	// Ajoute la section a la liste
+    	
     	jButtonNouveauSection.addActionListener(new ActionListener(){
 
 			@Override
@@ -392,6 +475,9 @@ public class fenPrincipale extends javax.swing.JFrame {
 			}
     		
     	});
+
+    	// Listener sur le bouton enregistrer la section
+    	// Enregistre la section dans la base de donnée
     	
     	jButtonEnregistrerSection.addActionListener(new ActionListener(){
 
@@ -405,6 +491,9 @@ public class fenPrincipale extends javax.swing.JFrame {
 			}
     	});
     	
+    	// Listener sur le bouton supprimer la section
+    	// Supprime la section dans la base de donnée
+    	
     	jButtonSupprimerSection.addActionListener(new ActionListener(){
 
 			@Override
@@ -413,6 +502,10 @@ public class fenPrincipale extends javax.swing.JFrame {
 			}
     		
     	});
+    	
+    	/*****************************************************
+    	*	Méthodes d'initialisation  du panel Section		 *
+    	******************************************************/
     	
     	SpinnerNumberModel model = new SpinnerNumberModel(0,0,10,1); 
 		jSpinnerNbrQuestionTest.setModel(model);
@@ -432,22 +525,29 @@ public class fenPrincipale extends javax.swing.JFrame {
     		
     }
   
-    /*****************************************************
-	*			Initialisation du panel Question		 *
-	******************************************************/
+    /**********************************************************************************************************
+     **********************************************************************************************************
+     *** 																			 						***
+     ***									Initialisation du panel Question								***
+     ***				Gere tous les aspects liés au question ( creation, suppresion, enregistrement )		***
+     ***				L'association des questions a la section en cours s'effectue dans ce panel			***
+     ***																			 						***
+     **********************************************************************************************************
+     **********************************************************************************************************/
  
  	private void initPanelQuestion(){
  	
  		/*****************************************************
  		*		 		Ajout des Listener					 *
  		******************************************************/
- 		
+ 		 		
  		jButtonAjoutDuneReponse.addActionListener(new ActionListener(){
-
+ 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				jScrollPaneReponse.add(new JPanelNouvelleReponse());
-				
+				jPanelReponse.add(new JPanelNouvelleReponse());
+				jPanelReponse.validate();
+				jPanelReponse.repaint();
 			}
  		
  		});
@@ -456,13 +556,26 @@ public class fenPrincipale extends javax.swing.JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				JFileChooser boite = new JFileChooser();
 				boite.setCurrentDirectory(new File("C:\\"));
 				boite.setMultiSelectionEnabled(false);
 				boite.setFileFilter(new FileNameExtensionFilter("Fichier JPEG","jpg"));
 				boite.showOpenDialog(null);
+				ctrl.getQuestionEnCour().setCheminImage(boite.getSelectedFile().toString());
 			}
+ 		});
+ 		
+ 		
+ 		jButtonNouvelleQuestion.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ctrl.getSectionEnCour().addQuestion(new Question());
+				jListQuestionDeLaSection.setListData(ctrl.getSectionEnCour().getQuestions());
+				jListQuestionDeLaSection.setSelectedIndex(jListQuestionDeLaSection.getLastVisibleIndex());
+							
+			}
+ 			
  		});
  		
  		/*****************************************************
@@ -499,9 +612,15 @@ public class fenPrincipale extends javax.swing.JFrame {
  }
  
       
-    /*****************************************************
-	*			Initialisation de la barre de menu		 *
-	******************************************************/
+ 	 /*********************************************************************************************************
+     **********************************************************************************************************
+     *** 																			 						***
+     ***									Initialisation de la barre de menu								***
+     ***				Ajoute les listeners au jMenuItem													***
+     ***																									***
+     ***																			 						***
+     **********************************************************************************************************
+     **********************************************************************************************************/
  	
  	
  	private void initBarreMenu(){
@@ -517,9 +636,15 @@ public class fenPrincipale extends javax.swing.JFrame {
  		
     }
     
- 	/*****************************************************
-	*			Initialisation du jTabbedPane			 *
-	******************************************************/
+ 	 /*********************************************************************************************************
+     **********************************************************************************************************
+     *** 																			 						***
+     ***									Initialisation du jTabbedPane									***
+     ***				Ajout de listener sur le jtabbedpane												***
+     ***				Effectue les mises a jour lors du changement de tab									***
+     ***																			 						***
+     **********************************************************************************************************
+     **********************************************************************************************************/
    
  	private void initJtabbedPane(){
  		
@@ -534,6 +659,7 @@ public class fenPrincipale extends javax.swing.JFrame {
 				case 1 :if(ctrl.getTestEnCour()!= null)
 						{
 			    			jTextNomTestPanelSection.setText(ctrl.getTestEnCour().getNom());
+			    			
 						}
 						break;
 				case 2 :if((ctrl.getTestEnCour()!= null)&(ctrl.getSectionEnCour()!=null))
@@ -555,10 +681,15 @@ public class fenPrincipale extends javax.swing.JFrame {
  		});
  	}
  	
-    
- 	/*****************************************************
-	*	Initialisation Composant Generer via NetBeans 	 *
-	******************************************************/
+ 	
+ 	/**********************************************************************************************************
+    ***********************************************************************************************************
+    *** 																			 						***
+ 	***									Initialisation des composants			 							***
+ 	***									Code generer par NetBeans				 							***
+ 	***																			 							***
+ 	***********************************************************************************************************
+ 	***********************************************************************************************************/
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -644,6 +775,7 @@ public class fenPrincipale extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jButtonAjoutDuneReponse = new javax.swing.JButton();
         jScrollPaneReponse = new javax.swing.JScrollPane();
+        jPanelReponse = new javax.swing.JPanel();
         jScrollPane8 = new javax.swing.JScrollPane();
         jListQuestionDeLaSection = new javax.swing.JList();
         jLabel14 = new javax.swing.JLabel();
@@ -799,15 +931,10 @@ public class fenPrincipale extends javax.swing.JFrame {
 
         jLabelListeStagiaireEni.setText("Liste des stagiaires ENI : ");
 
-        jLabel4.setText("Durée :");
+        jLabel4.setText("DurÃ©e :");
 
         jLabel5.setText("Mail formateur :");
-        
-        jTextFieldMailFormateur.setText("formateur@eni-ecole.com");
-        SpinnerNumberModel model = new SpinnerNumberModel(15,0,60,1); 
-        jSpinnerDureeInscription.setModel(model);
-        
-        
+
         jButtonMotDePasseEleve.setIcon(new javax.swing.ImageIcon("C:\\Images\\Key32.png")); // NOI18N
         jButtonMotDePasseEleve.setToolTipText("Modifier le mot de passe du stagiaire");
 
@@ -920,7 +1047,7 @@ public class fenPrincipale extends javax.swing.JFrame {
         jListSectionDisponible.setToolTipText("Liste des sections disponibles pour le test");
         jScrollPane4.setViewportView(jListSectionDisponible);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder("Propriétés")));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createTitledBorder("PropriÃ©tÃ©s")));
         jPanel1.setLayout(new java.awt.GridLayout(3, 2));
 
         jLabel2.setText("Nom :");
@@ -936,7 +1063,7 @@ public class fenPrincipale extends javax.swing.JFrame {
         jPanel1.add(jSpinnerNbrQuestionTest);
 
         jListSectionDuTest.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jListSectionDuTest.setToolTipText("Liste des sections associées au test");
+        jListSectionDuTest.setToolTipText("Liste des sections associÃ©es au test");
         jScrollPane5.setViewportView(jListSectionDuTest);
 
         jLabel7.setText("Liste des sections disponibles :");
@@ -947,7 +1074,7 @@ public class fenPrincipale extends javax.swing.JFrame {
         jLabel9.setText("TEST :");
 
         jTextNomTestPanelSection.setEditable(false);
-        jTextNomTestPanelSection.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jTextNomTestPanelSection.setFont(new java.awt.Font("Tahoma", 1, 11));
 
         jButtonAjoutSection.setIcon(new javax.swing.ImageIcon("C:\\Images\\Forward32.png")); // NOI18N
         jButtonAjoutSection.setToolTipText("Ajout d'une section au test");
@@ -956,7 +1083,7 @@ public class fenPrincipale extends javax.swing.JFrame {
         jButtonEnleverSection.setToolTipText("Enleve la section du test");
 
         jButtonNouveauSection.setIcon(new javax.swing.ImageIcon("C:\\Images\\Add32.png")); // NOI18N
-        jButtonNouveauSection.setToolTipText("Nouvel section pour le test séléctionné");
+        jButtonNouveauSection.setToolTipText("Nouvel section pour le test sÃ©lÃ©ctionnÃ©");
 
         jButtonEnregistrerSection.setIcon(new javax.swing.ImageIcon("C:\\Images\\Floppy32.png")); // NOI18N
         jButtonEnregistrerSection.setToolTipText("Enregistrer la section");
@@ -1046,7 +1173,7 @@ public class fenPrincipale extends javax.swing.JFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Question"));
 
-        jLabel12.setText("Enoncé :");
+        jLabel12.setText("EnoncÃ© :");
 
         jEditorPaneEnonceQuestion.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jEditorPaneEnonceQuestion.setToolTipText("Enonce de la question");
@@ -1071,8 +1198,7 @@ public class fenPrincipale extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jLabel12)
-                        .addGap(298, 298, 298))
+                        .addComponent(jLabel12))
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                             .addGap(13, 13, 13)
@@ -1090,8 +1216,9 @@ public class fenPrincipale extends javax.swing.JFrame {
                             .addComponent(jButtonChoixImage))
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
                             .addContainerGap()
-                            .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE,330, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap())
+                            .addComponent(jScrollPane6, javax.swing.GroupLayout.DEFAULT_SIZE, 330, Short.MAX_VALUE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))))
+                .addGap(10, 10, 10))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1124,12 +1251,13 @@ public class fenPrincipale extends javax.swing.JFrame {
         jTreeListeQuestionDispo.setSelectionModel(null);
         jScrollPane7.setViewportView(jTreeListeQuestionDispo);
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Réponses"));
+        jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("RÃ©ponses"));
 
         jButtonAjoutDuneReponse.setIcon(new javax.swing.ImageIcon("C:\\Images\\Add32.png")); // NOI18N
         jButtonAjoutDuneReponse.setToolTipText("Ajouter une reponse");
 
-        jScrollPaneReponse.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        jPanelReponse.setLayout(new java.awt.GridLayout(10, 0));
+        jScrollPaneReponse.setViewportView(jPanelReponse);
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
@@ -1138,15 +1266,16 @@ public class fenPrincipale extends javax.swing.JFrame {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jButtonAjoutDuneReponse)
-                .addContainerGap(312, Short.MAX_VALUE))
-            .addComponent(jScrollPaneReponse, javax.swing.GroupLayout.DEFAULT_SIZE, 389, Short.MAX_VALUE)
+                .addContainerGap(319, Short.MAX_VALUE))
+            .addComponent(jScrollPaneReponse, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 396, Short.MAX_VALUE)
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addComponent(jButtonAjoutDuneReponse)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPaneReponse, javax.swing.GroupLayout.DEFAULT_SIZE, 223, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPaneReponse, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         jListQuestionDeLaSection.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -1179,7 +1308,7 @@ public class fenPrincipale extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelQuestionLayout.createSequentialGroup()
                         .addGroup(PanelQuestionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, PanelQuestionLayout.createSequentialGroup()
-                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 362, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, PanelQuestionLayout.createSequentialGroup()
@@ -1334,6 +1463,7 @@ public class fenPrincipale extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanelInscriptionTest;
     private javax.swing.JPanel jPanelProprietesTest;
+    private javax.swing.JPanel jPanelReponse;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
