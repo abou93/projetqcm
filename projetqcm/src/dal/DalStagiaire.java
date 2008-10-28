@@ -129,9 +129,18 @@ public class DalStagiaire {
 			PreparedStatement stm = cnx.prepareStatement("select * from PROMOTIONS p inner join STAGIAIRES s on p.CODE = s.CODE_PROMOTION inner join INSCRIPTIONS i on s.ID = i.ID_STAGIAIRE where NOM_TEST = ?");
 			stm.setObject(1, test.getNom());	
 			ResultSet rs = stm.executeQuery();
+			Vector<Promotion> listePromo = selectAllPromotions();
+			
 			while(rs.next()){
-				Promotion p = new Promotion(rs.getString("CODE").trim(),rs.getString("LIBELLE").trim());
-				listeStagiaires.add(new Stagiaire((UUID)rs.getObject("ID"),rs.getString("NOM").trim(),rs.getString("PRENOM").trim(),p,rs.getString("MOT_DE_PASSE").trim()));
+				Stagiaire s = null;
+				for(Promotion p:listePromo){
+					if(p.getCode().equals(rs.getString("CODE").trim())){
+						s=new Stagiaire(UUID.fromString(rs.getString("ID")),rs.getString("NOM").trim(),rs.getString("PRENOM").trim(),p,rs.getString("MOT_DE_PASSE").trim());
+						p.getListeStagiaires().add(s);
+					}
+				}
+				//Promotion p = new Promotion(rs.getString("CODE").trim(),rs.getString("LIBELLE").trim());
+				listeStagiaires.add(s);
 			}
 		AccesBase.deconnexionBase(cnx);
 		} catch (SQLException e) {

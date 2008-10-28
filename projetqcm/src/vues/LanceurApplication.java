@@ -27,9 +27,9 @@ public class LanceurApplication {
 		String imagePath = "C:/Images/SplashScreen2.png";
 		SplashScreenQCM fond = new SplashScreenQCM(imagePath);
 		fond.setUndecorated(true);
-		
-		fond.setVisible(true);
 		fond.pack();
+		fond.setVisible(true);
+		
 		fond.getQuit().requestFocusInWindow();
 		fond.getValid().requestFocusInWindow();
 		fond.getText().requestFocusInWindow();

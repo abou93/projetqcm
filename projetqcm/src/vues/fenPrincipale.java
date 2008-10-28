@@ -9,8 +9,18 @@ package vues;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Enumeration;
+import java.util.GregorianCalendar;
+import java.util.Locale;
+import java.util.Vector;
 
 import javax.swing.JFileChooser;
+import javax.swing.JTree;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -24,6 +34,7 @@ import javax.swing.tree.TreeSelectionModel;
 
 
 import controleur.CtrlFormateur;
+import dal.DalInscription;
 
 import modeles.*;
 
@@ -67,6 +78,33 @@ public class fenPrincipale extends javax.swing.JFrame {
     /*****************************************************
 	*			Initialisation du panel Test			 *
 	******************************************************/
+    private void remplirTreeInscriptions(){
+		Vector<Stagiaire> stag = ctrl.getStagiairesTest(ctrl.getTestEnCour());
+		Vector<Promotion> listePromo = new Vector<Promotion>();
+		if(stag!=null){
+				for(Stagiaire s:stag){
+					if(!listePromo.contains(s.getPromotion())){
+						listePromo.add(s.getPromotion());
+					}
+				}
+				DefaultMutableTreeNode racineInsc = new DefaultMutableTreeNode("Inscrits");
+				jTreeListeStagiaireTest.setModel(new DefaultTreeModel(racineInsc));
+		    	
+				for (Promotion p : listePromo){
+		    		DefaultMutableTreeNode sousDossier = new DefaultMutableTreeNode(p);
+		    		for (Stagiaire s : stag){
+		    			if(s.getPromotion().equals(p)){
+		    				sousDossier.add(new DefaultMutableTreeNode(s));
+		    			}
+		    		}
+		    		racineInsc.add(sousDossier);
+		    	}
+		}else{
+			DefaultMutableTreeNode racineTest = new DefaultMutableTreeNode("Vide..") ;   	
+	    	jTreeListeStagiaireTest.setModel(new DefaultTreeModel(racineTest));
+		}
+	}
+    
     
     private void initPanelTest(){
 
@@ -76,6 +114,7 @@ public class fenPrincipale extends javax.swing.JFrame {
     	 */	
     	ctrl.chargerListeTests();
     	jListTests.setListData(ctrl.getListeTests());
+    	
     	
     	//Changement de test sélectionné dans la liste des tests.
     	jListTests.addListSelectionListener(new ListSelectionListener(){
@@ -87,11 +126,18 @@ public class fenPrincipale extends javax.swing.JFrame {
 					jSliderTemps.setValue(((Test)jListTests.getSelectedValue()).getTemps());
 					jSliderSeuil.setValue(((Test)jListTests.getSelectedValue()).getSeuil());
 					ctrl.setTestEnCour((Test)jListTests.getSelectedValue());
+					remplirTreeInscriptions();
+				
 				}
 			}
     	});
     	
+    	
+    	
+    	
+    	
     	jListTests.setSelectedIndex(jListTests.getFirstVisibleIndex());
+    	remplirTreeInscriptions();
     	
     	//Clic sur Nouveau test
     	jButtonNouveauTest.addActionListener(new ActionListener(){
@@ -145,10 +191,11 @@ public class fenPrincipale extends javax.swing.JFrame {
     		racine.add(sousDossier);
     	}
     	
-    	DefaultMutableTreeNode racineTest = new DefaultMutableTreeNode("Vide..") ;
+    	
+    	//DefaultMutableTreeNode racineTest = new DefaultMutableTreeNode("Vide..") ;
     	jTreeListeStagaireEni.setModel(new DefaultTreeModel(racine));
     	//jTreeListeStagaireEni.expandPath(jTreeListeStagaireEni.getPathForRow(1));
-    	jTreeListeStagiaireTest.setModel(new DefaultTreeModel(racineTest));
+    	//jTreeListeStagiaireTest.setModel(new DefaultTreeModel(racineTest));
     	
     	jTreeListeStagaireEni.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
     	
@@ -157,22 +204,51 @@ public class fenPrincipale extends javax.swing.JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				//Selectionner la ligne 0 par défaut
+				if(jTreeListeStagaireEni.getSelectionCount()==0){
+					jTreeListeStagaireEni.setSelectionRow(0);
+				}
 				DefaultMutableTreeNode racineInsc = null;
 				TreePath path = jTreeListeStagiaireTest.getPathForRow(0);
-				if(path.toString().equals("[Vide..]")){
+				//jTreeListeStagaireEni.getPathForRow(0).toString().equals("ENI Ecole")
+				if(path.toString().equals("[Vide..]") & !jTreeListeStagaireEni.getLastSelectedPathComponent().toString().equals("ENI Ecole")){
 					racineInsc = new DefaultMutableTreeNode("Inscrits");
 					jTreeListeStagiaireTest.setModel(new DefaultTreeModel(racineInsc));
 				}else{
-					racineInsc = (DefaultMutableTreeNode)jTreeListeStagiaireTest.getModel();
+					jTreeListeStagiaireTest.setSelectionRow(0);
+					racineInsc = ((DefaultMutableTreeNode)jTreeListeStagiaireTest.getLastSelectedPathComponent());
 				}
 	
 				if(((DefaultMutableTreeNode)jTreeListeStagaireEni.getLastSelectedPathComponent()).getUserObject() instanceof Promotion){
+					int verif = 0;
 					DefaultMutableTreeNode racinePromo = new DefaultMutableTreeNode(((DefaultMutableTreeNode)jTreeListeStagaireEni.getLastSelectedPathComponent()).getUserObject());
-					racineInsc.add(racinePromo);
-					System.out.println("essai");
+					Enumeration<DefaultMutableTreeNode> enume = racineInsc.children();
+					if(enume.hasMoreElements()){
+						while(enume.hasMoreElements()){
+							if(enume.nextElement().getUserObject().toString()==racinePromo.getUserObject().toString()){
+								verif++;
+							}
+						}
+					}
+					if(verif==0){
+						racineInsc.add(racinePromo);
+						Promotion p = (Promotion)racinePromo.getUserObject();
+						for(Stagiaire s:p.getListeStagiaires()){
+							Date d = new Date();
+							GregorianCalendar calendar = new GregorianCalendar();
+							calendar.setTime(d);
+							int duree = Integer.parseInt(jSpinnerDureeInscription.getValue().toString());
+							calendar.add(Calendar.DATE, duree);
+							Date d1 = calendar.getTime();
+							SimpleDateFormat formatDate = new SimpleDateFormat("dd/MM/yyyy");
+							ctrl.inscrirStagiaireTest(s, ctrl.getTestEnCour(), formatDate.format(d1), jTextFieldMailFormateur.getText());
+							DefaultMutableTreeNode racineStagiaire = new DefaultMutableTreeNode(s);
+							racinePromo.add(racineStagiaire);
+						}
+						jTreeListeStagiaireTest.setModel(new DefaultTreeModel(racineInsc));
+					}
 				}
 			}
-    		
     	});
     	
     }
@@ -614,6 +690,8 @@ public class fenPrincipale extends javax.swing.JFrame {
         jLabel4.setText("Durée :");
 
         jLabel5.setText("Mail formateur :");
+        jTextFieldMailFormateur.setText("formateur@eni-ecole.fr");
+        jSpinnerDureeInscription.setValue(15);
 
         jButtonMotDePasseEleve.setIcon(new javax.swing.ImageIcon("C:\\Images\\Key32.png")); // NOI18N
         jButtonMotDePasseEleve.setToolTipText("Modifier le mot de passe du stagiaire");
