@@ -295,11 +295,15 @@ public class CtrlFormateur {
 	public void supprInscription(Stagiaire stagiaire,Test test){
 		if(DalInscription.deleteInscription(stagiaire.getId(), test.getNom())){
 			if(DalInscription.deleteTirage(stagiaire.getId(), test.getNom())){
-				for(Inscription insc : stagiaire.getInscriptions()){
-					if(insc.getTest().getNom()==test.getNom()){
-						stagiaire.supprInscription(insc);
+				Vector<Inscription> listeInsc = stagiaire.getInscriptions();
+				for(int i=0;i<listeInsc.size();i++){
+					if(listeInsc.elementAt(i).getTest().getNom()==test.getNom()){
+						stagiaire.supprInscription(listeInsc.elementAt(i));
 					}
 				}
+				
+					
+				
 			}
 		}
 		

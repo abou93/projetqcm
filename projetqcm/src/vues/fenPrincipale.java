@@ -9,18 +9,14 @@ package vues;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.GregorianCalendar;
-import java.util.Locale;
 import java.util.Vector;
 
 import javax.swing.JFileChooser;
-import javax.swing.JTree;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -29,12 +25,12 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
 
 import controleur.CtrlFormateur;
-import dal.DalInscription;
 
 import modeles.*;
 
@@ -78,6 +74,7 @@ public class fenPrincipale extends javax.swing.JFrame {
     /*****************************************************
 	*			Initialisation du panel Test			 *
 	******************************************************/
+    
     private void remplirTreeInscriptions(){
 		Vector<Stagiaire> stag = ctrl.getStagiairesTest(ctrl.getTestEnCour());
 		Vector<Promotion> listePromo = new Vector<Promotion>();
@@ -99,12 +96,12 @@ public class fenPrincipale extends javax.swing.JFrame {
 		    		}
 		    		racineInsc.add(sousDossier);
 		    	}
+				jTreeListeStagiaireTest.expandPath(jTreeListeStagiaireTest.getPathForRow(0));
 		}else{
 			DefaultMutableTreeNode racineTest = new DefaultMutableTreeNode("Vide..") ;   	
 	    	jTreeListeStagiaireTest.setModel(new DefaultTreeModel(racineTest));
 		}
 	}
-    
     
     private void initPanelTest(){
 
@@ -114,7 +111,6 @@ public class fenPrincipale extends javax.swing.JFrame {
     	 */	
     	ctrl.chargerListeTests();
     	jListTests.setListData(ctrl.getListeTests());
-    	
     	
     	//Changement de test sélectionné dans la liste des tests.
     	jListTests.addListSelectionListener(new ListSelectionListener(){
@@ -131,10 +127,6 @@ public class fenPrincipale extends javax.swing.JFrame {
 				}
 			}
     	});
-    	
-    	
-    	
-    	
     	
     	jListTests.setSelectedIndex(jListTests.getFirstVisibleIndex());
     	remplirTreeInscriptions();
@@ -192,12 +184,12 @@ public class fenPrincipale extends javax.swing.JFrame {
     	}
     	
     	
-    	//DefaultMutableTreeNode racineTest = new DefaultMutableTreeNode("Vide..") ;
     	jTreeListeStagaireEni.setModel(new DefaultTreeModel(racine));
     	//jTreeListeStagaireEni.expandPath(jTreeListeStagaireEni.getPathForRow(1));
-    	//jTreeListeStagiaireTest.setModel(new DefaultTreeModel(racineTest));
+    	
     	
     	jTreeListeStagaireEni.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
+    	jTreeListeStagiaireTest.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
     	
     	//Clic sur inscrir un stagiaire au test en cours
     	jButtonIsncrireEleve.addActionListener(new ActionListener(){
@@ -249,6 +241,22 @@ public class fenPrincipale extends javax.swing.JFrame {
 					}
 				}
 			}
+    	});
+    	
+    	
+    	jButtonSupIncriptionEleve.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if(((DefaultMutableTreeNode)jTreeListeStagiaireTest.getLastSelectedPathComponent()).getUserObject() instanceof Promotion){
+					DefaultMutableTreeNode promoSelectionnee = (DefaultMutableTreeNode)jTreeListeStagiaireTest.getLastSelectedPathComponent();
+					Enumeration<DefaultMutableTreeNode> enume = promoSelectionnee.children();
+					while(enume.hasMoreElements()){
+						ctrl.supprInscription((Stagiaire)enume.nextElement().getUserObject(), ctrl.getTestEnCour());
+					}
+				((DefaultTreeModel)jTreeListeStagiaireTest.getModel()).removeNodeFromParent((MutableTreeNode)jTreeListeStagiaireTest.getSelectionPath().getLastPathComponent());				}
+			}
+    		
     	});
     	
     }
