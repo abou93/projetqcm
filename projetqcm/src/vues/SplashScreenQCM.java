@@ -1,6 +1,7 @@
 package vues;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Graphics;
@@ -23,6 +24,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -130,6 +132,10 @@ public class SplashScreenQCM  extends JFrame {
 					f.setLocation(loc);
 					f.setVisible(true);
 					SplashScreenQCM.this.dispose();
+				}else{
+					text2.setBackground(Color.RED);
+					text2.setText("");
+					text2.requestFocusInWindow();
 				}
 
 				} catch (Exception e1) {
@@ -159,6 +165,7 @@ public class SplashScreenQCM  extends JFrame {
 				if(e.getKeyCode()==KeyEvent.VK_ENTER){
 					btnValid.doClick();
 				}
+				text2.setBackground(Color.WHITE);
 			}
 		});
 	

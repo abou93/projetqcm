@@ -80,7 +80,7 @@ public class fenPrincipale extends javax.swing.JFrame {
     private void remplirTreeInscriptions(){
 		Vector<Stagiaire> stag = ctrl.getStagiairesTest(ctrl.getTestEnCour());
 		Vector<Promotion> listePromo = new Vector<Promotion>();
-		if(stag!=null){
+		if(stag.size()>0){
 				for(Stagiaire s:stag){
 					if(!listePromo.contains(s.getPromotion())){
 						listePromo.add(s.getPromotion());
@@ -219,7 +219,10 @@ public class fenPrincipale extends javax.swing.JFrame {
 					Enumeration<DefaultMutableTreeNode> enume = racineInsc.children();
 					if(enume.hasMoreElements()){
 						while(enume.hasMoreElements()){
-							if(enume.nextElement().getUserObject().toString()==racinePromo.getUserObject().toString()){
+							Promotion p = (Promotion)enume.nextElement().getUserObject();
+							System.out.println(p.getCode());
+							System.out.println(((Promotion)racinePromo.getUserObject()).getCode());
+							if(p.getCode().equals(((Promotion)racinePromo.getUserObject()).getCode())){
 								verif++;
 							}
 						}
@@ -245,7 +248,7 @@ public class fenPrincipale extends javax.swing.JFrame {
 			}
     	});
     	
-    	
+    	//Clic sur supprimer une inscription
     	jButtonSupIncriptionEleve.addActionListener(new ActionListener(){
 
 			@Override
@@ -256,7 +259,13 @@ public class fenPrincipale extends javax.swing.JFrame {
 					while(enume.hasMoreElements()){
 						ctrl.supprInscription((Stagiaire)enume.nextElement().getUserObject(), ctrl.getTestEnCour());
 					}
-				((DefaultTreeModel)jTreeListeStagiaireTest.getModel()).removeNodeFromParent((MutableTreeNode)jTreeListeStagiaireTest.getSelectionPath().getLastPathComponent());				}
+					((DefaultTreeModel)jTreeListeStagiaireTest.getModel()).removeNodeFromParent((MutableTreeNode)jTreeListeStagiaireTest.getSelectionPath().getLastPathComponent());
+					jTreeListeStagiaireTest.setSelectionRow(0);
+					if(jTreeListeStagiaireTest.getModel().getChildCount(jTreeListeStagiaireTest.getLastSelectedPathComponent())==0){
+						DefaultMutableTreeNode racineVide = new DefaultMutableTreeNode("Vide..");
+						jTreeListeStagiaireTest.setModel(new DefaultTreeModel(racineVide));
+					}
+				}
 			}
     		
     	});
