@@ -17,7 +17,6 @@ import java.util.Enumeration;
 import java.util.GregorianCalendar;
 import java.util.Vector;
 
-import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.SpinnerNumberModel;
@@ -26,19 +25,10 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.MutableTreeNode;
-import javax.swing.tree.TreeNode;
-import javax.swing.tree.TreePath;
-import javax.swing.tree.TreeSelectionModel;
+import javax.swing.tree.*;
 
-import modeles.Promotion;
-import modeles.Question;
-import modeles.Section;
-import modeles.Stagiaire;
-import modeles.Test;
-import modeles.Type;
+import modeles.*;
+
 import vues.JPanelNouvelleReponse;
 import controleur.CtrlFormateur;
 
@@ -73,14 +63,24 @@ public class fenPrincipale extends javax.swing.JFrame {
     }
 
 
-    /*****************************************************
-	*			Initialisation	des panels 				 *
-	*			 (Listener, ctrl, etc ...)				 *
-	******************************************************/
+	/**********************************************************************************************************
+    ***********************************************************************************************************
+    *** 																			 						***
+  	***									Initialisation des panels de l'application							***
+  	***					Ajout des listener, initialisation des jTree, jList, jText, etc ...					***
+  	***																			 							***
+  	***********************************************************************************************************
+  	***********************************************************************************************************/
     
-    /*****************************************************
-	*			Initialisation du panel Test			 *
-	******************************************************/
+    /**********************************************************************************************************
+    ***********************************************************************************************************
+    *** 																			 						***
+   	***									Initialisation du panel tests										***
+   	***				Gere tous les aspects liés au test ( creation, suppresion, enregistrement				***
+   	***				L'inscription des stagiaires est géré dans ce panel	 									***
+   	***																			 							***
+   	***********************************************************************************************************
+   	***********************************************************************************************************/
     
     
     //Rempli la liste des stagiaires inscrits à un test
@@ -325,14 +325,28 @@ public class fenPrincipale extends javax.swing.JFrame {
     	
     }
     
-    /*****************************************************
-	*			Initialisation du panel Section			 *
-	******************************************************/
+    
+    /**********************************************************************************************************
+    ***********************************************************************************************************
+    *** 																			 						***
+    ***									Initialisation du panel Sections									***
+    ***				Gere tous les aspects liés au section ( creation, suppresion, enregistrement )			***
+    ***				L'affectation des sections au tests s'effectue dans ce panel							***
+    ***																			 							***
+    ***********************************************************************************************************
+    ***********************************************************************************************************/
  
     private void initPanelSection(){
     	
+    	 	
+    	/*****************************************************
+    	*			Listener du panel section				 *
+    	******************************************************/
+    		
+    	
     	// Listener sur la jList des sections disponible
     	// Mets à jour les zones de textes correspondantes
+    	
     	jListSectionDisponible.addListSelectionListener(new ListSelectionListener(){
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
@@ -352,6 +366,8 @@ public class fenPrincipale extends javax.swing.JFrame {
     		
     	});
     	
+    	// Listener sur le bouton d'ajout de section
+    	// Ajoute la section dans la liste des sections du test
     	
     	jButtonAjoutSection.addActionListener(new ActionListener(){
 
@@ -370,6 +386,9 @@ public class fenPrincipale extends javax.swing.JFrame {
     		
     	});
     	
+    	// Listener sur le bouton enlever la section
+    	// Enleve la section du test (liste et Base de donnée)
+    	
     	jButtonEnleverSection.addActionListener(new ActionListener(){
 
 			@Override
@@ -382,6 +401,9 @@ public class fenPrincipale extends javax.swing.JFrame {
     		
     	});
     	
+    	// Listener sur le bouton nouvelle section
+    	// Ajoute la section a la liste
+    	
     	jButtonNouveauSection.addActionListener(new ActionListener(){
 
 			@Override
@@ -392,6 +414,9 @@ public class fenPrincipale extends javax.swing.JFrame {
 			}
     		
     	});
+
+    	// Listener sur le bouton enregistrer la section
+    	// Enregistre la section dans la base de donnée
     	
     	jButtonEnregistrerSection.addActionListener(new ActionListener(){
 
@@ -405,6 +430,9 @@ public class fenPrincipale extends javax.swing.JFrame {
 			}
     	});
     	
+    	// Listener sur le bouton supprimer la section
+    	// Supprime la section dans la base de donnée
+    	
     	jButtonSupprimerSection.addActionListener(new ActionListener(){
 
 			@Override
@@ -413,6 +441,10 @@ public class fenPrincipale extends javax.swing.JFrame {
 			}
     		
     	});
+    	
+    	/*****************************************************
+    	*	Méthodes d'initialisation  du panel Section		 *
+    	******************************************************/
     	
     	SpinnerNumberModel model = new SpinnerNumberModel(0,0,10,1); 
 		jSpinnerNbrQuestionTest.setModel(model);
@@ -432,9 +464,15 @@ public class fenPrincipale extends javax.swing.JFrame {
     		
     }
   
-    /*****************************************************
-	*			Initialisation du panel Question		 *
-	******************************************************/
+    /**********************************************************************************************************
+     **********************************************************************************************************
+     *** 																			 						***
+     ***									Initialisation du panel Question								***
+     ***				Gere tous les aspects liés au question ( creation, suppresion, enregistrement )		***
+     ***				L'association des questions a la section en cours s'effectue dans ce panel			***
+     ***																			 						***
+     **********************************************************************************************************
+     **********************************************************************************************************/
  
  	private void initPanelQuestion(){
  	
@@ -499,9 +537,15 @@ public class fenPrincipale extends javax.swing.JFrame {
  }
  
       
-    /*****************************************************
-	*			Initialisation de la barre de menu		 *
-	******************************************************/
+ 	 /*********************************************************************************************************
+     **********************************************************************************************************
+     *** 																			 						***
+     ***									Initialisation de la barre de menu								***
+     ***				Ajoute les listeners au jMenuItem													***
+     ***																									***
+     ***																			 						***
+     **********************************************************************************************************
+     **********************************************************************************************************/
  	
  	
  	private void initBarreMenu(){
@@ -517,9 +561,15 @@ public class fenPrincipale extends javax.swing.JFrame {
  		
     }
     
- 	/*****************************************************
-	*			Initialisation du jTabbedPane			 *
-	******************************************************/
+ 	 /*********************************************************************************************************
+     **********************************************************************************************************
+     *** 																			 						***
+     ***									Initialisation du jTabbedPane									***
+     ***				Ajout de listener sur le jtabbedpane												***
+     ***				Effectue les mises a jour lors du changement de tab									***
+     ***																			 						***
+     **********************************************************************************************************
+     **********************************************************************************************************/
    
  	private void initJtabbedPane(){
  		
@@ -555,10 +605,15 @@ public class fenPrincipale extends javax.swing.JFrame {
  		});
  	}
  	
-    
- 	/*****************************************************
-	*	Initialisation Composant Generer via NetBeans 	 *
-	******************************************************/
+ 	
+ 	/**********************************************************************************************************
+    ***********************************************************************************************************
+    *** 																			 						***
+ 	***									Initialisation des composants			 							***
+ 	***									Code generer par NetBeans				 							***
+ 	***																			 							***
+ 	***********************************************************************************************************
+ 	***********************************************************************************************************/
 
     /** This method is called from within the constructor to
      * initialize the form.
