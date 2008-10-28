@@ -671,7 +671,7 @@ public class fenPrincipale extends javax.swing.JFrame {
         jListTests.setToolTipText("Liste des tests existants");
         jScrollPane1.setViewportView(jListTests);
 
-        jPanelProprietesTest.setBorder(javax.swing.BorderFactory.createTitledBorder("PropriÃ©tÃ©s"));
+        jPanelProprietesTest.setBorder(javax.swing.BorderFactory.createTitledBorder("Propriétés"));
         jPanelProprietesTest.setToolTipText("Nouveau test");
 
         jLabelNomTest.setText("Nom :");
