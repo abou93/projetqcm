@@ -646,6 +646,7 @@ public class fenPrincipale extends javax.swing.JFrame {
 				case 1 :if(ctrl.getTestEnCour()!= null)
 						{
 			    			jTextNomTestPanelSection.setText(ctrl.getTestEnCour().getNom());
+			    			
 						}
 						break;
 				case 2 :if((ctrl.getTestEnCour()!= null)&(ctrl.getSectionEnCour()!=null))
