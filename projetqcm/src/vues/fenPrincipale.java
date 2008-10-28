@@ -29,6 +29,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.MutableTreeNode;
+import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 
@@ -105,6 +106,17 @@ public class fenPrincipale extends javax.swing.JFrame {
 	    	jTreeListeStagiaireTest.setModel(new DefaultTreeModel(racineTest));
 		}
 	}
+    
+    private String calculDate(){
+    	Date d = new Date();
+		GregorianCalendar calendar = new GregorianCalendar();
+		calendar.setTime(d);
+		int duree = Integer.parseInt(jSpinnerDureeInscription.getValue().toString());
+		calendar.add(Calendar.DATE, duree);
+		Date d1 = calendar.getTime();
+		SimpleDateFormat formatDate = new SimpleDateFormat("dd/MM/yyyy");
+		return formatDate.format(d1);
+    }
     
     private void initPanelTest(){
 
@@ -221,8 +233,6 @@ public class fenPrincipale extends javax.swing.JFrame {
 					if(enume.hasMoreElements()){
 						while(enume.hasMoreElements()){
 							Promotion p = (Promotion)enume.nextElement().getUserObject();
-							System.out.println(p.getCode());
-							System.out.println(((Promotion)racinePromo.getUserObject()).getCode());
 							if(p.getCode().equals(((Promotion)racinePromo.getUserObject()).getCode())){
 								verif++;
 							}
@@ -232,19 +242,36 @@ public class fenPrincipale extends javax.swing.JFrame {
 						racineInsc.add(racinePromo);
 						Promotion p = (Promotion)racinePromo.getUserObject();
 						for(Stagiaire s:p.getListeStagiaires()){
-							Date d = new Date();
-							GregorianCalendar calendar = new GregorianCalendar();
-							calendar.setTime(d);
-							int duree = Integer.parseInt(jSpinnerDureeInscription.getValue().toString());
-							calendar.add(Calendar.DATE, duree);
-							Date d1 = calendar.getTime();
-							SimpleDateFormat formatDate = new SimpleDateFormat("dd/MM/yyyy");
-							ctrl.inscrirStagiaireTest(s, ctrl.getTestEnCour(), formatDate.format(d1), jTextFieldMailFormateur.getText());
+							ctrl.inscrirStagiaireTest(s, ctrl.getTestEnCour(), calculDate(), jTextFieldMailFormateur.getText());
 							DefaultMutableTreeNode racineStagiaire = new DefaultMutableTreeNode(s);
 							racinePromo.add(racineStagiaire);
 						}
 						jTreeListeStagiaireTest.setModel(new DefaultTreeModel(racineInsc));
 					}
+				}else if ((((DefaultMutableTreeNode)jTreeListeStagaireEni.getLastSelectedPathComponent()).getUserObject() instanceof Stagiaire)){
+					boolean verif=false;
+					DefaultMutableTreeNode racinePromo = new DefaultMutableTreeNode(((DefaultMutableTreeNode)((DefaultMutableTreeNode)jTreeListeStagaireEni.getLastSelectedPathComponent()).getParent()).getUserObject());
+					DefaultMutableTreeNode racineStagiaire = new DefaultMutableTreeNode(((DefaultMutableTreeNode)jTreeListeStagaireEni.getLastSelectedPathComponent()).getUserObject());
+					Enumeration<DefaultMutableTreeNode> enume = racineInsc.children();
+					if(enume.hasMoreElements()){
+						while(enume.hasMoreElements()){
+							DefaultMutableTreeNode node = enume.nextElement();
+							Promotion p = (Promotion)node.getUserObject();
+							if(p.getCode().equals(((Promotion)racinePromo.getUserObject()).getCode())){
+								if(ctrl.inscrirStagiaireTest((Stagiaire)racineStagiaire.getUserObject(), ctrl.getTestEnCour(),  calculDate(), jTextFieldMailFormateur.getText())){
+									node.add(racineStagiaire);
+								}
+								verif=true;
+							}
+						}
+					}
+					if(!verif){
+						if(ctrl.inscrirStagiaireTest((Stagiaire)racineStagiaire.getUserObject(), ctrl.getTestEnCour(),  calculDate(), jTextFieldMailFormateur.getText())){
+							racinePromo.add(racineStagiaire);
+							racineInsc.add(racinePromo);
+						}
+					}
+					jTreeListeStagiaireTest.setModel(new DefaultTreeModel(racineInsc));
 				}
 			}
     	});
@@ -266,6 +293,24 @@ public class fenPrincipale extends javax.swing.JFrame {
 						DefaultMutableTreeNode racineVide = new DefaultMutableTreeNode("Vide..");
 						jTreeListeStagiaireTest.setModel(new DefaultTreeModel(racineVide));
 					}
+				}else if (((DefaultMutableTreeNode)jTreeListeStagiaireTest.getLastSelectedPathComponent()).getUserObject() instanceof Stagiaire){
+					DefaultMutableTreeNode stagiaireSelectionnee = (DefaultMutableTreeNode)jTreeListeStagiaireTest.getLastSelectedPathComponent();
+					TreeNode promoSelectionnee = ((DefaultMutableTreeNode)jTreeListeStagiaireTest.getLastSelectedPathComponent()).getParent();
+					
+					ctrl.supprInscription((Stagiaire)stagiaireSelectionnee.getUserObject(), ctrl.getTestEnCour());
+					
+					((DefaultTreeModel)jTreeListeStagiaireTest.getModel()).removeNodeFromParent((MutableTreeNode)jTreeListeStagiaireTest.getSelectionPath().getLastPathComponent());
+					jTreeListeStagiaireTest.setSelectionRow(0);
+					
+					if(promoSelectionnee.getChildCount()==0){
+						((DefaultTreeModel)jTreeListeStagiaireTest.getModel()).removeNodeFromParent((DefaultMutableTreeNode)promoSelectionnee);
+					}
+					
+					if(jTreeListeStagiaireTest.getModel().getChildCount(jTreeListeStagiaireTest.getLastSelectedPathComponent())==0){
+						DefaultMutableTreeNode racineVide = new DefaultMutableTreeNode("Vide..");
+						jTreeListeStagiaireTest.setModel(new DefaultTreeModel(racineVide));
+					}
+					//TODO supprimer l'inscription d'un stagiaire
 				}
 			}
     		
