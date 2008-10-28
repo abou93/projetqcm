@@ -551,7 +551,7 @@ public class fenPrincipale extends javax.swing.JFrame {
  			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				jPanelReponse.add(new JPanelNouvelleReponse());
+				jPanelReponse.add(new JPanelNouvelleReponse('A',"",false));
 				jPanelReponse.validate();
 				jPanelReponse.repaint();
 			}
