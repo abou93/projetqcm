@@ -165,6 +165,7 @@ public class fenPrincipale extends javax.swing.JFrame {
 				if(((DefaultMutableTreeNode)jTreeListeStagaireEni.getLastSelectedPathComponent()).getUserObject() instanceof Promotion){
 					DefaultMutableTreeNode racinePromo = new DefaultMutableTreeNode(((DefaultMutableTreeNode)jTreeListeStagaireEni.getLastSelectedPathComponent()).getUserObject());
 					racineInsc.add(racinePromo);
+					System.out.println("essai");
 				}
 			}
     		
