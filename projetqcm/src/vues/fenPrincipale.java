@@ -542,7 +542,21 @@ public class fenPrincipale extends javax.swing.JFrame {
 				boite.setMultiSelectionEnabled(false);
 				boite.setFileFilter(new FileNameExtensionFilter("Fichier JPEG","jpg"));
 				boite.showOpenDialog(null);
+				
 			}
+ 		});
+ 		
+ 		
+ 		jButtonNouvelleQuestion.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ctrl.getSectionEnCour().addQuestion(new Question());
+				jListQuestionDeLaSection.setListData(ctrl.getSectionEnCour().getQuestions());
+				jListQuestionDeLaSection.setSelectedIndex(jListQuestionDeLaSection.getLastVisibleIndex());
+							
+			}
+ 			
  		});
  		
  		/*****************************************************
