@@ -196,7 +196,9 @@ public class CtrlFormateur {
 	 * @return Vector(Stagiaire)
 	 */
 	public Vector<Stagiaire> getStagiairesPromo(Promotion promotion){
-		return DalStagiaire.selectStagiairesPromotion(promotion.getCode());
+		Vector<Stagiaire> v = DalStagiaire.selectStagiairesPromotion(promotion.getCode());
+		if (v !=null) promotion.setListeStagiaires(v);
+		return v;
 	}
 	
 	

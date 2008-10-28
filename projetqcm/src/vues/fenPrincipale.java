@@ -34,6 +34,10 @@ import modeles.*;
 public class fenPrincipale extends javax.swing.JFrame {
 	
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	CtrlFormateur ctrl;
     
 	/*****************************************************
