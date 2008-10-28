@@ -8,6 +8,7 @@ package vues;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -16,8 +17,6 @@ import java.util.Enumeration;
 import java.util.GregorianCalendar;
 import java.util.Vector;
 
-import javax.swing.ComboBoxModel;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.SpinnerNumberModel;
@@ -79,6 +78,8 @@ public class fenPrincipale extends javax.swing.JFrame {
 	*			Initialisation du panel Test			 *
 	******************************************************/
     
+    
+    //Rempli la liste des stagiaires inscrits à un test
     private void remplirTreeInscriptions(){
 		Vector<Stagiaire> stag = ctrl.getStagiairesTest(ctrl.getTestEnCour());
 		Vector<Promotion> listePromo = new Vector<Promotion>();
@@ -107,6 +108,7 @@ public class fenPrincipale extends javax.swing.JFrame {
 		}
 	}
     
+    //Calcul la date de fin de l'inscription (durée de validité)
     private String calculDate(){
     	Date d = new Date();
 		GregorianCalendar calendar = new GregorianCalendar();
@@ -198,11 +200,9 @@ public class fenPrincipale extends javax.swing.JFrame {
     		racine.add(sousDossier);
     	}
     	
-    	
+    	//Initialisation des jtree pour l'inscription
     	jTreeListeStagaireEni.setModel(new DefaultTreeModel(racine));
     	//jTreeListeStagaireEni.expandPath(jTreeListeStagaireEni.getPathForRow(1));
-    	
-    	
     	jTreeListeStagaireEni.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
     	jTreeListeStagiaireTest.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
     	
@@ -310,9 +310,12 @@ public class fenPrincipale extends javax.swing.JFrame {
 						DefaultMutableTreeNode racineVide = new DefaultMutableTreeNode("Vide..");
 						jTreeListeStagiaireTest.setModel(new DefaultTreeModel(racineVide));
 					}
-					//TODO supprimer l'inscription d'un stagiaire
 				}
 			}
+    		
+    	});
+    	
+    	jTreeListeStagaireEni.addMouseListener(new MouseAdapter(){
     		
     	});
     	
