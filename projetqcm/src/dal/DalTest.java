@@ -3,6 +3,8 @@ package dal;
 import java.sql.*;
 import java.util.Vector;
 
+import pluriel.ListeSections;
+
 import modeles.*;
 
 /***
@@ -323,9 +325,9 @@ public class DalTest {
 	 * @param String nomTest
 	 * @return Vector
 	 */
-	public static Vector<Section> selectSectionByTest(String nomTest)
+	public static ListeSections selectSectionByTest(String nomTest)
 	{
-		Vector<Section> listeSectionsDuTest = new Vector<Section>();
+		ListeSections listeSectionsDuTest = new ListeSections();
 		Connection cnx;
 		PreparedStatement stm;
 		ResultSet rs;
@@ -428,13 +430,13 @@ public class DalTest {
 	}
 	
 	
-	public static Vector<Section> selectAllSection()
+	public static ListeSections selectAllSection()
 	{
 		Connection cnx;
 		PreparedStatement stm;
 		ResultSet rs;
 		cnx=AccesBase.getConnection();
-		Vector<Section> listeSections = new Vector<Section>();
+		ListeSections listeSections = new ListeSections();
 		
 		try {
 			

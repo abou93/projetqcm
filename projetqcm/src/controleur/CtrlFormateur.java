@@ -4,6 +4,8 @@ import java.util.Enumeration;
 import java.util.Random;
 import java.util.Vector;
 
+import pluriel.ListeSections;
+
 import modeles.Inscription;
 import modeles.Promotion;
 import modeles.Question;
@@ -25,10 +27,10 @@ public class CtrlFormateur {
 	static CtrlFormateur instance;
 	Vector<Test> listeTests;
 	Vector<Promotion> listePromotions;
-	Vector<Section> listeSectionsParTest;
+	ListeSections listeSectionsParTest;
 	
 
-	Vector<Section> listeSections;
+	ListeSections listeSections;
 	//Vector<Stagiaire> listeStagiaires;
 	
 	Test testEnCour = null;
@@ -68,6 +70,7 @@ public class CtrlFormateur {
 		if (!(this.listeSectionsParTest.contains(section)))
 			{ 
 			this.listeSectionsParTest.add(section);
+			this.enleverSectionTest(section, this.getTestEnCour());
 			}
 	}
 	
@@ -101,8 +104,8 @@ public class CtrlFormateur {
 		super();
 		listeTests=new Vector<Test>();
 		listePromotions = new Vector<Promotion>();
-		listeSectionsParTest = new Vector<Section>();
-		listeSections = new Vector<Section>();
+		listeSectionsParTest = new ListeSections();
+		listeSections = new ListeSections();
 		//listeStagiaires = new Vector<Stagiaire>();
 		chargerListePromotions();
 	}

@@ -189,17 +189,21 @@ public class fenPrincipale extends javax.swing.JFrame {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				Section s = null ;
-				if (e.getSource()==jListSectionDisponible){
-				s = (Section) jListSectionDisponible.getSelectedValue();}
-				if (e.getSource()==jListSectionDuTest){
-				s = (Section) jListSectionDuTest.getSelectedValue();}
-				jTextFieldNomSection.setText(s.getNom());
-				jTextFieldNumeroSection.setText(String.valueOf(s.getNumero()));
-				jSpinnerNbrQuestionTest.setValue(s.getNbrQuestion());
-				ctrl.setSectionEnCour(s);
+				if (jListSectionDisponible.getSelectedValue()!=null)
+				{
+					if (e.getSource()==jListSectionDisponible){
+						s = (Section) jListSectionDisponible.getSelectedValue();}
+					if (e.getSource()==jListSectionDuTest){
+						s = (Section) jListSectionDuTest.getSelectedValue();}
+					jTextFieldNomSection.setText(s.getNom());
+					jTextFieldNumeroSection.setText(String.valueOf(s.getNumero()));
+					jSpinnerNbrQuestionTest.setValue(s.getNbrQuestion());
+					ctrl.setSectionEnCour(s);
+				}
 			}
     		
     	});
+    	
     	
     	jButtonAjoutSection.addActionListener(new ActionListener(){
 
@@ -208,6 +212,7 @@ public class fenPrincipale extends javax.swing.JFrame {
 				Section s = (Section) jListSectionDisponible.getSelectedValue();
 				ctrl.addSectionListeSectionsParTest(s);
 				jListSectionDuTest.setListData(ctrl.getListeSectionsParTest());
+				ctrl.affecterSectionTest(s, ctrl.getTestEnCour());
 			}
     		
     	});
@@ -219,6 +224,39 @@ public class fenPrincipale extends javax.swing.JFrame {
 				Section s = (Section) jListSectionDuTest.getSelectedValue();
 				ctrl.supSectionListeSectionsParTest(s);
 				jListSectionDuTest.setListData(ctrl.getListeSectionsParTest());
+				
+			}
+    		
+    	});
+    	
+    	jButtonNouveauSection.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ctrl.nouvelleSection();
+				jListSectionDisponible.setListData(ctrl.getListeSection());
+				jListSectionDisponible.setSelectedIndex(jListSectionDisponible.getLastVisibleIndex());
+			}
+    		
+    	});
+    	
+    	jButtonEnregistrerSection.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Section s = ctrl.getSectionEnCour();
+				s.setNom(jTextFieldNomSection.getText());
+				s.setNumero((Integer)jSpinnerNbrQuestionTest.getValue());
+				s.setNbrQuestion((Integer)jSpinnerNbrQuestionTest.getValue());
+				ctrl.enregistrerSection(s);
+			}
+    	});
+    	
+    	jButtonSupprimerSection.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ctrl.supprimerSection(ctrl.getTestEnCour(), ctrl.getSectionEnCour());
 			}
     		
     	});

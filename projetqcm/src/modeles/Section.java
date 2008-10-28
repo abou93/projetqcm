@@ -109,4 +109,12 @@ public class Section {
 		return this.getNom();
 			
 	}
+	
+	public boolean contains(Object o){
+		Section s = (Section) o;
+		if(this.numero == s.getNumero()) return true;
+		else return false;
+	}
+	
+	
 }
