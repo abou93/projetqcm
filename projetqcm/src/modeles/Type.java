@@ -53,5 +53,11 @@ public class Type {
 		this.libelle = libelle;
 	}
 	
+	public String toString()
+	{
+		return this.getLibelle();
+	}
+	
+	
 	
 }

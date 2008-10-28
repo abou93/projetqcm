@@ -4,6 +4,8 @@ import java.sql.*;
 import java.util.UUID;
 import java.util.Vector;
 
+import pluriel.ListeTypes;
+
 import modeles.*;
 
 
@@ -19,6 +21,9 @@ import modeles.*;
  *   
  */
 public class DalQuestion {
+	
+	private static ListeTypes listeType = new ListeTypes();
+	
 	
 	/*****************************************************
 	*					Methodes Insert 				 *
@@ -254,6 +259,10 @@ public class DalQuestion {
 				question.setType(selectType(rs.getInt("TYPE_QUESTION")));
 				question.setCheminImage(rs.getString("IMAGE_QUESTION"));
 				listeQuestions.add(question);
+				
+				int i = listeType.indexOf(question.getType());
+				question.setType(listeType.elementAt(i));
+				
 			}
 				
 		} catch (SQLException e) {
@@ -338,6 +347,44 @@ public class DalQuestion {
 		
 		AccesBase.deconnexionBase(cnx);
 		return type;
+	}
+	
+	
+	/***
+	 * Recupere les questions presentes dans la base pour la section passée en paramètre <br>
+	 * Retourne une liste de Question
+	 * @param Section section
+	 * @return Vector
+	 */
+	public static Vector<Type> selectAllType()
+	{
+		
+		Connection cnx;
+		PreparedStatement stm;
+		ResultSet rs;
+		cnx=AccesBase.getConnection();
+		
+		
+		try {
+			
+			stm = cnx.prepareStatement("select * from TYPE_QUESTION ");
+			rs=stm.executeQuery();
+			while(rs.next())
+			{
+				Type type = new Type();
+				type.setNumero(rs.getInt("NUMERO"));
+				type.setLibelle(rs.getString("LIBELLE"));
+				listeType.add(type);
+			}
+			
+							
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+			System.err.println("erreur selectType");
+		}					
+		
+		AccesBase.deconnexionBase(cnx);
+		return listeType;
 	}
 	
 	

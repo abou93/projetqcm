@@ -16,6 +16,8 @@ import java.util.Enumeration;
 import java.util.GregorianCalendar;
 import java.util.Vector;
 
+import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JFileChooser;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
@@ -369,6 +371,10 @@ public class fenPrincipale extends javax.swing.JFrame {
  
  	private void initPanelQuestion(){
  	
+ 		/*****************************************************
+ 		*		 		Ajout des Listener					 *
+ 		******************************************************/
+ 		
  		jButtonAjoutDuneReponse.addActionListener(new ActionListener(){
 
 			@Override
@@ -392,6 +398,32 @@ public class fenPrincipale extends javax.swing.JFrame {
 			}
  		});
  		
+ 		/*****************************************************
+ 		*		 		Initialisation des composants		 *
+ 		******************************************************/
+ 		
+ 		for(Type type : ctrl.getListeTypes()){
+ 			jComboBoxListeTypeQuestion.addItem(type);
+ 		}
+ 		
+ 		
+ 		DefaultMutableTreeNode racine = new DefaultMutableTreeNode("Questions Disponibles") ;
+    	for (Section s : ctrl.getListeSection()){
+    		DefaultMutableTreeNode sousDossier = new DefaultMutableTreeNode(s);
+    		for (Question q : ctrl.questionParSection(s)){
+    			sousDossier.add(new DefaultMutableTreeNode(q));
+    		}
+    		racine.add(sousDossier);
+    	}
+    	jTreeListeQuestionDispo.setModel(new DefaultTreeModel(racine));
+ 		
+    	jListQuestionDeLaSection.setListData(ctrl.questionParSection(ctrl.getSectionEnCour()));
+ 		jListQuestionDeLaSection.setSelectedIndex(jListQuestionDeLaSection.getFirstVisibleIndex());
+ 		ctrl.setQuestionEnCour((Question)jListQuestionDeLaSection.getSelectedValue());
+ 		
+ 		jComboBoxListeTypeQuestion.setSelectedItem(jListQuestionDeLaSection.getSelectedValue()); 		
+ 		jEditorPaneEnonceQuestion.setText(ctrl.getQuestionEnCour().getEnonce());
+ 		 		
  		if((ctrl.getTestEnCour()!= null)&(ctrl.getSectionEnCour()!=null)){
  			jTextFieldNomTestPanelQuestion.setText(ctrl.getTestEnCour().getNom());
  	 		jTextFieldNomSectionPanelQuestion.setText(ctrl.getSectionEnCour().getNom());

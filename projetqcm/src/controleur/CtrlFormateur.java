@@ -13,6 +13,7 @@ import modeles.Reponse;
 import modeles.Section;
 import modeles.Stagiaire;
 import modeles.Test;
+import modeles.Type;
 import dal.DalInscription;
 import dal.DalQuestion;
 import dal.DalStagiaire;
@@ -28,14 +29,14 @@ public class CtrlFormateur {
 	Vector<Test> listeTests;
 	Vector<Promotion> listePromotions;
 	ListeSections listeSectionsParTest;
-	
+	Vector<Type> listeTypes;
 
 	ListeSections listeSections;
 	//Vector<Stagiaire> listeStagiaires;
 	
 	Test testEnCour = null;
 	Section sectionEnCour = null;
-	
+	Question questionEnCour = null;
 	
 	
 	/*****************************************************
@@ -44,6 +45,16 @@ public class CtrlFormateur {
 	
 	public Test getTestEnCour() {
 		return testEnCour;
+	}
+
+
+	public Question getQuestionEnCour() {
+		return questionEnCour;
+	}
+
+
+	public void setQuestionEnCour(Question questionEnCour) {
+		this.questionEnCour = questionEnCour;
 	}
 
 
@@ -95,6 +106,16 @@ public class CtrlFormateur {
 	public Vector<Test> getListeTests() {
 		return listeTests;
 	}
+	
+	public Vector<Type> getListeTypes() {
+		return listeTypes;
+	}
+
+
+	public void setListeTypes(Vector<Type> listeTypes) {
+		this.listeTypes = listeTypes;
+	}
+
 
 	/*****************************************************
 	*					Constructeur					 *
@@ -106,8 +127,10 @@ public class CtrlFormateur {
 		listePromotions = new Vector<Promotion>();
 		listeSectionsParTest = new ListeSections();
 		listeSections = new ListeSections();
-		//listeStagiaires = new Vector<Stagiaire>();
+		listeTypes = new Vector<Type>();
+	
 		chargerListePromotions();
+		chargerListeType();
 	}
 	
 
@@ -115,6 +138,8 @@ public class CtrlFormateur {
 	*					Méthodes						 *
 	******************************************************/
 	
+
+
 	/***
 	 * Méthode singleton permettant de récupérer l'instance du controleur. Si cette instance existe la méthode la renvoie sinon la méthode la créer.
 	 * @return instance du controleur CtrlFormateur
@@ -192,6 +217,16 @@ public class CtrlFormateur {
 		Vector<Promotion> v = DalStagiaire.selectAllPromotions();
 		if (v != null) listePromotions=v; 
 	}
+	
+	
+	/***
+	 * Charge la liste des types depuis la base.
+	 */
+	private void chargerListeType(){
+		Vector<Type> v = DalQuestion.selectAllType();
+		if (v != null) listeTypes=v; 
+	}
+	
 	
 	/***
 	 * Liste les stagiaires pour la promotion désirée.
@@ -463,4 +498,10 @@ public class CtrlFormateur {
 		}
 		return b;
 	}
+	
+	
+	
+	
 }
+
+

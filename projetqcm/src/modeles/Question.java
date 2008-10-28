@@ -141,9 +141,7 @@ public class Question {
 	
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("Question " + this.getId().toString()+ "\n");
-		builder.append(this.getEnonce()+ "\n");
-		builder.append("Nombre de reponse : " + this.getNombreReponse());
+		builder.append("Question : " + this.getEnonce()+ "\n");
 		return builder.toString();
 	}
 		
