@@ -6,15 +6,29 @@
 
 package vues;
 
+import java.awt.Font;
+
+import javax.swing.ScrollPaneConstants;
+
 /**
  *
  * @author  slefort
  */
 public class JPanelNouvelleReponse extends javax.swing.JPanel {
 
-    /** Creates new form JPanelNouvelleReponse */
-    public JPanelNouvelleReponse() {
+	/** Creates new form JPanelNouvelleReponse */
+    public JPanelNouvelleReponse(String lettre,String texte,boolean checked) {
         initComponents();
+        initPerso(lettre,texte,checked);
+    }
+
+    
+    private void initPerso(String lettre,String texte,boolean checked){
+    	jTextAreaNouvelleReponse.setFont(new Font("Tahoma",0,11));
+    	jScrollPane1.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+    	jCheckBoxReponseVrai.setSelected(checked);
+    	jTextAreaNouvelleReponse.setText(texte);
+    	jLabel1.setText(lettre);
     }
 
     /** This method is called from within the constructor to

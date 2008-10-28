@@ -6,7 +6,6 @@
 
 package vues;
 
-import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -19,10 +18,8 @@ import java.util.Enumeration;
 import java.util.GregorianCalendar;
 import java.util.Vector;
 
-import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -559,7 +556,7 @@ public class fenPrincipale extends javax.swing.JFrame {
  			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				jPanelReponse.add(new JPanelNouvelleReponse('A',"",false));
+				jPanelReponse.add(new JPanelNouvelleReponse("A","",false));
 				jPanelReponse.validate();
 				jPanelReponse.repaint();
 			}
