@@ -1,5 +1,7 @@
 package modeles;
 
+import java.util.Vector;
+
 public class Promotion {
 
 	/*****************************************************
@@ -8,6 +10,7 @@ public class Promotion {
 	
 	private String code;
 	private String libelle;
+	private Vector<Stagiaire> listeStagiaires;
 	
 	
 	/*****************************************************
@@ -18,6 +21,7 @@ public class Promotion {
 		super();
 		this.code = code;
 		this.libelle = libelle;
+		this.listeStagiaires = new Vector<Stagiaire>();
 	}
 
 	
@@ -37,5 +41,12 @@ public class Promotion {
 		return this.getCode();
 	}
 	
+	public Vector<Stagiaire> getListeStagiaires(){
+		return this.listeStagiaires;
+	}
+	
+	public void setListeStagiaires(Vector<Stagiaire> stagiaires){
+		this.listeStagiaires = stagiaires;
+	}
 	
 }
