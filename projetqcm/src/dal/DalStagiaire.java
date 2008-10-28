@@ -127,7 +127,7 @@ public class DalStagiaire {
 		Vector<Stagiaire> listeStagiaires = new Vector<Stagiaire>();
 		try {
 			PreparedStatement stm = cnx.prepareStatement("select * from PROMOTIONS p inner join STAGIAIRES s on p.CODE = s.CODE_PROMOTION inner join INSCRIPTIONS i on s.ID = i.ID_STAGIAIRE where NOM_TEST = ?");
-			stm.setObject(1, test.getNom());	
+			stm.setString(1, test.getNom());	
 			ResultSet rs = stm.executeQuery();
 			Vector<Promotion> listePromo = selectAllPromotions();
 			
@@ -149,6 +149,28 @@ public class DalStagiaire {
 			return null;
 		}
 		return listeStagiaires;
+	}
+	
+	
+	/***
+	 * Met à jour le stagiaire passé en paramètre
+	 * @param Stagiaire : stagiaire
+	 * @return Boolean : True si la mise à jour est ok, false dans l'autre cas.
+	 */
+	public static boolean updateStagiaire(Stagiaire stagiaire){
+		cnx = AccesBase.getConnection();
+		try {
+			PreparedStatement stm = cnx.prepareStatement("update STAGIAIRES set MOT_DE_PASSE = ? where ID = ?");
+			stm.setString(1, stagiaire.getMotDePasse());
+			stm.setString(2, stagiaire.getId().toString());
+			stm.executeUpdate();
+			AccesBase.deconnexionBase(cnx);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			AccesBase.deconnexionBase(cnx);
+			return false;
+		}
+		return true;
 	}
 	
 }

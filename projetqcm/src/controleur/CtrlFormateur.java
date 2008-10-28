@@ -504,6 +504,13 @@ public class CtrlFormateur {
 	}
 	
 	
+	public void changerMotPasseStagiaire(Stagiaire stagiaire,String nouveauMotDePasse){
+		if(nouveauMotDePasse!=null){
+			stagiaire.changerMotDePasse(nouveauMotDePasse);
+			DalStagiaire.updateStagiaire(stagiaire);
+		}
+	}
+	
 	
 	
 }

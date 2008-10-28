@@ -9,6 +9,7 @@ package vues;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -219,9 +220,10 @@ public class fenPrincipale extends javax.swing.JFrame {
 				if(jTreeListeStagaireEni.getSelectionCount()==0){
 					jTreeListeStagaireEni.setSelectionRow(0);
 				}
+				
 				DefaultMutableTreeNode racineInsc = null;
 				TreePath path = jTreeListeStagiaireTest.getPathForRow(0);
-				//jTreeListeStagaireEni.getPathForRow(0).toString().equals("ENI Ecole")
+				
 				if(path.toString().equals("[Vide..]") & !jTreeListeStagaireEni.getLastSelectedPathComponent().toString().equals("ENI Ecole")){
 					racineInsc = new DefaultMutableTreeNode("Inscrits");
 					jTreeListeStagiaireTest.setModel(new DefaultTreeModel(racineInsc));
@@ -234,22 +236,28 @@ public class fenPrincipale extends javax.swing.JFrame {
 					int verif = 0;
 					DefaultMutableTreeNode racinePromo = new DefaultMutableTreeNode(((DefaultMutableTreeNode)jTreeListeStagaireEni.getLastSelectedPathComponent()).getUserObject());
 					Enumeration<DefaultMutableTreeNode> enume = racineInsc.children();
+					
 					if(enume.hasMoreElements()){
+						
 						while(enume.hasMoreElements()){
 							Promotion p = (Promotion)enume.nextElement().getUserObject();
 							if(p.getCode().equals(((Promotion)racinePromo.getUserObject()).getCode())){
 								verif++;
 							}
 						}
+						
 					}
+					
 					if(verif==0){
 						racineInsc.add(racinePromo);
 						Promotion p = (Promotion)racinePromo.getUserObject();
 						for(Stagiaire s:p.getListeStagiaires()){
+							
 							ctrl.inscrirStagiaireTest(s, ctrl.getTestEnCour(), calculDate(), jTextFieldMailFormateur.getText());
 							DefaultMutableTreeNode racineStagiaire = new DefaultMutableTreeNode(s);
 							racinePromo.add(racineStagiaire);
 						}
+						
 						jTreeListeStagiaireTest.setModel(new DefaultTreeModel(racineInsc));
 					}
 				}else if ((((DefaultMutableTreeNode)jTreeListeStagaireEni.getLastSelectedPathComponent()).getUserObject() instanceof Stagiaire)){
@@ -257,11 +265,15 @@ public class fenPrincipale extends javax.swing.JFrame {
 					DefaultMutableTreeNode racinePromo = new DefaultMutableTreeNode(((DefaultMutableTreeNode)((DefaultMutableTreeNode)jTreeListeStagaireEni.getLastSelectedPathComponent()).getParent()).getUserObject());
 					DefaultMutableTreeNode racineStagiaire = new DefaultMutableTreeNode(((DefaultMutableTreeNode)jTreeListeStagaireEni.getLastSelectedPathComponent()).getUserObject());
 					Enumeration<DefaultMutableTreeNode> enume = racineInsc.children();
+					
 					if(enume.hasMoreElements()){
+						
 						while(enume.hasMoreElements()){
 							DefaultMutableTreeNode node = enume.nextElement();
 							Promotion p = (Promotion)node.getUserObject();
+							
 							if(p.getCode().equals(((Promotion)racinePromo.getUserObject()).getCode())){
+								
 								if(ctrl.inscrirStagiaireTest((Stagiaire)racineStagiaire.getUserObject(), ctrl.getTestEnCour(),  calculDate(), jTextFieldMailFormateur.getText())){
 									node.add(racineStagiaire);
 								}
@@ -270,6 +282,7 @@ public class fenPrincipale extends javax.swing.JFrame {
 						}
 					}
 					if(!verif){
+						
 						if(ctrl.inscrirStagiaireTest((Stagiaire)racineStagiaire.getUserObject(), ctrl.getTestEnCour(),  calculDate(), jTextFieldMailFormateur.getText())){
 							racinePromo.add(racineStagiaire);
 							racineInsc.add(racinePromo);
@@ -288,15 +301,19 @@ public class fenPrincipale extends javax.swing.JFrame {
 				if(((DefaultMutableTreeNode)jTreeListeStagiaireTest.getLastSelectedPathComponent()).getUserObject() instanceof Promotion){
 					DefaultMutableTreeNode promoSelectionnee = (DefaultMutableTreeNode)jTreeListeStagiaireTest.getLastSelectedPathComponent();
 					Enumeration<DefaultMutableTreeNode> enume = promoSelectionnee.children();
+					
 					while(enume.hasMoreElements()){
 						ctrl.supprInscription((Stagiaire)enume.nextElement().getUserObject(), ctrl.getTestEnCour());
 					}
+					
 					((DefaultTreeModel)jTreeListeStagiaireTest.getModel()).removeNodeFromParent((MutableTreeNode)jTreeListeStagiaireTest.getSelectionPath().getLastPathComponent());
 					jTreeListeStagiaireTest.setSelectionRow(0);
+					
 					if(jTreeListeStagiaireTest.getModel().getChildCount(jTreeListeStagiaireTest.getLastSelectedPathComponent())==0){
 						DefaultMutableTreeNode racineVide = new DefaultMutableTreeNode("Vide..");
 						jTreeListeStagiaireTest.setModel(new DefaultTreeModel(racineVide));
 					}
+					
 				}else if (((DefaultMutableTreeNode)jTreeListeStagiaireTest.getLastSelectedPathComponent()).getUserObject() instanceof Stagiaire){
 					DefaultMutableTreeNode stagiaireSelectionnee = (DefaultMutableTreeNode)jTreeListeStagiaireTest.getLastSelectedPathComponent();
 					TreeNode promoSelectionnee = ((DefaultMutableTreeNode)jTreeListeStagiaireTest.getLastSelectedPathComponent()).getParent();
@@ -319,9 +336,34 @@ public class fenPrincipale extends javax.swing.JFrame {
     		
     	});
     	
+    	//Gerer le changement de sélection dans le jtree StagiaireEni
     	jTreeListeStagaireEni.addMouseListener(new MouseAdapter(){
+
+			public void mouseClicked(MouseEvent e) {
+				if(jTreeListeStagaireEni.getSelectionCount()>0){
+					if (((DefaultMutableTreeNode)jTreeListeStagaireEni.getLastSelectedPathComponent()).getUserObject() instanceof Stagiaire){
+						jButtonMotDePasseEleve.setEnabled(true);
+					}else{
+						jButtonMotDePasseEleve.setEnabled(false);
+					}
+				}
+				
+			}
+    	});
+    	
+    	
+    	//Clic sur le bouton de changement de mot de passe du stagiaire
+    	jButtonMotDePasseEleve.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Stagiaire stagiaire = (Stagiaire)((DefaultMutableTreeNode)jTreeListeStagaireEni.getLastSelectedPathComponent()).getUserObject();
+				String nouveauMotDePasse = JOptionPane.showInputDialog(null, "Entrez le nouveau mot de passe de " + stagiaire.toString() + " : ", "Changer le mot de passe.", JOptionPane.INFORMATION_MESSAGE);
+				ctrl.changerMotPasseStagiaire(stagiaire,nouveauMotDePasse);				
+			}
     		
     	});
+
     	
     }
     
@@ -865,6 +907,7 @@ public class fenPrincipale extends javax.swing.JFrame {
         
         jButtonMotDePasseEleve.setIcon(new javax.swing.ImageIcon("C:\\Images\\Key32.png")); // NOI18N
         jButtonMotDePasseEleve.setToolTipText("Modifier le mot de passe du stagiaire");
+        jButtonMotDePasseEleve.setEnabled(false);
 
         jLabel16.setText("Jour(s)");
 
