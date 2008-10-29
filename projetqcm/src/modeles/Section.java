@@ -99,6 +99,10 @@ public class Section {
 		this.getQuestions().add(question);
 	}
 	
+	public void supprQuestion(Question question){
+		questions.remove(question);
+	}
+	
 	public Question getQuestionAt(int index)
 	{
 		return this.getQuestions().elementAt(index);

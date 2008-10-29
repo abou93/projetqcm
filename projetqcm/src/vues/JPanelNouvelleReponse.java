@@ -17,12 +17,13 @@ import javax.swing.ScrollPaneConstants;
  * @author  slefort
  */
 public class JPanelNouvelleReponse extends javax.swing.JPanel {
-
+	int numero = 0;
 	String[] lettres = {"A","B","C","D","E","F","G","H","I","J"};
 	
 	/** Creates new form JPanelNouvelleReponse */
     public JPanelNouvelleReponse(int num,String texte,boolean checked) {
         initComponents();
+        numero=num;
         initPerso(lettres[num],texte,checked);
     }
 

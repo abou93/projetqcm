@@ -6,6 +6,7 @@
 
 package vues;
 
+import java.awt.Component;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -580,6 +581,7 @@ public class fenPrincipale extends javax.swing.JFrame {
  		*		 		Ajout des Listener					 *
  		******************************************************/
  		 		
+ 		//Clic sur le bouton d'ajout d'une réponse
  		jButtonAjoutDuneReponse.addActionListener(new ActionListener(){
  			
 			@Override
@@ -594,6 +596,8 @@ public class fenPrincipale extends javax.swing.JFrame {
 			}
  		});
  	
+ 		
+ 		//Clic sur le bouton choix de l'image
  		jButtonChoixImage.addActionListener(new ActionListener(){
 
 			@Override
@@ -608,6 +612,7 @@ public class fenPrincipale extends javax.swing.JFrame {
  		});
  		
  		
+ 		//Clic sur le bouton nouvelle question
  		jButtonNouvelleQuestion.addActionListener(new ActionListener(){
 
 			@Override
@@ -626,6 +631,8 @@ public class fenPrincipale extends javax.swing.JFrame {
  			
  		});
  		
+ 		
+ 		//Clic sur le bouton enregistrer question
  		jButtonEnregistrerQuestion.addActionListener(new ActionListener(){
 
 			@Override
@@ -652,6 +659,8 @@ public class fenPrincipale extends javax.swing.JFrame {
  			
  		});
  		
+ 		
+ 		//Gère le changement de selection dans la liste des questions de la section en cours
  		jListQuestionDeLaSection.addListSelectionListener(new ListSelectionListener(){
 
 			@Override
@@ -682,11 +691,26 @@ public class fenPrincipale extends javax.swing.JFrame {
  			
  		});
  		
+ 		
+ 		//Clic sur le bouton supprimer question
  		jButtonSupprimmerQuestion.addActionListener(new ActionListener(){
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				if(ctrl.supprQuestion(ctrl.getQuestionEnCour())){
+					ctrl.getSectionEnCour().supprQuestion(ctrl.getQuestionEnCour());
+					jListQuestionDeLaSection.setListData(ctrl.getSectionEnCour().getQuestions());
+					
+					DefaultMutableTreeNode racine = new DefaultMutableTreeNode("Questions Disponibles") ;
+			    	for (Section s : ctrl.getListeSection()){
+			    		DefaultMutableTreeNode sousDossier = new DefaultMutableTreeNode(s);
+			    		for (Question q : ctrl.questionParSection(s)){
+			    			sousDossier.add(new DefaultMutableTreeNode(q));
+			    		}
+			    		racine.add(sousDossier);
+			    	}
+			    	jTreeListeQuestionDispo.setModel(new DefaultTreeModel(racine));
+				}
 			}
  			
  		});
