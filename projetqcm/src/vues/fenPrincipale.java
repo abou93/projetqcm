@@ -18,6 +18,7 @@ import java.util.Enumeration;
 import java.util.GregorianCalendar;
 import java.util.Vector;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.SpinnerNumberModel;
@@ -62,7 +63,8 @@ public class fenPrincipale extends javax.swing.JFrame {
 	******************************************************/
 	
     public fenPrincipale() {
-    	
+    	super();
+    	  	
     	ctrl=CtrlFormateur.getCtrlFormateur(); // Recupere l'instance du controleur
     	
     	initComponents(); // Initialise les composants
@@ -623,6 +625,7 @@ public class fenPrincipale extends javax.swing.JFrame {
     		racine.add(sousDossier);
     	}
     	jTreeListeQuestionDispo.setModel(new DefaultTreeModel(racine));
+    	
  		
     	if(ctrl.getSectionEnCour()!=null){
     		jListQuestionDeLaSection.setListData(ctrl.getSectionEnCour().getQuestions());
@@ -1284,7 +1287,7 @@ public class fenPrincipale extends javax.swing.JFrame {
 
         jTreeListeQuestionDispo.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jTreeListeQuestionDispo.setToolTipText("Liste des questions disponibles par section");
-        jTreeListeQuestionDispo.setSelectionModel(null);
+        //jTreeListeQuestionDispo.setSelectionModel(null);
         jScrollPane7.setViewportView(jTreeListeQuestionDispo);
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Réponses"));
