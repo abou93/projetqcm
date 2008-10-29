@@ -471,7 +471,11 @@ public class CtrlFormateur {
 	 * @return Vector(Section)
 	 */
 	public Vector<Question> questionParSection(Section section){
-		return DalQuestion.selectQuestions(section);
+		Vector<Question> questionsSection =  DalQuestion.selectQuestions(section);
+		for(Question q : questionsSection){
+			q.setSection(section);
+		}
+		return questionsSection;
 	}
 	
 	
@@ -534,6 +538,17 @@ public class CtrlFormateur {
 	}
 	
 	
+	/***
+	 * Change unequestion de section
+	 * @param Question : question
+	 * @param Section : ancienneSection
+	 */
+	public void changerQuestionSection(Question question,Section ancienneSection,Section nouvelleSection){
+		nouvelleSection.addQuestion(question);
+		ancienneSection.supprQuestion(question);
+		question.setSection(nouvelleSection);
+		DalQuestion.updateQuestion(question);
+	}
 	
 }
 

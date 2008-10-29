@@ -6,21 +6,17 @@
 
 package vues;
 
-import java.awt.Component;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.beans.DefaultPersistenceDelegate;
-import java.beans.PersistenceDelegate;
 import java.beans.XMLEncoder;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -648,9 +644,7 @@ public class fenPrincipale extends javax.swing.JFrame {
 				jListQuestionDeLaSection.setListData(ctrl.getSectionEnCour().getQuestions());
 				jListQuestionDeLaSection.setSelectedIndex(jListQuestionDeLaSection.getLastVisibleIndex());
 				nbrReponse=0;
-				for(int i = 0 ; i< tableauReponses.size();i++){
-					tableauReponses.setElementAt(null, i);
-				}
+				tableauReponses.removeAllElements();
 				jPanelReponse.removeAll();
 				jPanelReponse.validate();
 				jPanelReponse.repaint();
@@ -746,26 +740,25 @@ public class fenPrincipale extends javax.swing.JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Question qu = (Question)((DefaultMutableTreeNode)jTreeListeQuestionDispo.getLastSelectedPathComponent()).getUserObject();
-				Section se = qu.getSection();
-				ctrl.getSectionEnCour().addQuestion(qu);
-				se.supprQuestion(qu);
-				
-				//Afficher le jTree
-				DefaultMutableTreeNode racine = new DefaultMutableTreeNode("Questions Disponibles") ;
-				for (Section s : ctrl.getListeSection()){
-		    		DefaultMutableTreeNode sousDossier = new DefaultMutableTreeNode(s);
-		    		for (Question q : ctrl.questionParSection(s)){
-		    			sousDossier.add(new DefaultMutableTreeNode(q));
-		    		}
-		    		racine.add(sousDossier);
-		    	}
-		    	jTreeListeQuestionDispo.setModel(new DefaultTreeModel(racine));
-		    	
-		    	jListQuestionDeLaSection.setListData(ctrl.getSectionEnCour().getQuestions());
+				if(jTreeListeQuestionDispo.getSelectionCount()>0 && ((DefaultMutableTreeNode)jTreeListeQuestionDispo.getLastSelectedPathComponent()).getUserObject() instanceof Question){
+					Question question = (Question)((DefaultMutableTreeNode)jTreeListeQuestionDispo.getLastSelectedPathComponent()).getUserObject();
+					Section ancienneSection = question.getSection();
+					ctrl.changerQuestionSection(question, ancienneSection,ctrl.getSectionEnCour());
+					
+					//Afficher le jTree
+					DefaultMutableTreeNode racine = new DefaultMutableTreeNode("Questions Disponibles") ;
+					for (Section s : ctrl.getListeSection()){
+			    		DefaultMutableTreeNode sousDossier = new DefaultMutableTreeNode(s);
+			    		for (Question q : ctrl.questionParSection(s)){
+			    			sousDossier.add(new DefaultMutableTreeNode(q));
+			    		}
+			    		racine.add(sousDossier);
+			    	}
+			    	jTreeListeQuestionDispo.setModel(new DefaultTreeModel(racine));
+			    	
+			    	jListQuestionDeLaSection.setListData(ctrl.getSectionEnCour().getQuestions());
+				}
 			}
-			
- 			
  		});
  		
  		
@@ -774,10 +767,29 @@ public class fenPrincipale extends javax.swing.JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				if(jTreeListeQuestionDispo.getSelectionCount()>0 && ((DefaultMutableTreeNode)jTreeListeQuestionDispo.getLastSelectedPathComponent()).getUserObject() instanceof Section){
+					Question question = (Question)jListQuestionDeLaSection.getSelectedValue();
+					Section ancienneSection = ctrl.getSectionEnCour();
+					Section nouvelleSection = (Section)((DefaultMutableTreeNode)jTreeListeQuestionDispo.getLastSelectedPathComponent()).getUserObject();
+					ctrl.changerQuestionSection(question, ancienneSection, nouvelleSection);
+					
+					
+					//Afficher le jTree
+					DefaultMutableTreeNode racine = new DefaultMutableTreeNode("Questions Disponibles") ;
+					for (Section s : ctrl.getListeSection()){
+			    		DefaultMutableTreeNode sousDossier = new DefaultMutableTreeNode(s);
+			    		for (Question q : ctrl.questionParSection(s)){
+			    			sousDossier.add(new DefaultMutableTreeNode(q));
+			    		}
+			    		racine.add(sousDossier);
+			    	}
+			    	jTreeListeQuestionDispo.setModel(new DefaultTreeModel(racine));
+			    	jListQuestionDeLaSection.setListData(ctrl.getSectionEnCour().getQuestions());
+				}
 			}
  			
  		});
+ 		
  		/*****************************************************
  		*		 		Initialisation des composants		 *
  		******************************************************/
@@ -797,6 +809,7 @@ public class fenPrincipale extends javax.swing.JFrame {
     	}
     	jTreeListeQuestionDispo.setModel(new DefaultTreeModel(racine));
     	
+    	jTreeListeQuestionDispo.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
  		
     	if(ctrl.getSectionEnCour()!=null){
     		jListQuestionDeLaSection.setListData(ctrl.getSectionEnCour().getQuestions());
