@@ -134,7 +134,7 @@ public class DalQuestion {
 	}
 	
 	/***
-	 *  Reçoit une question à mettre à jour dans la base de donnée
+	 *  Reçoit une reponse à mettre à jour dans la base de donnée
 	 *  Retourne true si ok, false si nok 
 	 *  @param Reponse reponse
 	 *  @return Boolean
@@ -163,6 +163,37 @@ public class DalQuestion {
 		AccesBase.deconnexionBase(cnx);
 		return false;
 	}
+	
+	
+	/***
+	 *  Reçoit une reponse à mettre à jour dans la base de donnée
+	 *  Retourne true si ok, false si nok 
+	 *  @param Reponse reponse
+	 *  @return Boolean
+	 */
+	public static boolean updateNumeroReponse(UUID idQuestion, int index){
+		
+		Connection cnx;
+		PreparedStatement stm;
+		cnx=AccesBase.getConnection();
+		
+		try {
+			stm = cnx.prepareStatement("update QUESTIONS_REPONSES set NUMERO = NUMERO -1 where ID_ENONCE = ? and NUMERO > ? ");
+			stm.setString(1,idQuestion.toString());
+			stm.setInt(4,index);
+			stm.execute();
+			AccesBase.deconnexionBase(cnx);
+			return true;
+		
+		} catch (SQLException e) {
+			System.err.println(e.getMessage());
+			System.err.println("erreur updateNumeroReponse");
+		}					
+		
+		AccesBase.deconnexionBase(cnx);
+		return false;
+	}
+	
 	
 	/*****************************************************
 	*					Methodes Delete					 *

@@ -538,6 +538,27 @@ public class CtrlFormateur {
 	}
 	
 	
+
+	public void deleteReponse(int index)
+	{
+		if(DalQuestion.deleteReponse(this.questionEnCour.getReponseAt(index))){
+			this.questionEnCour.getListeReponses().remove(index);
+			if ((index>0)&&(DalQuestion.updateNumeroReponse(this.getQuestionEnCour().getId(), index)))
+				{
+					for(int i = index ; i<this.getQuestionEnCour().getListeReponses().size();i++)
+					{
+						Reponse r = this.getQuestionEnCour().getReponseAt(i);
+						r.setNumero(r.getNumero() -1);
+					}
+				}
+				
+			
+		
+		}
+			
+	}
+
+	
 	/***
 	 * Change unequestion de section
 	 * @param Question : question
@@ -549,6 +570,9 @@ public class CtrlFormateur {
 		question.setSection(nouvelleSection);
 		DalQuestion.updateQuestion(question);
 	}
+
+	
+	
 	
 }
 

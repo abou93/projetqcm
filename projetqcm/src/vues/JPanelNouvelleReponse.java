@@ -50,13 +50,13 @@ public class JPanelNouvelleReponse extends javax.swing.JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
-					JPanelNouvelleReponse j = fenetre.tableauReponses.elementAt(numero);
-					fenetre.jPanelReponse.remove(j);
-					fenetre.jPanelReponse.repaint();
+				
 					fenetre.tableauReponses.removeAllElements();
 					fenetre.jPanelReponse.removeAll();
 					
-					CtrlFormateur.getCtrlFormateur().getQuestionEnCour().getListeReponses().remove(numero);
+					if (CtrlFormateur.getCtrlFormateur().getQuestionEnCour().getNombreReponse()> numero)
+							CtrlFormateur.getCtrlFormateur().deleteReponse(numero);
+					//CtrlFormateur.getCtrlFormateur().getQuestionEnCour().getListeReponses().remove(numero);
 					Vector<Reponse> listeReponse = CtrlFormateur.getCtrlFormateur().getQuestionEnCour().getListeReponses();
 					
 					for(int i = 0;i<CtrlFormateur.getCtrlFormateur().getQuestionEnCour().getListeReponses().size();i++){
@@ -64,6 +64,7 @@ public class JPanelNouvelleReponse extends javax.swing.JPanel {
 						fenetre.tableauReponses.add(jpa);
 						fenetre.jPanelReponse.add(jpa);
 					}
+					
 					fenetre.jPanelReponse.validate();
 					fenetre.jPanelReponse.repaint();
 					
