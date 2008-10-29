@@ -56,7 +56,7 @@ public class fenPrincipale extends javax.swing.JFrame {
 	private static final long serialVersionUID = 1L;
 	CtrlFormateur ctrl;
     int nbrReponse = 0;
-    String[] lettres = {"A","B","C","D","E","F","G","H","I","J"};
+    //String[] lettres = {"A","B","C","D","E","F","G","H","I","J"};
 	
 	/*****************************************************
 	*				Constructeur						 *
@@ -64,7 +64,11 @@ public class fenPrincipale extends javax.swing.JFrame {
 	
     public fenPrincipale() {
     	super();
-    	  	
+    	
+    	//Changer l'icone de la fenetre
+//		ClassLoader cl=this.getClass().getClassLoader();
+//		this.setIconImage(new ImageIcon(cl.getResource("399.gif")).getImage());
+    	
     	ctrl=CtrlFormateur.getCtrlFormateur(); // Recupere l'instance du controleur
     	
     	initComponents(); // Initialise les composants
@@ -573,7 +577,7 @@ public class fenPrincipale extends javax.swing.JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(nbrReponse<10){
-					jPanelReponse.add(new JPanelNouvelleReponse(lettres[nbrReponse],"",false));
+					jPanelReponse.add(new JPanelNouvelleReponse(nbrReponse,"",false));
 					jPanelReponse.validate();
 					jPanelReponse.repaint();
 					nbrReponse ++;
