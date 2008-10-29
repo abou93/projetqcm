@@ -34,7 +34,7 @@ public class LanceurApplication {
 		if (SystemTray.isSupported()) {
 			ImageIcon i = new ImageIcon("C:/Images/LogoENI16.png");
 			Image im = i.getImage();
-			TrayIcon tic = new TrayIcon(im,"Eni - Création de QCM");
+			TrayIcon tic = new TrayIcon(im,"Eni - Gestion de test QCM");
 			SystemTray tray = SystemTray.getSystemTray();
 			try {
 				tray.add(tic);

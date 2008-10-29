@@ -11,8 +11,10 @@ import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -57,8 +59,10 @@ public class SplashScreenQCM  extends JFrame {
 	
 	//Constructeur
 	public SplashScreenQCM(String filePath) {
-		super("Gestion de tests QCM");
+		super("Gestion de test QCM");
 		this.filePath = filePath;
+		Image icone = Toolkit.getDefaultToolkit().getImage("C:/Images/LogoENI16.PNG");
+    	this.setIconImage(icone);
 		initialize();
 	}
 
