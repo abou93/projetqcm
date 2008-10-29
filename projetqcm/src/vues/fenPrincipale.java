@@ -633,6 +633,17 @@ public class fenPrincipale extends javax.swing.JFrame {
 					ctrl.getQuestionEnCour().addReponse(r);
 				}
 				ctrl.enregistrerQuestion(ctrl.getQuestionEnCour());
+				//TODO Ajouter la question au jTreeListeQuestionDispo
+				DefaultMutableTreeNode racine = (DefaultMutableTreeNode)jTreeListeQuestionDispo.getPathForRow(0).getLastPathComponent();
+				Enumeration<DefaultMutableTreeNode> enumeRacine = racine.children();
+				while(enumeRacine.hasMoreElements()){
+					DefaultMutableTreeNode section = enumeRacine.nextElement();
+					if(((Section)section.getUserObject()).getNumero()==ctrl.getSectionEnCour().getNumero()){
+						section.add(new DefaultMutableTreeNode(ctrl.getQuestionEnCour()));
+					}
+				}
+				jTreeListeQuestionDispo.setModel(new DefaultTreeModel(racine));
+				jListQuestionDeLaSection.repaint();
 			}
  			
  		});
@@ -663,6 +674,15 @@ public class fenPrincipale extends javax.swing.JFrame {
 						nbrReponse ++;
 					}
 				}
+			}
+ 			
+ 		});
+ 		
+ 		jButtonSupprimmerQuestion.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
 			}
  			
  		});
