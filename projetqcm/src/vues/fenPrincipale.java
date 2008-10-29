@@ -690,17 +690,18 @@ public class fenPrincipale extends javax.swing.JFrame {
 			    			
 						}
 						break;
-				case 2 :if((ctrl.getTestEnCour()!= null)&(ctrl.getSectionEnCour()!=null))
+				case 2 :if((ctrl.getSectionEnCour()!=null))
 						{
 			 				jTextFieldNomSectionPanelQuestion.setText(ctrl.getSectionEnCour().getNom());
+			 				jListQuestionDeLaSection.setListData(ctrl.getSectionEnCour().getQuestions());
+							jListQuestionDeLaSection.setSelectedIndex(jListQuestionDeLaSection.getFirstVisibleIndex());
+							if ((Question)jListQuestionDeLaSection.getSelectedValue()!=null){
+							ctrl.setQuestionEnCour((Question)jListQuestionDeLaSection.getSelectedValue());
+					 		jComboBoxListeTypeQuestion.setSelectedItem(jListQuestionDeLaSection.getSelectedValue()); 		
+					 		jEditorPaneEnonceQuestion.setText(ctrl.getQuestionEnCour().getEnonce());}
+							else jEditorPaneEnonceQuestion.setText("");
 			 			}
-						jListQuestionDeLaSection.setListData(ctrl.getSectionEnCour().getQuestions());
-						jListQuestionDeLaSection.setSelectedIndex(jListQuestionDeLaSection.getFirstVisibleIndex());
-						if ((Question)jListQuestionDeLaSection.getSelectedValue()!=null){
-						ctrl.setQuestionEnCour((Question)jListQuestionDeLaSection.getSelectedValue());
-				 		jComboBoxListeTypeQuestion.setSelectedItem(jListQuestionDeLaSection.getSelectedValue()); 		
-				 		jEditorPaneEnonceQuestion.setText(ctrl.getQuestionEnCour().getEnonce());}
-						else jEditorPaneEnonceQuestion.setText("");
+						
 						break;
 					
 				}
