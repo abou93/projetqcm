@@ -435,7 +435,7 @@ public class DalQuestion {
 		
 		try {
 			
-			stm = cnx.prepareStatement("select * from QUESTIONS where ID = ? ");
+			stm = cnx.prepareStatement("select * from QUESTIONS_ENONCES where ID = ? ");
 			stm.setString(1, idQuestion.toString());
 			rs=stm.executeQuery();
 			
@@ -474,7 +474,7 @@ public class DalQuestion {
 		
 		try {
 			
-			stm = cnx.prepareStatement("select * from REPONSES where ID_ENONCE = ? and NUMERO = ?");
+			stm = cnx.prepareStatement("select * from QUESTIONS_REPONSES where ID_ENONCE = ? and NUMERO = ?");
 			stm.setString(1, idQuestion.toString());
 			stm.setInt(2, numeroReponse);
 			rs=stm.executeQuery();
