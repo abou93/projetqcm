@@ -18,7 +18,6 @@ import java.util.Enumeration;
 import java.util.GregorianCalendar;
 import java.util.Vector;
 
-import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.SpinnerNumberModel;
@@ -606,7 +605,25 @@ public class fenPrincipale extends javax.swing.JFrame {
 				ctrl.getSectionEnCour().addQuestion(new Question());
 				jListQuestionDeLaSection.setListData(ctrl.getSectionEnCour().getQuestions());
 				jListQuestionDeLaSection.setSelectedIndex(jListQuestionDeLaSection.getLastVisibleIndex());
-							
+				nbrReponse=0;	
+			}
+ 			
+ 		});
+ 		
+ 		jButtonEnregistrerQuestion.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+ 			
+ 		});
+ 		
+ 		jListQuestionDeLaSection.addListSelectionListener(new ListSelectionListener(){
+
+			@Override
+			public void valueChanged(ListSelectionEvent e) {
+				jEditorPaneEnonceQuestion.setText(((Question)jListQuestionDeLaSection.getSelectedValue()).toString());
 			}
  			
  		});
@@ -667,7 +684,8 @@ public class fenPrincipale extends javax.swing.JFrame {
  		
  		jMenuItemQuittez.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
-				fenPrincipale.this.dispose();				
+				fenPrincipale.this.dispose();
+				System.exit(0);
 			}
     		
     	});
