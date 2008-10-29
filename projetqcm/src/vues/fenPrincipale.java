@@ -610,11 +610,15 @@ public class fenPrincipale extends javax.swing.JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(nbrReponse<10){
-					tableauReponses.add(new JPanelNouvelleReponse(fenPrincipale.this,nbrReponse,"",false)); 
-					jPanelReponse.add(tableauReponses.elementAt(nbrReponse));
-					jPanelReponse.validate();
-					jPanelReponse.repaint();
-					nbrReponse ++;
+					if(tableauReponses.elementAt(nbrReponse-1).getJTextAreaReponse().getText().length()>0)
+					{
+						tableauReponses.add(new JPanelNouvelleReponse(fenPrincipale.this,nbrReponse,"",false)); 
+						jPanelReponse.add(tableauReponses.elementAt(nbrReponse));
+						jPanelReponse.validate();
+						jPanelReponse.repaint();
+						nbrReponse ++;
+					}
+					else JOptionPane.showMessageDialog(null,"Veuillez remplir la question précédente","Info",JOptionPane.WARNING_MESSAGE);
 				}
 			}
  		});

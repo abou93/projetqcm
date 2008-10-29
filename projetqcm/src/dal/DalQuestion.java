@@ -180,7 +180,7 @@ public class DalQuestion {
 		try {
 			stm = cnx.prepareStatement("update QUESTIONS_REPONSES set NUMERO = NUMERO -1 where ID_ENONCE = ? and NUMERO > ? ");
 			stm.setString(1,idQuestion.toString());
-			stm.setInt(4,index);
+			stm.setInt(2,index);
 			stm.execute();
 			AccesBase.deconnexionBase(cnx);
 			return true;

@@ -534,7 +534,9 @@ public class CtrlFormateur {
 	 * @return Vector(Reponse)
 	 */
 	public Vector<Reponse> getReponses(Question question){
-		return DalQuestion.selectReponse(question);
+		question.setListesReponses(DalQuestion.selectReponse(question));
+		return question.getListeReponses();
+		
 	}
 	
 	
