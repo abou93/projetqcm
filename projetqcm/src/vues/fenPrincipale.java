@@ -100,9 +100,12 @@ public class fenPrincipale extends javax.swing.JFrame {
     
     //Rempli la liste des stagiaires inscrits à un test
     private void remplirTreeInscriptions(){
-		Vector<Stagiaire> stag = ctrl.getStagiairesTest(ctrl.getTestEnCour());
+    	Vector<Stagiaire> stag=null;
+    	if(ctrl.getTestEnCour()!=null){
+    		stag = ctrl.getStagiairesTest(ctrl.getTestEnCour());
+    	}
 		Vector<Promotion> listePromo = new Vector<Promotion>();
-		if(stag.size()>0){
+		if(stag!=null && stag.size()>0){
 				for(Stagiaire s:stag){
 					if(!listePromo.contains(s.getPromotion())){
 						listePromo.add(s.getPromotion());
@@ -179,6 +182,8 @@ public class fenPrincipale extends javax.swing.JFrame {
 				ctrl.nouveauTest();
 				jListTests.setListData(ctrl.getListeTests());
 				jListTests.setSelectedIndex(jListTests.getLastVisibleIndex());
+				jTextFieldNomTest.requestFocusInWindow();
+				jTextFieldNomTest.selectAll();
 			}
     		
     	});
