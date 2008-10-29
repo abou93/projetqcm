@@ -329,8 +329,9 @@ public class CtrlFormateur {
 	 * @param Test : test
 	 */
 	public void supprInscription(Stagiaire stagiaire,Test test){
-		if(DalInscription.deleteInscription(stagiaire.getId(), test.getNom())){
-			if(DalInscription.deleteTirage(stagiaire.getId(), test.getNom())){
+		
+		if(DalInscription.deleteTirage(stagiaire.getId(), test.getNom())){
+			if(DalInscription.deleteInscription(stagiaire.getId(), test.getNom())){
 				Vector<Inscription> listeInsc = stagiaire.getInscriptions();
 				for(int i=0;i<listeInsc.size();i++){
 					if(listeInsc.elementAt(i).getTest().getNom()==test.getNom()){
@@ -524,7 +525,7 @@ public class CtrlFormateur {
 	
 	
 	/***
-	 * Récupère les réponse d'un question.
+	 * Récupère les réponse d'une question.
 	 * @param Question : question
 	 * @return Vector(Reponse)
 	 */
