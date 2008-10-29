@@ -17,7 +17,19 @@ public class ListeSections extends Vector<Section>{
 		return false;
 	}
 
+	@Override
+	public int indexOf(Object o) {// TODO Auto
+		Section section = (Section) o;
+		for(int i = 0 ; i<this.size() ; i++){
+			if((this.elementAt(i).getNumero()==section.getNumero())&(this.elementAt(i).getNom().equals(section.getNom()))){
+				return i;
+			}
+		}
+		return -1;
+	}
+
 	
+
 	
 	
 }

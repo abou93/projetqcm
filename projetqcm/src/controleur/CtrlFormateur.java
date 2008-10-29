@@ -351,7 +351,13 @@ public class CtrlFormateur {
 	 * @param Test : test
 	 */
 	public void chargerListeSectionsParTest(Test test){
+		
 		listeSectionsParTest = DalTest.selectSectionByTest(test.getNom());
+		for(int j= 0 ; j<listeSectionsParTest.size() ; j++){
+			int i = listeSections.indexOf(listeSectionsParTest.elementAt(j));
+			if (i!=-1) listeSectionsParTest.setElementAt(listeSections.elementAt(i),j);
+		}
+		
 		test.setSections(listeSectionsParTest);
 	}
 	
