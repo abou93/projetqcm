@@ -551,8 +551,6 @@ public class CtrlFormateur {
 						r.setNumero(r.getNumero() -1);
 					}
 				}
-				
-			
 		
 		}
 			
