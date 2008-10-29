@@ -608,7 +608,7 @@ public class fenPrincipale extends javax.swing.JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(nbrReponse<10){
-					tableauReponses.setElementAt(new JPanelNouvelleReponse(fenPrincipale.this,nbrReponse,"",false), nbrReponse); 
+					tableauReponses.add(new JPanelNouvelleReponse(fenPrincipale.this,nbrReponse,"",false)); 
 					jPanelReponse.add(tableauReponses.elementAt(nbrReponse));
 					jPanelReponse.validate();
 					jPanelReponse.repaint();
@@ -687,10 +687,7 @@ public class fenPrincipale extends javax.swing.JFrame {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				nbrReponse=0;
-				for(int i = 0 ; i<tableauReponses.size();i++){
-					
-					tableauReponses.setElementAt(null,i);
-				}
+				tableauReponses.removeAllElements();
 				jPanelReponse.removeAll();
 				jPanelReponse.validate();
 				jPanelReponse.repaint();

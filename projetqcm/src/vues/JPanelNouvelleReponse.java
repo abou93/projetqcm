@@ -9,10 +9,15 @@ package vues;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Vector;
 
 import javax.swing.JCheckBox;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
+
+import modeles.Reponse;
+
+import controleur.CtrlFormateur;
 
 /**
  *
@@ -45,13 +50,22 @@ public class JPanelNouvelleReponse extends javax.swing.JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) 
 			{
-					fenetre.jPanelReponse.remove(fenetre.tableauReponses.elementAt(numero));
+					JPanelNouvelleReponse j = fenetre.tableauReponses.elementAt(numero);
+					fenetre.jPanelReponse.remove(j);
 					fenetre.jPanelReponse.repaint();
-					fenetre.tableauReponses.setElementAt(null,numero);
+					fenetre.tableauReponses.removeAllElements();
+					fenetre.jPanelReponse.removeAll();
 					
-					for(JPanelNouvelleReponse j : fenetre.tableauReponses){
-						fenetre.jPanelReponse.add(j);
+					CtrlFormateur.getCtrlFormateur().getQuestionEnCour().getListeReponses().remove(numero);
+					Vector<Reponse> listeReponse = CtrlFormateur.getCtrlFormateur().getQuestionEnCour().getListeReponses();
+					
+					for(int i = 0;i<CtrlFormateur.getCtrlFormateur().getQuestionEnCour().getListeReponses().size();i++){
+						JPanelNouvelleReponse jpa = new JPanelNouvelleReponse(fenetre,i,listeReponse.elementAt(i).getTexte(),listeReponse.elementAt(i).isEtat());
+						fenetre.tableauReponses.add(jpa);
+						fenetre.jPanelReponse.add(jpa);
 					}
+					fenetre.jPanelReponse.validate();
+					fenetre.jPanelReponse.repaint();
 					
 			}
 				
