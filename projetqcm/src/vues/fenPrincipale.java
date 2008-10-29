@@ -435,8 +435,6 @@ public class fenPrincipale extends javax.swing.JFrame {
 				{
 					if (e.getSource()==jListSectionDisponible){
 						s = (Section) jListSectionDisponible.getSelectedValue();}
-					if (e.getSource()==jListSectionDuTest){
-						s = (Section) jListSectionDuTest.getSelectedValue();}
 					jTextFieldNomSection.setText(s.getNom());
 					jTextFieldNumeroSection.setText(String.valueOf(s.getNumero()));
 					jSpinnerNbrQuestionTest.setValue(s.getNbrQuestion());
@@ -506,7 +504,7 @@ public class fenPrincipale extends javax.swing.JFrame {
 			public void actionPerformed(ActionEvent e) {
 				Section s = ctrl.getSectionEnCour();
 				s.setNom(jTextFieldNomSection.getText());
-				s.setNumero(ctrl.getListeSection().size());
+				if(s.getNumero() == 0) s.setNumero(ctrl.getListeSection().size());
 				s.setNbrQuestion((Integer)jSpinnerNbrQuestionTest.getValue());
 				ctrl.enregistrerSection(s);
 				jListSectionDisponible.setListData(ctrl.getListeSection());

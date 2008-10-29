@@ -80,7 +80,7 @@ public class CtrlFormateur {
 	public void addSectionListeSectionsParTest(Section section) {
 		if (!(this.listeSectionsParTest.contains(section)))
 			{ 
-			this.listeSectionsParTest.add(section);
+			//this.listeSectionsParTest.add(section);
 			this.affecterSectionTest(section, this.getTestEnCour());
 			}
 	}
