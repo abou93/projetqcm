@@ -1,7 +1,12 @@
 package dal;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.sql.*;
+import java.util.Properties;
 import java.util.ResourceBundle;
+
+import securite.IOProperties;
 
 public class AccesBase {
 
@@ -21,9 +26,12 @@ public class AccesBase {
 	public static Connection getConnection()
 	{
 		Connection ctn=null; 
+		IOProperties IoPropertie = new IOProperties();
 		
+			
 		// recupere le pilote
 		try {
+			
 			Class.forName(ResourceBundle.getBundle("parametres").getString("nomPiloteSQLServer"));
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -32,8 +40,20 @@ public class AccesBase {
 		    
 		// ouverture de la connexion
 		try {
-			ctn= DriverManager.getConnection(ResourceBundle.getBundle("parametres").getString("chaineConnectionSQLServer"));
+			Properties prop = IoPropertie.loadProperties("connexion.properties");
+			StringBuilder connexion= new StringBuilder();
+			connexion.append("jdbc:sqlserver://"+prop.getProperty("adresse"));
+			connexion.append(":1433;user="+prop.getProperty("user"));
+			connexion.append(";password="+prop.getProperty("password"));
+			connexion.append(";databasename="+prop.getProperty("databasename"));
+			ctn= DriverManager.getConnection(connexion.toString());
 		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
