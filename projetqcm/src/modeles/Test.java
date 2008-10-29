@@ -68,6 +68,9 @@ public class Test {
 			return this.getSections().elementAt(index);
 	}
 
+	public void setSections(Vector<Section> sec){
+		this.sections=sec;
+	}
 		
 	
 	

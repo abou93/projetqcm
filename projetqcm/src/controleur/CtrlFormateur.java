@@ -352,6 +352,7 @@ public class CtrlFormateur {
 	 */
 	public void chargerListeSectionsParTest(Test test){
 		listeSectionsParTest = DalTest.selectSectionByTest(test.getNom());
+		test.setSections(listeSectionsParTest);
 	}
 	
 
