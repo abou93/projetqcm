@@ -135,7 +135,7 @@ public class SplashScreenQCM  extends JFrame {
 				IOProperties ioProperties = new IOProperties();
 				Properties password  = ioProperties.loadProperties("securite.properties");
 				password.getProperty("motdepasse");
-				String passeDefaut =hash.getHash(password.getProperty("motdepasse"));
+				String passeDefaut =password.getProperty("motdepasse");
 				 	
 
 				if(passeSaisi.equals(passeDefaut)){
