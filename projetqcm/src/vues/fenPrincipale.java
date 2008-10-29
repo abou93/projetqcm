@@ -13,11 +13,14 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.GregorianCalendar;
+import java.util.Properties;
 import java.util.Vector;
 
 import javax.swing.JFileChooser;
@@ -42,10 +45,11 @@ import modeles.Section;
 import modeles.Stagiaire;
 import modeles.Test;
 import modeles.Type;
+import securite.IOProperties;
 import securite.hashPassword;
 import vues.JPanelNouvelleReponse;
 import controleur.CtrlFormateur;
-import dal.DalQuestion;
+
 
 /**
  *
@@ -748,6 +752,32 @@ public class fenPrincipale extends javax.swing.JFrame {
 			}
     		
     	});
+ 		
+ 		jMenuItemOption.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String nouveauMotDePasse = JOptionPane.showInputDialog(null, "Entrez le nouveau mot de passe formateur ", "Changer le mot de passe", JOptionPane.INFORMATION_MESSAGE);
+				IOProperties ioProperties = new IOProperties();
+				try {
+					Properties password  = ioProperties.loadProperties("securite.properties");
+					hashPassword hash = new hashPassword();
+					password.setProperty("motdepasse",hash.getHash(nouveauMotDePasse));
+					ioProperties.saveProperties(password,"securite.properties", "Fichier password");
+				} catch (FileNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (Exception e2) {
+					// TODO Auto-generated catch block
+					e2.printStackTrace();
+				}
+				
+			}
+ 			
+ 		});
  		
  		
     }

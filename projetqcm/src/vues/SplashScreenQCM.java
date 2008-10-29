@@ -20,6 +20,7 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Properties;
 import java.util.ResourceBundle;
 
 import javax.imageio.ImageIO;
@@ -30,6 +31,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import securite.IOProperties;
 import securite.hashPassword;
 
 /**
@@ -130,7 +132,11 @@ public class SplashScreenQCM  extends JFrame {
 				hashPassword hash = new hashPassword();
 				try {
 				String passeSaisi = hash.getHash(text2.getText());
-				String passeDefaut =hash.getHash(ResourceBundle.getBundle("securite").getString("motdepasse")); 	
+				IOProperties ioProperties = new IOProperties();
+				Properties password  = ioProperties.loadProperties("securite.properties");
+				password.getProperty("motdepasse");
+				String passeDefaut =hash.getHash(password.getProperty("motdepasse"));
+				 	
 
 				if(passeSaisi.equals(passeDefaut)){
 					fenPrincipale f = new fenPrincipale();
