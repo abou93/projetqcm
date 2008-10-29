@@ -6,6 +6,8 @@
 
 package vues;
 
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -65,8 +67,8 @@ public class fenPrincipale extends javax.swing.JFrame {
     	super();
     	
     	//Changer l'icone de la fenetre
-//		ClassLoader cl=this.getClass().getClassLoader();
-//		this.setIconImage(new ImageIcon(cl.getResource("399.gif")).getImage());
+		Image icone = Toolkit.getDefaultToolkit().getImage("C:/Images/LogoENI16.PNG");
+    	this.setIconImage(icone);
     	
     	ctrl=CtrlFormateur.getCtrlFormateur(); // Recupere l'instance du controleur
     	
@@ -521,9 +523,12 @@ public class fenPrincipale extends javax.swing.JFrame {
 				ctrl.supprimerSection(ctrl.getTestEnCour(), ctrl.getSectionEnCour());
 				jListSectionDisponible.setListData(ctrl.getListeSection());
 				jListSectionDisponible.setSelectedIndex(jListSectionDisponible.getLastVisibleIndex());
-				ctrl.setSectionEnCour(null);
-				jTextFieldNomSection.setText("");
-				jTextFieldNumeroSection.setText("0");
+				if (ctrl.getListeSection().size()<1) {
+					ctrl.setSectionEnCour(null);
+					jTextFieldNomSection.setText("");
+					jTextFieldNumeroSection.setText("0");
+					
+				}
 				
 				
 			}

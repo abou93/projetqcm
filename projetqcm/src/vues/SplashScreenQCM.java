@@ -108,6 +108,9 @@ public class SplashScreenQCM  extends JFrame {
 		c.add(imagePanel);
 		
 		//Centrer le splashscreen
+		
+
+		
 		GraphicsEnvironment ge = GraphicsEnvironment.
         getLocalGraphicsEnvironment();
         GraphicsDevice[] gs = ge.getScreenDevices();
@@ -130,8 +133,9 @@ public class SplashScreenQCM  extends JFrame {
 
 				if(passeSaisi.equals(passeDefaut)){
 					fenPrincipale f = new fenPrincipale();
-					Point loc = new Point( pt.x - f.getWidth()/2,pt.y - f.getHeight()/2);
-					f.setLocation(loc);
+					f.setLocationRelativeTo(f.getParent());
+				//	Point loc = new Point( pt.x - f.getWidth()/2,pt.y - f.getHeight()/2);
+				//	f.setLocation(loc);
 					f.setVisible(true);
 					SplashScreenQCM.this.dispose();
 				}else{
