@@ -8,6 +8,8 @@ package vues;
 
 import java.awt.Font;
 
+import javax.swing.JCheckBox;
+import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
 
 /**
@@ -33,6 +35,16 @@ public class JPanelNouvelleReponse extends javax.swing.JPanel {
     	jLabel1.setText(lettre);
     	jLabel1.setFont(new Font("Tahoma",Font.BOLD,12));
     }
+    
+    
+    public JTextArea getJTextAreaReponse(){
+    	return jTextAreaNouvelleReponse;
+    }
+    
+    public JCheckBox getJCheckBoxReponse(){
+    	return jCheckBoxReponseVrai;
+    }
+    
 
     /** This method is called from within the constructor to
      * initialize the form.

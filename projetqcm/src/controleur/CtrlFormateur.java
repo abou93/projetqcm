@@ -490,6 +490,7 @@ public class CtrlFormateur {
 	 */
 	public boolean enregistrerQuestion(Question question){
 		boolean b;
+		question.setSection(this.getSectionEnCour());
 		if(DalQuestion.selectQuestion(question.getId())==null){
 			b = DalQuestion.insertQuestion(question);
 		}else{
@@ -512,6 +513,16 @@ public class CtrlFormateur {
 			stagiaire.changerMotDePasse(nouveauMotDePasse);
 			DalStagiaire.updateStagiaire(stagiaire);
 		}
+	}
+	
+	
+	/***
+	 * Récupère les réponse d'un question.
+	 * @param Question : question
+	 * @return Vector(Reponse)
+	 */
+	public Vector<Reponse> getReponses(Question question){
+		return DalQuestion.selectReponse(question);
 	}
 	
 	

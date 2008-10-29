@@ -37,6 +37,7 @@ import javax.swing.tree.TreeSelectionModel;
 
 import modeles.Promotion;
 import modeles.Question;
+import modeles.Reponse;
 import modeles.Section;
 import modeles.Stagiaire;
 import modeles.Test;
@@ -44,6 +45,7 @@ import modeles.Type;
 import securite.hashPassword;
 import vues.JPanelNouvelleReponse;
 import controleur.CtrlFormateur;
+import dal.DalQuestion;
 
 /**
  *
@@ -57,7 +59,7 @@ public class fenPrincipale extends javax.swing.JFrame {
 	private static final long serialVersionUID = 1L;
 	CtrlFormateur ctrl;
     int nbrReponse = 0;
-    //String[] lettres = {"A","B","C","D","E","F","G","H","I","J"};
+    JPanelNouvelleReponse[] tableauReponses = new JPanelNouvelleReponse[10];
 	
 	/*****************************************************
 	*				Constructeur						 *
@@ -581,7 +583,8 @@ public class fenPrincipale extends javax.swing.JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(nbrReponse<10){
-					jPanelReponse.add(new JPanelNouvelleReponse(nbrReponse,"",false));
+					tableauReponses[nbrReponse] = new JPanelNouvelleReponse(nbrReponse,"",false);
+					jPanelReponse.add(tableauReponses[nbrReponse]);
 					jPanelReponse.validate();
 					jPanelReponse.repaint();
 					nbrReponse ++;
@@ -610,7 +613,13 @@ public class fenPrincipale extends javax.swing.JFrame {
 				ctrl.getSectionEnCour().addQuestion(new Question());
 				jListQuestionDeLaSection.setListData(ctrl.getSectionEnCour().getQuestions());
 				jListQuestionDeLaSection.setSelectedIndex(jListQuestionDeLaSection.getLastVisibleIndex());
-				nbrReponse=0;	
+				nbrReponse=0;
+				for(int i = 0 ; i<tableauReponses.length;i++){
+					tableauReponses[i]=null;
+				}
+				jPanelReponse.removeAll();
+				jPanelReponse.validate();
+				jPanelReponse.repaint();
 			}
  			
  		});
@@ -619,7 +628,13 @@ public class fenPrincipale extends javax.swing.JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				ctrl.getQuestionEnCour().setEnonce(jEditorPaneEnonceQuestion.getText());
+				ctrl.getQuestionEnCour().setType((Type)jComboBoxListeTypeQuestion.getSelectedItem());
+				for(int i =0;i<nbrReponse;i++){
+					Reponse r = new Reponse(tableauReponses[i].getJTextAreaReponse().getText(),i,tableauReponses[i].getJCheckBoxReponse().isSelected(),ctrl.getQuestionEnCour());
+					ctrl.getQuestionEnCour().addReponse(r);
+				}
+				ctrl.enregistrerQuestion(ctrl.getQuestionEnCour());
 			}
  			
  		});
@@ -628,7 +643,28 @@ public class fenPrincipale extends javax.swing.JFrame {
 
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
-				jEditorPaneEnonceQuestion.setText(((Question)jListQuestionDeLaSection.getSelectedValue()).toString());
+				nbrReponse=0;
+				for(int i = 0 ; i<tableauReponses.length;i++){
+					
+					tableauReponses[i]=null;
+				}
+				jPanelReponse.removeAll();
+				jPanelReponse.validate();
+				jPanelReponse.repaint();
+				
+				if(jListQuestionDeLaSection.getSelectedIndex()>-1){
+					jEditorPaneEnonceQuestion.setText(((Question)jListQuestionDeLaSection.getSelectedValue()).getEnonce());
+					ctrl.setQuestionEnCour((Question)jListQuestionDeLaSection.getSelectedValue());
+					jComboBoxListeTypeQuestion.setSelectedItem(ctrl.getQuestionEnCour().getType());
+					Vector<Reponse> listeReponse = ctrl.getReponses(ctrl.getQuestionEnCour());
+					for(int i = 0;i<listeReponse.size();i++){
+						tableauReponses[nbrReponse] = new JPanelNouvelleReponse(i,listeReponse.elementAt(i).getTexte(),listeReponse.elementAt(i).isEtat());
+						jPanelReponse.add(tableauReponses[nbrReponse]);
+						jPanelReponse.validate();
+						jPanelReponse.repaint();
+						nbrReponse ++;
+					}
+				}
 			}
  			
  		});
