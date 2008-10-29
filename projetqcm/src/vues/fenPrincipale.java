@@ -13,9 +13,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.beans.DefaultPersistenceDelegate;
+import java.beans.PersistenceDelegate;
+import java.beans.XMLEncoder;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -227,6 +232,22 @@ public class fenPrincipale extends javax.swing.JFrame {
 				test.setTemps(jSliderTemps.getValue());
 				ctrl.enregistrerTest((Test)jListTests.getSelectedValue());
 				jListTests.setListData(ctrl.getListeTests());
+			}
+    		
+    	});
+    	
+    	
+    	jButtonImprimerTest.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				try {
+					XMLEncoder encoder = new XMLEncoder(new FileOutputStream(ctrl.getTestEnCour().getNom() + ".xml"));
+					encoder.writeObject(ctrl.getTestEnCour());
+					encoder.close();
+				} catch (FileNotFoundException e1) {
+					e1.printStackTrace();
+				}
 			}
     		
     	});
