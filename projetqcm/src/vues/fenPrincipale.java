@@ -516,6 +516,10 @@ public class fenPrincipale extends javax.swing.JFrame {
 				ctrl.supprimerSection(ctrl.getTestEnCour(), ctrl.getSectionEnCour());
 				jListSectionDisponible.setListData(ctrl.getListeSection());
 				jListSectionDisponible.setSelectedIndex(jListSectionDisponible.getLastVisibleIndex());
+				ctrl.setSectionEnCour(null);
+				jTextFieldNomSection.setText("");
+				jTextFieldNumeroSection.setText("0");
+				
 				
 			}
     		
@@ -524,6 +528,9 @@ public class fenPrincipale extends javax.swing.JFrame {
     	/*****************************************************
     	*	Méthodes d'initialisation  du panel Section		 *
     	******************************************************/
+    	
+    	jTextFieldNumeroSection.setEditable(false);
+    	
     	
     	SpinnerNumberModel model = new SpinnerNumberModel(0,0,10,1); 
 		jSpinnerNbrQuestionTest.setModel(model);
