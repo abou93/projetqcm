@@ -281,72 +281,78 @@ public class fenPrincipale extends javax.swing.JFrame {
 				
 				DefaultMutableTreeNode racineInsc = null;
 				TreePath path = jTreeListeStagiaireTest.getPathForRow(0);
-				
-				if(path.toString().equals("[Vide..]") & !jTreeListeStagaireEni.getLastSelectedPathComponent().toString().equals("ENI Ecole")){
-					racineInsc = new DefaultMutableTreeNode("Inscrits");
-					jTreeListeStagiaireTest.setModel(new DefaultTreeModel(racineInsc));
-				}else{
-					jTreeListeStagiaireTest.setSelectionRow(0);
-					racineInsc = ((DefaultMutableTreeNode)jTreeListeStagiaireTest.getLastSelectedPathComponent());
-				}
-	
-				if(((DefaultMutableTreeNode)jTreeListeStagaireEni.getLastSelectedPathComponent()).getUserObject() instanceof Promotion){
-					int verif = 0;
-					DefaultMutableTreeNode racinePromo = new DefaultMutableTreeNode(((DefaultMutableTreeNode)jTreeListeStagaireEni.getLastSelectedPathComponent()).getUserObject());
-					Enumeration<DefaultMutableTreeNode> enume = racineInsc.children();
+
+				if(ctrl.getTestEnCour().getSections().size()>0){
 					
-					if(enume.hasMoreElements()){
+				
+					if(path.toString().equals("[Vide..]") & !jTreeListeStagaireEni.getLastSelectedPathComponent().toString().equals("ENI Ecole")){
+						racineInsc = new DefaultMutableTreeNode("Inscrits");
+						jTreeListeStagiaireTest.setModel(new DefaultTreeModel(racineInsc));
+					}else{
+						jTreeListeStagiaireTest.setSelectionRow(0);
+						racineInsc = ((DefaultMutableTreeNode)jTreeListeStagiaireTest.getLastSelectedPathComponent());
+					}
+		
+					if(((DefaultMutableTreeNode)jTreeListeStagaireEni.getLastSelectedPathComponent()).getUserObject() instanceof Promotion){
+						int verif = 0;
+						DefaultMutableTreeNode racinePromo = new DefaultMutableTreeNode(((DefaultMutableTreeNode)jTreeListeStagaireEni.getLastSelectedPathComponent()).getUserObject());
+						Enumeration<DefaultMutableTreeNode> enume = racineInsc.children();
 						
-						while(enume.hasMoreElements()){
-							Promotion p = (Promotion)enume.nextElement().getUserObject();
-							if(p.getCode().equals(((Promotion)racinePromo.getUserObject()).getCode())){
-								verif++;
+						if(enume.hasMoreElements()){
+							
+							while(enume.hasMoreElements()){
+								Promotion p = (Promotion)enume.nextElement().getUserObject();
+								if(p.getCode().equals(((Promotion)racinePromo.getUserObject()).getCode())){
+									verif++;
+								}
+							}
+							
+						}
+						
+						if(verif==0){
+							racineInsc.add(racinePromo);
+							Promotion p = (Promotion)racinePromo.getUserObject();
+							for(Stagiaire s:p.getListeStagiaires()){
+								
+								ctrl.inscrirStagiaireTest(s, ctrl.getTestEnCour(), calculDate(), jTextFieldMailFormateur.getText());
+								DefaultMutableTreeNode racineStagiaire = new DefaultMutableTreeNode(s);
+								racinePromo.add(racineStagiaire);
+							}
+							
+							jTreeListeStagiaireTest.setModel(new DefaultTreeModel(racineInsc));
+						}
+					}else if ((((DefaultMutableTreeNode)jTreeListeStagaireEni.getLastSelectedPathComponent()).getUserObject() instanceof Stagiaire)){
+						boolean verif=false;
+						DefaultMutableTreeNode racinePromo = new DefaultMutableTreeNode(((DefaultMutableTreeNode)((DefaultMutableTreeNode)jTreeListeStagaireEni.getLastSelectedPathComponent()).getParent()).getUserObject());
+						DefaultMutableTreeNode racineStagiaire = new DefaultMutableTreeNode(((DefaultMutableTreeNode)jTreeListeStagaireEni.getLastSelectedPathComponent()).getUserObject());
+						Enumeration<DefaultMutableTreeNode> enume = racineInsc.children();
+						
+						if(enume.hasMoreElements()){
+							
+							while(enume.hasMoreElements()){
+								DefaultMutableTreeNode node = enume.nextElement();
+								Promotion p = (Promotion)node.getUserObject();
+								
+								if(p.getCode().equals(((Promotion)racinePromo.getUserObject()).getCode())){
+									
+									if(ctrl.inscrirStagiaireTest((Stagiaire)racineStagiaire.getUserObject(), ctrl.getTestEnCour(),  calculDate(), jTextFieldMailFormateur.getText())){
+										node.add(racineStagiaire);
+									}
+									verif=true;
+								}
 							}
 						}
-						
-					}
-					
-					if(verif==0){
-						racineInsc.add(racinePromo);
-						Promotion p = (Promotion)racinePromo.getUserObject();
-						for(Stagiaire s:p.getListeStagiaires()){
+						if(!verif){
 							
-							ctrl.inscrirStagiaireTest(s, ctrl.getTestEnCour(), calculDate(), jTextFieldMailFormateur.getText());
-							DefaultMutableTreeNode racineStagiaire = new DefaultMutableTreeNode(s);
-							racinePromo.add(racineStagiaire);
+							if(ctrl.inscrirStagiaireTest((Stagiaire)racineStagiaire.getUserObject(), ctrl.getTestEnCour(),  calculDate(), jTextFieldMailFormateur.getText())){
+								racinePromo.add(racineStagiaire);
+								racineInsc.add(racinePromo);
+							}
 						}
-						
 						jTreeListeStagiaireTest.setModel(new DefaultTreeModel(racineInsc));
 					}
-				}else if ((((DefaultMutableTreeNode)jTreeListeStagaireEni.getLastSelectedPathComponent()).getUserObject() instanceof Stagiaire)){
-					boolean verif=false;
-					DefaultMutableTreeNode racinePromo = new DefaultMutableTreeNode(((DefaultMutableTreeNode)((DefaultMutableTreeNode)jTreeListeStagaireEni.getLastSelectedPathComponent()).getParent()).getUserObject());
-					DefaultMutableTreeNode racineStagiaire = new DefaultMutableTreeNode(((DefaultMutableTreeNode)jTreeListeStagaireEni.getLastSelectedPathComponent()).getUserObject());
-					Enumeration<DefaultMutableTreeNode> enume = racineInsc.children();
-					
-					if(enume.hasMoreElements()){
-						
-						while(enume.hasMoreElements()){
-							DefaultMutableTreeNode node = enume.nextElement();
-							Promotion p = (Promotion)node.getUserObject();
-							
-							if(p.getCode().equals(((Promotion)racinePromo.getUserObject()).getCode())){
-								
-								if(ctrl.inscrirStagiaireTest((Stagiaire)racineStagiaire.getUserObject(), ctrl.getTestEnCour(),  calculDate(), jTextFieldMailFormateur.getText())){
-									node.add(racineStagiaire);
-								}
-								verif=true;
-							}
-						}
-					}
-					if(!verif){
-						
-						if(ctrl.inscrirStagiaireTest((Stagiaire)racineStagiaire.getUserObject(), ctrl.getTestEnCour(),  calculDate(), jTextFieldMailFormateur.getText())){
-							racinePromo.add(racineStagiaire);
-							racineInsc.add(racinePromo);
-						}
-					}
-					jTreeListeStagiaireTest.setModel(new DefaultTreeModel(racineInsc));
+				}else{
+					JOptionPane.showMessageDialog(null, "Le test " + ctrl.getTestEnCour().getNom() + " n'a pas de section.", "Action impossible", JOptionPane.ERROR_MESSAGE);
 				}
 			}
     	});
@@ -734,6 +740,44 @@ public class fenPrincipale extends javax.swing.JFrame {
  			
  		});
  		
+ 		
+ 		//Clic sur le bouton ajouter question à la section en cours
+ 		jButtonAjoutSection1.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Question qu = (Question)((DefaultMutableTreeNode)jTreeListeQuestionDispo.getLastSelectedPathComponent()).getUserObject();
+				Section se = qu.getSection();
+				ctrl.getSectionEnCour().addQuestion(qu);
+				se.supprQuestion(qu);
+				
+				//Afficher le jTree
+				DefaultMutableTreeNode racine = new DefaultMutableTreeNode("Questions Disponibles") ;
+				for (Section s : ctrl.getListeSection()){
+		    		DefaultMutableTreeNode sousDossier = new DefaultMutableTreeNode(s);
+		    		for (Question q : ctrl.questionParSection(s)){
+		    			sousDossier.add(new DefaultMutableTreeNode(q));
+		    		}
+		    		racine.add(sousDossier);
+		    	}
+		    	jTreeListeQuestionDispo.setModel(new DefaultTreeModel(racine));
+		    	
+		    	jListQuestionDeLaSection.setListData(ctrl.getSectionEnCour().getQuestions());
+			}
+			
+ 			
+ 		});
+ 		
+ 		
+ 		//Clic sur le bouton enlever question de la section en cours
+ 		jButtonEnleverSection1.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+ 			
+ 		});
  		/*****************************************************
  		*		 		Initialisation des composants		 *
  		******************************************************/
@@ -764,8 +808,7 @@ public class fenPrincipale extends javax.swing.JFrame {
     		}
     	}
     	
- 		
- 		 		
+    	
  		if((ctrl.getTestEnCour()!= null)&(ctrl.getSectionEnCour()!=null)){
  			jTextFieldNomSectionPanelQuestion.setText(ctrl.getSectionEnCour().getNom());
  		}
