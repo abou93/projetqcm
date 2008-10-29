@@ -58,20 +58,24 @@ public class DalInscription {
 	public static boolean insertTirage(Inscription inscription){
 		cnx = AccesBase.getConnection();
 		Enumeration<UUID> enumTirage = inscription.getTirage().elements();
-		while(enumTirage.hasMoreElements()){
-			try {
+		while(enumTirage.hasMoreElements())
+		{
+			try 
+			{
 				PreparedStatement stm = cnx.prepareStatement("insert into TIRAGE (ID_QUESTION,NOM_TEST,ID_STAGIAIRE) values (?,?,?)");
 				stm.setString(1, enumTirage.nextElement().toString());
 				stm.setString(2, inscription.getTest().getNom());
 				stm.setString(3, inscription.getStagiaire().getId().toString());
 				stm.execute();
-				AccesBase.deconnexionBase(cnx);
-			} catch (SQLException e) {
+			}	
+			catch (SQLException e) 
+			{
 				e.printStackTrace();
 				AccesBase.deconnexionBase(cnx);
 				return false;
 			}
 		}
+		AccesBase.deconnexionBase(cnx);
 		return true;
 	}
 	
