@@ -53,7 +53,7 @@ public class JPanelNouvelleReponse extends javax.swing.JPanel {
 					//fenetre.nbrReponse -=fenetre.tableauReponses.size();
 					fenetre.tableauReponses.removeAllElements();
 					fenetre.jPanelReponse.removeAll();
-					fenetre.nbrReponse --;
+					
 					if (CtrlFormateur.getCtrlFormateur().getQuestionEnCour().getNombreReponse()> numero)
 							CtrlFormateur.getCtrlFormateur().deleteReponse(numero);
 					//CtrlFormateur.getCtrlFormateur().getQuestionEnCour().getListeReponses().remove(numero);
@@ -64,6 +64,7 @@ public class JPanelNouvelleReponse extends javax.swing.JPanel {
 						fenetre.tableauReponses.add(jpa);
 						fenetre.jPanelReponse.add(jpa);
 					}
+					fenetre.nbrReponse = fenetre.tableauReponses.size();
 					
 					fenetre.jPanelReponse.validate();
 					fenetre.jPanelReponse.repaint();
