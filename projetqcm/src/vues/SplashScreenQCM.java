@@ -4,7 +4,9 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.GraphicsConfiguration;
 import java.awt.GraphicsDevice;
 import java.awt.GraphicsEnvironment;
@@ -109,8 +111,7 @@ public class SplashScreenQCM  extends JFrame {
 		
 		//Centrer le splashscreen
 		
-
-		
+				
 		GraphicsEnvironment ge = GraphicsEnvironment.
         getLocalGraphicsEnvironment();
         GraphicsDevice[] gs = ge.getScreenDevices();

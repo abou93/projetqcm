@@ -1,6 +1,9 @@
 package vues;
 
 import java.awt.AWTException;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.SystemTray;
 import java.awt.TrayIcon;
@@ -51,6 +54,8 @@ public class LanceurApplication {
 		fond.setUndecorated(true);
 		fond.pack();
 		fond.setVisible(true);
+		
+		
 		
 		fond.getQuit().requestFocusInWindow();
 		fond.getValid().requestFocusInWindow();
