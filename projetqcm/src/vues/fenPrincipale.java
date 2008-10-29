@@ -665,7 +665,6 @@ public class fenPrincipale extends javax.swing.JFrame {
 					ctrl.getQuestionEnCour().addReponse(r);
 				}
 				ctrl.enregistrerQuestion(ctrl.getQuestionEnCour());
-				//TODO Ajouter la question au jTreeListeQuestionDispo
 				DefaultMutableTreeNode racine = (DefaultMutableTreeNode)jTreeListeQuestionDispo.getPathForRow(0).getLastPathComponent();
 				Enumeration<DefaultMutableTreeNode> enumeRacine = racine.children();
 				while(enumeRacine.hasMoreElements()){
@@ -729,6 +728,7 @@ public class fenPrincipale extends javax.swing.JFrame {
 			    		racine.add(sousDossier);
 			    	}
 			    	jTreeListeQuestionDispo.setModel(new DefaultTreeModel(racine));
+			    	jListQuestionDeLaSection.setSelectedIndex(0);
 				}
 			}
  			
@@ -864,13 +864,10 @@ public class fenPrincipale extends javax.swing.JFrame {
 					password.setProperty("motdepasse",hash.getHash(nouveauMotDePasse));
 					ioProperties.saveProperties(password,"securite.properties", "Fichier password");
 				} catch (FileNotFoundException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				} catch (IOException e1) {
-					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				} catch (Exception e2) {
-					// TODO Auto-generated catch block
 					e2.printStackTrace();
 				}
 				
