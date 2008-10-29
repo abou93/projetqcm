@@ -1,5 +1,11 @@
 package vues;
 
+import java.awt.AWTException;
+import java.awt.Image;
+import java.awt.SystemTray;
+import java.awt.TrayIcon;
+
+import javax.swing.ImageIcon;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -22,6 +28,21 @@ public class LanceurApplication {
 			e1.printStackTrace();
 		} catch (UnsupportedLookAndFeelException e1) {
 			e1.printStackTrace();
+		}
+		
+		// Affiche une icone dans la barre de tache		
+		if (SystemTray.isSupported()) {
+			ImageIcon i = new ImageIcon("C:/Images/LogoENI16.png");
+			Image im = i.getImage();
+			TrayIcon tic = new TrayIcon(im,"Eni - Création de QCM");
+			SystemTray tray = SystemTray.getSystemTray();
+			try {
+				tray.add(tic);
+				// tray.remove(tic);  Pour enlever l'icone
+			} catch (AWTException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		
 		String imagePath = "C:/Images/SplashScreen2.png";

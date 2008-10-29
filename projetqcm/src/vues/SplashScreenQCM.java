@@ -164,8 +164,9 @@ public class SplashScreenQCM  extends JFrame {
 			public void keyPressed(KeyEvent e){
 				if(e.getKeyCode()==KeyEvent.VK_ENTER){
 					btnValid.doClick();
+				}else{
+					text2.setBackground(Color.WHITE);
 				}
-				text2.setBackground(Color.WHITE);
 			}
 		});
 	
