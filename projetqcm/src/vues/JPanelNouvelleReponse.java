@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Vector;
 
+import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JTextArea;
 import javax.swing.ScrollPaneConstants;
@@ -83,7 +84,11 @@ public class JPanelNouvelleReponse extends javax.swing.JPanel {
     	return jCheckBoxReponseVrai;
     }
     
-
+    public JButton getJButtonReponse(){
+    	return jButtonSupprimerReponse;
+    }
+       
+    
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is

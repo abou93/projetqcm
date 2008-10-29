@@ -6,6 +6,7 @@
 
 package vues;
 
+import java.awt.Component;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
@@ -467,6 +468,23 @@ public class fenPrincipale extends javax.swing.JFrame {
 					jTextFieldNumeroSection.setText(String.valueOf(s.getNumero()));
 					jSpinnerNbrQuestionTest.setValue(s.getNbrQuestion());
 					ctrl.setSectionEnCour(s);
+					if(ctrl.getTestEnCour().getSections().contains(s)){ //TODO changer la condition (vérifier si la section selectionner fait partit d'un test puis verifier les inscription pour ce test)
+						//jButtonAjoutSection.setEnabled(false);
+	    		   		//jButtonEnleverSection.setEnabled(false);
+	    		   		jButtonSupprimerSection.setEnabled(false);
+	    		   		jButtonEnregistrerSection.setEnabled(false);
+	    		   		//jButtonNouveauSection.setEnabled(false);
+	    		   		jTextFieldNomSection.setEnabled(false);
+	    		   		jSpinnerNbrQuestionTest.setEnabled(false);
+    				}else{
+    					//jButtonAjoutSection.setEnabled(true);
+	    		   		//jButtonEnleverSection.setEnabled(true);
+	    		   		jButtonSupprimerSection.setEnabled(true);
+	    		   		jButtonEnregistrerSection.setEnabled(true);
+	    		   		//jButtonNouveauSection.setEnabled(true);
+	    		   		jTextFieldNomSection.setEnabled(true);
+	    		   		jSpinnerNbrQuestionTest.setEnabled(true);
+    				}
 				}
 			}
     		
@@ -709,8 +727,36 @@ public class fenPrincipale extends javax.swing.JFrame {
 						nbrReponse ++;
 					}
 				}
+				if(!jButtonEnregistrerSection.isEnabled()){ //TODO changer la condition (sur la section courante et non sur un bouton)
+					jButtonAjoutDuneReponse.setEnabled(false);
+					jButtonChoixImage.setEnabled(false);
+					jButtonNouvelleQuestion.setEnabled(false);
+					jButtonEnregistrerQuestion.setEnabled(false);
+					jButtonSupprimmerQuestion.setEnabled(false);
+					//jTreeListeQuestionDispo.setEnabled(false);
+					//jListQuestionDeLaSection.setEnabled(false);
+					jButtonAjoutSection1.setEnabled(false);
+					jButtonEnleverSection1.setEnabled(false);
+					//jEditorPaneEnonceQuestion.setEnabled(false);
+					for(Component c : jPanelReponse.getComponents()){
+						((JPanelNouvelleReponse)c).getJButtonReponse().setEnabled(false);
+					}
+				}else{
+					jButtonAjoutDuneReponse.setEnabled(true);
+					jButtonChoixImage.setEnabled(true);
+					jButtonNouvelleQuestion.setEnabled(true);
+					jButtonEnregistrerQuestion.setEnabled(true);
+					jButtonSupprimmerQuestion.setEnabled(true);
+					//jTreeListeQuestionDispo.setEnabled(true);
+					//jListQuestionDeLaSection.setEnabled(true);
+					jButtonAjoutSection1.setEnabled(true);
+					jButtonEnleverSection1.setEnabled(true);
+					//jEditorPaneEnonceQuestion.setEnabled(true);
+					for(Component c : jPanelReponse.getComponents()){
+						((JPanelNouvelleReponse)c).getJButtonReponse().setEnabled(true);
+					}
+				}
 			}
- 			
  		});
  		
  		
@@ -732,7 +778,6 @@ public class fenPrincipale extends javax.swing.JFrame {
 			    		racine.add(sousDossier);
 			    	}
 			    	jTreeListeQuestionDispo.setModel(new DefaultTreeModel(racine));
-			    	jListQuestionDeLaSection.setSelectedIndex(0);
 				}
 			}
  			
@@ -907,8 +952,23 @@ public class fenPrincipale extends javax.swing.JFrame {
 			    			jTextNomTestPanelSection.setText(ctrl.getTestEnCour().getNom());
 			    		   	ctrl.chargerListeSectionsParTest(ctrl.getTestEnCour());
 			    		   	jListSectionDuTest.setListData(ctrl.getListeSectionsParTest());
-			    		
-			    			
+			    			if(ctrl.isInscription(ctrl.getTestEnCour())){ //TODO changer la condition (vérifier si la section selectionner fait partit d'un test puis verifier les inscription pour ce test)
+			    		   		jButtonAjoutSection.setEnabled(false);
+			    		   		jButtonEnleverSection.setEnabled(false);
+			    		   		jButtonSupprimerSection.setEnabled(false);
+			    		   		jButtonEnregistrerSection.setEnabled(false);
+			    		   		//jButtonNouveauSection.setEnabled(false);
+			    		   		jTextFieldNomSection.setEnabled(false);
+			    		   		jSpinnerNbrQuestionTest.setEnabled(false);
+			    		   	}else{
+			    		   		jButtonAjoutSection.setEnabled(true);
+			    		   		jButtonEnleverSection.setEnabled(true);
+			    		   		jButtonSupprimerSection.setEnabled(true);
+			    		   		jButtonEnregistrerSection.setEnabled(true);
+			    		   		//jButtonNouveauSection.setEnabled(true);
+			    		   		jTextFieldNomSection.setEnabled(true);
+			    		   		jSpinnerNbrQuestionTest.setEnabled(true);
+			    		   	}
 						}
 						break;
 				case 2 :if((ctrl.getSectionEnCour()!=null))
@@ -916,11 +976,40 @@ public class fenPrincipale extends javax.swing.JFrame {
 			 				jTextFieldNomSectionPanelQuestion.setText(ctrl.getSectionEnCour().getNom());
 			 				jListQuestionDeLaSection.setListData(ctrl.getSectionEnCour().getQuestions());
 							jListQuestionDeLaSection.setSelectedIndex(jListQuestionDeLaSection.getFirstVisibleIndex());
-							if ((Question)jListQuestionDeLaSection.getSelectedValue()!=null){
-							ctrl.setQuestionEnCour((Question)jListQuestionDeLaSection.getSelectedValue());
-					 		jComboBoxListeTypeQuestion.setSelectedItem(jListQuestionDeLaSection.getSelectedValue()); 		
-					 		jEditorPaneEnonceQuestion.setText(ctrl.getQuestionEnCour().getEnonce());}
-							else jEditorPaneEnonceQuestion.setText("");
+							if((Question)jListQuestionDeLaSection.getSelectedValue()!=null){
+								ctrl.setQuestionEnCour((Question)jListQuestionDeLaSection.getSelectedValue());
+						 		jComboBoxListeTypeQuestion.setSelectedItem(jListQuestionDeLaSection.getSelectedValue()); 		
+						 		jEditorPaneEnonceQuestion.setText(ctrl.getQuestionEnCour().getEnonce());
+						 	}else jEditorPaneEnonceQuestion.setText("");
+							if(!jButtonEnregistrerSection.isEnabled()){ //TODO changer la condition (sur la section courante et non sur un bouton)
+								jButtonAjoutDuneReponse.setEnabled(false);
+								jButtonChoixImage.setEnabled(false);
+								jButtonNouvelleQuestion.setEnabled(false);
+								jButtonEnregistrerQuestion.setEnabled(false);
+								jButtonSupprimmerQuestion.setEnabled(false);
+								//jTreeListeQuestionDispo.setEnabled(false);
+								//jListQuestionDeLaSection.setEnabled(false);
+								jButtonAjoutSection1.setEnabled(false);
+								jButtonEnleverSection1.setEnabled(false);
+								//jEditorPaneEnonceQuestion.setEnabled(false);
+								for(Component c : jPanelReponse.getComponents()){
+									((JPanelNouvelleReponse)c).getJButtonReponse().setEnabled(false);
+								}
+							}else{
+								jButtonAjoutDuneReponse.setEnabled(true);
+								jButtonChoixImage.setEnabled(true);
+								jButtonNouvelleQuestion.setEnabled(true);
+								jButtonEnregistrerQuestion.setEnabled(true);
+								jButtonSupprimmerQuestion.setEnabled(true);
+								//jTreeListeQuestionDispo.setEnabled(true);
+								//jListQuestionDeLaSection.setEnabled(true);
+								jButtonAjoutSection1.setEnabled(true);
+								jButtonEnleverSection1.setEnabled(true);
+								//jEditorPaneEnonceQuestion.setEnabled(true);
+								for(Component c : jPanelReponse.getComponents()){
+									((JPanelNouvelleReponse)c).getJButtonReponse().setEnabled(true);
+								}
+							}
 			 			}
 						
 						break;

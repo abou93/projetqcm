@@ -209,4 +209,25 @@ public class DalInscription {
 		}
 		return tirage;
 	}
+	
+	/***
+	 * Permet de vérifier si un test possède au moins une inscription
+	 * @param Test : test
+	 * @return Boolean : True si une (ou plusieurs) inscription est associée à ce test, false si ausune inscription n'est assocée à ce test
+	 */
+	public static boolean selectInscriptionTest(Test test){
+		cnx = AccesBase.getConnection();
+		boolean b = false;
+		try {
+			PreparedStatement stm = cnx.prepareStatement("select * from INSCRIPTIONS where NOM_TEST=?");
+			stm.setString(1, test.getNom());
+			ResultSet rs = stm.executeQuery();
+			b=rs.next();
+			AccesBase.deconnexionBase(cnx);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			AccesBase.deconnexionBase(cnx);
+		}
+		return b;
+	}
 }

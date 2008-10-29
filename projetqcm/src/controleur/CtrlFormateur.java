@@ -572,6 +572,9 @@ public class CtrlFormateur {
 	}
 
 	
+	public boolean isInscription(Test test){
+		return DalInscription.selectInscriptionTest(test);
+	}
 	
 	
 }
