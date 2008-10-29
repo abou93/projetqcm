@@ -69,7 +69,7 @@ public class fenPrincipale extends javax.swing.JFrame {
 	private static final long serialVersionUID = 1L;
 	CtrlFormateur ctrl;
     int nbrReponse = 0;
-    JPanelNouvelleReponse[] tableauReponses = new JPanelNouvelleReponse[10];
+    Vector<JPanelNouvelleReponse> tableauReponses = new Vector<JPanelNouvelleReponse>();
 	
 	/*****************************************************
 	*				Constructeur						 *
@@ -608,8 +608,8 @@ public class fenPrincipale extends javax.swing.JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				if(nbrReponse<10){
-					tableauReponses[nbrReponse] = new JPanelNouvelleReponse(nbrReponse,"",false);
-					jPanelReponse.add(tableauReponses[nbrReponse]);
+					tableauReponses.setElementAt(new JPanelNouvelleReponse(fenPrincipale.this,nbrReponse,"",false), nbrReponse); 
+					jPanelReponse.add(tableauReponses.elementAt(nbrReponse));
 					jPanelReponse.validate();
 					jPanelReponse.repaint();
 					nbrReponse ++;
@@ -642,8 +642,8 @@ public class fenPrincipale extends javax.swing.JFrame {
 				jListQuestionDeLaSection.setListData(ctrl.getSectionEnCour().getQuestions());
 				jListQuestionDeLaSection.setSelectedIndex(jListQuestionDeLaSection.getLastVisibleIndex());
 				nbrReponse=0;
-				for(int i = 0 ; i<tableauReponses.length;i++){
-					tableauReponses[i]=null;
+				for(int i = 0 ; i< tableauReponses.size();i++){
+					tableauReponses.setElementAt(null, i);
 				}
 				jPanelReponse.removeAll();
 				jPanelReponse.validate();
@@ -661,7 +661,7 @@ public class fenPrincipale extends javax.swing.JFrame {
 				ctrl.getQuestionEnCour().setEnonce(jEditorPaneEnonceQuestion.getText());
 				ctrl.getQuestionEnCour().setType((Type)jComboBoxListeTypeQuestion.getSelectedItem());
 				for(int i =0;i<nbrReponse;i++){
-					Reponse r = new Reponse(tableauReponses[i].getJTextAreaReponse().getText(),i,tableauReponses[i].getJCheckBoxReponse().isSelected(),ctrl.getQuestionEnCour());
+					Reponse r = new Reponse(tableauReponses.elementAt(i).getJTextAreaReponse().getText(),i,tableauReponses.elementAt(i).getJCheckBoxReponse().isSelected(),ctrl.getQuestionEnCour());
 					ctrl.getQuestionEnCour().addReponse(r);
 				}
 				ctrl.enregistrerQuestion(ctrl.getQuestionEnCour());
@@ -687,9 +687,9 @@ public class fenPrincipale extends javax.swing.JFrame {
 			@Override
 			public void valueChanged(ListSelectionEvent e) {
 				nbrReponse=0;
-				for(int i = 0 ; i<tableauReponses.length;i++){
+				for(int i = 0 ; i<tableauReponses.size();i++){
 					
-					tableauReponses[i]=null;
+					tableauReponses.setElementAt(null,i);
 				}
 				jPanelReponse.removeAll();
 				jPanelReponse.validate();
@@ -701,8 +701,9 @@ public class fenPrincipale extends javax.swing.JFrame {
 					jComboBoxListeTypeQuestion.setSelectedItem(ctrl.getQuestionEnCour().getType());
 					Vector<Reponse> listeReponse = ctrl.getReponses(ctrl.getQuestionEnCour());
 					for(int i = 0;i<listeReponse.size();i++){
-						tableauReponses[nbrReponse] = new JPanelNouvelleReponse(i,listeReponse.elementAt(i).getTexte(),listeReponse.elementAt(i).isEtat());
-						jPanelReponse.add(tableauReponses[nbrReponse]);
+						JPanelNouvelleReponse j = new JPanelNouvelleReponse(fenPrincipale.this,i,listeReponse.elementAt(i).getTexte(),listeReponse.elementAt(i).isEtat());
+						tableauReponses.add(j);
+						jPanelReponse.add(j);
 						jPanelReponse.validate();
 						jPanelReponse.repaint();
 						nbrReponse ++;
@@ -1658,7 +1659,7 @@ public class fenPrincipale extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanelInscriptionTest;
     private javax.swing.JPanel jPanelProprietesTest;
-    private javax.swing.JPanel jPanelReponse;
+    public javax.swing.JPanel jPanelReponse;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;

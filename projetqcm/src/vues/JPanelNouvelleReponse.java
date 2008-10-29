@@ -7,6 +7,8 @@
 package vues;
 
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.JCheckBox;
 import javax.swing.JTextArea;
@@ -19,10 +21,12 @@ import javax.swing.ScrollPaneConstants;
 public class JPanelNouvelleReponse extends javax.swing.JPanel {
 	int numero = 0;
 	String[] lettres = {"A","B","C","D","E","F","G","H","I","J"};
+	fenPrincipale fenetre ;
 	
 	/** Creates new form JPanelNouvelleReponse */
-    public JPanelNouvelleReponse(int num,String texte,boolean checked) {
-        initComponents();
+    public JPanelNouvelleReponse(fenPrincipale f, int num,String texte,boolean checked) {
+        fenetre = f;
+    	initComponents();
         numero=num;
         initPerso(lettres[num],texte,checked);
     }
@@ -35,6 +39,23 @@ public class JPanelNouvelleReponse extends javax.swing.JPanel {
     	jTextAreaNouvelleReponse.setText(texte);
     	jLabel1.setText(lettre);
     	jLabel1.setFont(new Font("Tahoma",Font.BOLD,12));
+    	
+    	jButtonSupprimerReponse.addActionListener(new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) 
+			{
+					fenetre.jPanelReponse.remove(fenetre.tableauReponses.elementAt(numero));
+					fenetre.jPanelReponse.repaint();
+					fenetre.tableauReponses.setElementAt(null,numero);
+					
+					for(JPanelNouvelleReponse j : fenetre.tableauReponses){
+						fenetre.jPanelReponse.add(j);
+					}
+					
+			}
+				
+		});
     }
     
     
