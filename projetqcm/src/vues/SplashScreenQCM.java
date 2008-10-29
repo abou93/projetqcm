@@ -24,7 +24,6 @@ import javax.imageio.ImageIO;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
@@ -36,6 +35,7 @@ import securite.hashPassword;
  *
  */
 public class SplashScreenQCM  extends JFrame {
+	private static final long serialVersionUID = 1L;
 	private Container c;
 	private JPanel imagePanel;
 	private String filePath;
@@ -65,6 +65,8 @@ public class SplashScreenQCM  extends JFrame {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		c = getContentPane();
 		imagePanel = new JPanel() {
+			private static final long serialVersionUID = 1L;
+
 			public void paint(Graphics g) {
 				try {
 					BufferedImage image = ImageIO.read(new File(filePath));
