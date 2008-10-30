@@ -871,6 +871,7 @@ public class fenPrincipale extends javax.swing.JFrame {
 					ctrl.getSectionEnCour().supprQuestion(ctrl.getQuestionEnCour());
 					jListQuestionDeLaSection.setListData(ctrl.getSectionEnCour().getQuestions());
 					
+					//Afficher le jTree
 					DefaultMutableTreeNode racine = new DefaultMutableTreeNode("Questions Disponibles") ;
 			    	for (Section s : ctrl.getListeSection()){
 			    		DefaultMutableTreeNode sousDossier = new DefaultMutableTreeNode(s);
@@ -1099,6 +1100,7 @@ public class fenPrincipale extends javax.swing.JFrame {
 								jButtonAjoutSection.setEnabled(true);
 	    	    		   		jButtonEnleverSection.setEnabled(true);
 							}
+			    		 
 						}
 						break;
 				
@@ -1143,6 +1145,16 @@ public class fenPrincipale extends javax.swing.JFrame {
 									((JPanelNouvelleReponse)c).getJButtonReponse().setEnabled(true);
 								}
 							}
+							 //Afficher le jTree
+							DefaultMutableTreeNode racine = new DefaultMutableTreeNode("Questions Disponibles") ;
+					    	for (Section s : ctrl.getListeSection()){
+					    		DefaultMutableTreeNode sousDossier = new DefaultMutableTreeNode(s);
+					    		for (Question q : ctrl.questionParSection(s)){
+					    			sousDossier.add(new DefaultMutableTreeNode(q));
+					    		}
+					    		racine.add(sousDossier);
+					    	}
+					    	jTreeListeQuestionDispo.setModel(new DefaultTreeModel(racine));
 			 			}
 						
 						break;
