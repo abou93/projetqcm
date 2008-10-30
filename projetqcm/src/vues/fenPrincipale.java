@@ -56,7 +56,7 @@ import controleur.CtrlFormateur;
 
 /**
  *
- * @author  slefort
+ * @author  slefort & mgenevrais
  */
 public class fenPrincipale extends javax.swing.JFrame {
 
@@ -469,7 +469,7 @@ public class fenPrincipale extends javax.swing.JFrame {
 					jSpinnerNbrQuestionTest.setValue(s.getNbrQuestion());
 					ctrl.setSectionEnCour(s);
 
-	    		   	if(ctrl.isInscriptionSection(ctrl.getSectionEnCour())){	//TODO
+	    		   	if(ctrl.isInscriptionSection(ctrl.getSectionEnCour())){
 	    		   		jButtonSupprimerSection.setEnabled(false);
 	    		   		jButtonEnregistrerSection.setEnabled(false);
 	    		   		jTextFieldNomSection.setEnabled(false);
@@ -729,7 +729,7 @@ public class fenPrincipale extends javax.swing.JFrame {
 						nbrReponse ++;
 					}
 				}
-				if(ctrl.isInscriptionSection(ctrl.getSectionEnCour())){ //TODO
+				if(ctrl.isInscriptionSection(ctrl.getSectionEnCour())){
 					jButtonAjoutDuneReponse.setEnabled(false);
 					jButtonChoixImage.setEnabled(false);
 					jButtonNouvelleQuestion.setEnabled(false);
@@ -971,7 +971,7 @@ public class fenPrincipale extends javax.swing.JFrame {
 //			    		   			}
 //			    		   		}
 //			    		   	}
-			    			if(ctrl.isInscriptionSection(ctrl.getSectionEnCour())){	//TODO
+			    			if(ctrl.isInscriptionSection(ctrl.getSectionEnCour())){
 			    		   		jButtonSupprimerSection.setEnabled(false);
 			    		   		jButtonEnregistrerSection.setEnabled(false);
 			    		   		jTextFieldNomSection.setEnabled(false);
@@ -1001,7 +1001,7 @@ public class fenPrincipale extends javax.swing.JFrame {
 						 		jComboBoxListeTypeQuestion.setSelectedItem(jListQuestionDeLaSection.getSelectedValue()); 		
 						 		jEditorPaneEnonceQuestion.setText(ctrl.getQuestionEnCour().getEnonce());
 						 	}else jEditorPaneEnonceQuestion.setText("");
-							if(ctrl.isInscriptionSection(ctrl.getSectionEnCour())){ //TODO
+							if(ctrl.isInscriptionSection(ctrl.getSectionEnCour())){
 								jButtonAjoutDuneReponse.setEnabled(false);
 								jButtonChoixImage.setEnabled(false);
 								jButtonNouvelleQuestion.setEnabled(false);
