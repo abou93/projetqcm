@@ -9,10 +9,14 @@ package vues;
 import java.awt.Component;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.Dialog.ModalExclusionType;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.beans.XMLEncoder;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -916,24 +920,20 @@ public class fenPrincipale extends javax.swing.JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String nouveauMotDePasse = JOptionPane.showInputDialog(null, "Entrez le nouveau mot de passe formateur ", "Changer le mot de passe", JOptionPane.INFORMATION_MESSAGE);
-				IOProperties ioProperties = new IOProperties();
-				try {
-					Properties password  = ioProperties.loadProperties("securite.properties");
-					hashPassword hash = new hashPassword();
-					password.setProperty("motdepasse",hash.getHash(nouveauMotDePasse));
-					ioProperties.saveProperties(password,"securite.properties", "Fichier password");
-				} catch (FileNotFoundException e1) {
-					e1.printStackTrace();
-				} catch (IOException e1) {
-					e1.printStackTrace();
-				} catch (Exception e2) {
-					e2.printStackTrace();
-				}
+				
+				FenetreOptions option = new FenetreOptions();
+				option.setLocationRelativeTo(option.getParent());
+				option.setAlwaysOnTop(true);
+				option.setModal(true);
+				option.setResizable(false);
+				option.setVisible(true);
+				
 				
 			}
  			
  		});
+ 		
+ 		
  		
  		
     }
