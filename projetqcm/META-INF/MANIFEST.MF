@@ -1,0 +1,4 @@
+Manifest-Version: 1.0 
+Created-By: 1.4.1_01 (Sun Microsystems Inc.) 
+Main-Class: Principale 
+Class-Path: .\sqljdbc.jar .\beansbinding-1.2.1.jar 
