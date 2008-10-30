@@ -788,17 +788,28 @@ public class fenPrincipale extends javax.swing.JFrame {
 				//Enregistre la question
 				ctrl.enregistrerQuestion(ctrl.getQuestionEnCour());
 				
-				//Mets le jTree des questions disponibles à jour
-				DefaultMutableTreeNode racine = (DefaultMutableTreeNode)jTreeListeQuestionDispo.getPathForRow(0).getLastPathComponent();
-				Enumeration<?> enumeRacine = racine.children();
-				while(enumeRacine.hasMoreElements()){
-					DefaultMutableTreeNode section = (DefaultMutableTreeNode)enumeRacine.nextElement();
-					if(((Section)section.getUserObject()).getNumero()==ctrl.getSectionEnCour().getNumero()){
-						section.add(new DefaultMutableTreeNode(ctrl.getQuestionEnCour()));
-					}
-				}
-				jTreeListeQuestionDispo.setModel(new DefaultTreeModel(racine));
-				jListQuestionDeLaSection.repaint();
+				 //Afficher le jTree
+				DefaultMutableTreeNode racine = new DefaultMutableTreeNode("Questions Disponibles") ;
+		    	for (Section s : ctrl.getListeSection()){
+		    		DefaultMutableTreeNode sousDossier = new DefaultMutableTreeNode(s);
+		    		for (Question q : ctrl.questionParSection(s)){
+		    			sousDossier.add(new DefaultMutableTreeNode(q));
+		    		}
+		    		racine.add(sousDossier);
+		    	}
+		    	jTreeListeQuestionDispo.setModel(new DefaultTreeModel(racine));
+				
+//				//Mets le jTree des questions disponibles à jour
+//				DefaultMutableTreeNode racine = (DefaultMutableTreeNode)jTreeListeQuestionDispo.getPathForRow(0).getLastPathComponent();
+//				Enumeration<?> enumeRacine = racine.children();
+//				while(enumeRacine.hasMoreElements()){
+//					DefaultMutableTreeNode section = (DefaultMutableTreeNode)enumeRacine.nextElement();
+//					if(((Section)section.getUserObject()).getNumero()==ctrl.getSectionEnCour().getNumero()){
+//						section.add(new DefaultMutableTreeNode(ctrl.getQuestionEnCour()));
+//					}
+//				}
+//				jTreeListeQuestionDispo.setModel(new DefaultTreeModel(racine));
+//				jListQuestionDeLaSection.repaint();
 			}
  			
  		});
