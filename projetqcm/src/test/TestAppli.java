@@ -13,7 +13,6 @@ import java.awt.event.ActionListener;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import securite.*;
 import vues.SplashScreenQCM;
 
 

@@ -5,6 +5,7 @@ import java.util.Vector;
 import modeles.Section;
 
 public class ListeSections extends Vector<Section>{
+	private static final long serialVersionUID = 1L;
 
 	@Override
 	public boolean contains(Object o) {

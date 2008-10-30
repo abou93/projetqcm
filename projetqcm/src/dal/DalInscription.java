@@ -211,9 +211,31 @@ public class DalInscription {
 	}
 	
 	/***
-	 * Permet de vérifier si un test possède au moins une inscription
+	 * Permet de vérifier si une section appartient à un test qui possède au moins une inscription
 	 * @param Test : test
 	 * @return Boolean : True si une (ou plusieurs) inscription est associée à ce test, false si ausune inscription n'est assocée à ce test
+	 */
+	public static boolean selectInscriptionSection(Section section){
+		cnx = AccesBase.getConnection();
+		boolean b = false;
+		try {
+			PreparedStatement stm = cnx.prepareStatement("select * from INSCRIPTIONS i inner join TESTS_SECTIONS t on i.NOM_TEST=t.NOM_TEST where NUMERO_SECTION=?");
+			stm.setInt(1, section.getNumero());
+			ResultSet rs = stm.executeQuery();
+			b=rs.next();
+			AccesBase.deconnexionBase(cnx);
+		} catch (SQLException e) {
+			e.printStackTrace();
+			AccesBase.deconnexionBase(cnx);
+		}
+		return b;
+	}
+	
+	
+	/***
+	 * Permet de vérifier si un test possède au moins une inscription
+	 * @param Test : test
+	 * @return Boolean
 	 */
 	public static boolean selectInscriptionTest(Test test){
 		cnx = AccesBase.getConnection();
@@ -230,4 +252,5 @@ public class DalInscription {
 		}
 		return b;
 	}
+	
 }

@@ -560,7 +560,7 @@ public class CtrlFormateur {
 
 	
 	/***
-	 * Change unequestion de section
+	 * Change une question de section
 	 * @param Question : question
 	 * @param Section : ancienneSection
 	 */
@@ -571,11 +571,18 @@ public class CtrlFormateur {
 		DalQuestion.updateQuestion(question);
 	}
 
-	
-	public boolean isInscription(Test test){
-		return DalInscription.selectInscriptionTest(test);
+	/***
+	 * Verifie si la section est dans un test qui possède une (ou plusieurs) inscription
+	 * @param Section : section
+	 * @return Boolean : True si au moins un des tests dans lequel est la section possède au moins une inscription, false si tout les tests dans lesquels est la section ne possèdent aucune inscription
+	 */
+	public boolean isInscriptionSection(Section section){
+		return DalInscription.selectInscriptionSection(section);
 	}
 	
+	public boolean isInscriptionTest(Test test){
+		return DalInscription.selectInscriptionTest(test);
+	}
 	
 }
 

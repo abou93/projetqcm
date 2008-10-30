@@ -182,7 +182,7 @@ public class fenPrincipale extends javax.swing.JFrame {
 					jSliderSeuil.setValue(((Test)jListTests.getSelectedValue()).getSeuil());
 					ctrl.setTestEnCour((Test)jListTests.getSelectedValue());
 					remplirTreeInscriptions();
-				
+					ctrl.chargerListeSectionsParTest(ctrl.getTestEnCour());
 				}
 			}
     	});
@@ -293,12 +293,12 @@ public class fenPrincipale extends javax.swing.JFrame {
 					if(((DefaultMutableTreeNode)jTreeListeStagaireEni.getLastSelectedPathComponent()).getUserObject() instanceof Promotion){
 						int verif = 0;
 						DefaultMutableTreeNode racinePromo = new DefaultMutableTreeNode(((DefaultMutableTreeNode)jTreeListeStagaireEni.getLastSelectedPathComponent()).getUserObject());
-						Enumeration<DefaultMutableTreeNode> enume = racineInsc.children();
+						Enumeration<?> enume = racineInsc.children();
 						
 						if(enume.hasMoreElements()){
 							
 							while(enume.hasMoreElements()){
-								Promotion p = (Promotion)enume.nextElement().getUserObject();
+								Promotion p = (Promotion)((DefaultMutableTreeNode)enume.nextElement()).getUserObject();
 								if(p.getCode().equals(((Promotion)racinePromo.getUserObject()).getCode())){
 									verif++;
 								}
@@ -322,12 +322,12 @@ public class fenPrincipale extends javax.swing.JFrame {
 						boolean verif=false;
 						DefaultMutableTreeNode racinePromo = new DefaultMutableTreeNode(((DefaultMutableTreeNode)((DefaultMutableTreeNode)jTreeListeStagaireEni.getLastSelectedPathComponent()).getParent()).getUserObject());
 						DefaultMutableTreeNode racineStagiaire = new DefaultMutableTreeNode(((DefaultMutableTreeNode)jTreeListeStagaireEni.getLastSelectedPathComponent()).getUserObject());
-						Enumeration<DefaultMutableTreeNode> enume = racineInsc.children();
+						Enumeration<?> enume = racineInsc.children();
 						
 						if(enume.hasMoreElements()){
 							
 							while(enume.hasMoreElements()){
-								DefaultMutableTreeNode node = enume.nextElement();
+								DefaultMutableTreeNode node = (DefaultMutableTreeNode)enume.nextElement();
 								Promotion p = (Promotion)node.getUserObject();
 								
 								if(p.getCode().equals(((Promotion)racinePromo.getUserObject()).getCode())){
@@ -361,10 +361,10 @@ public class fenPrincipale extends javax.swing.JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if(((DefaultMutableTreeNode)jTreeListeStagiaireTest.getLastSelectedPathComponent()).getUserObject() instanceof Promotion){
 					DefaultMutableTreeNode promoSelectionnee = (DefaultMutableTreeNode)jTreeListeStagiaireTest.getLastSelectedPathComponent();
-					Enumeration<DefaultMutableTreeNode> enume = promoSelectionnee.children();
+					Enumeration<?> enume = promoSelectionnee.children();
 					
 					while(enume.hasMoreElements()){
-						ctrl.supprInscription((Stagiaire)enume.nextElement().getUserObject(), ctrl.getTestEnCour());
+						ctrl.supprInscription((Stagiaire)((DefaultMutableTreeNode)enume.nextElement()).getUserObject(), ctrl.getTestEnCour());
 					}
 					
 					((DefaultTreeModel)jTreeListeStagiaireTest.getModel()).removeNodeFromParent((MutableTreeNode)jTreeListeStagiaireTest.getSelectionPath().getLastPathComponent());
@@ -468,23 +468,25 @@ public class fenPrincipale extends javax.swing.JFrame {
 					jTextFieldNumeroSection.setText(String.valueOf(s.getNumero()));
 					jSpinnerNbrQuestionTest.setValue(s.getNbrQuestion());
 					ctrl.setSectionEnCour(s);
-					if(ctrl.getTestEnCour().getSections().contains(s)){ //TODO changer la condition (vérifier si la section selectionner fait partit d'un test puis verifier les inscription pour ce test)
-						//jButtonAjoutSection.setEnabled(false);
-	    		   		//jButtonEnleverSection.setEnabled(false);
+
+	    		   	if(ctrl.isInscriptionSection(ctrl.getSectionEnCour())){	//TODO
 	    		   		jButtonSupprimerSection.setEnabled(false);
 	    		   		jButtonEnregistrerSection.setEnabled(false);
-	    		   		//jButtonNouveauSection.setEnabled(false);
 	    		   		jTextFieldNomSection.setEnabled(false);
 	    		   		jSpinnerNbrQuestionTest.setEnabled(false);
     				}else{
-    					//jButtonAjoutSection.setEnabled(true);
-	    		   		//jButtonEnleverSection.setEnabled(true);
 	    		   		jButtonSupprimerSection.setEnabled(true);
 	    		   		jButtonEnregistrerSection.setEnabled(true);
-	    		   		//jButtonNouveauSection.setEnabled(true);
 	    		   		jTextFieldNomSection.setEnabled(true);
 	    		   		jSpinnerNbrQuestionTest.setEnabled(true);
     				}
+	    		 	if(ctrl.isInscriptionTest(ctrl.getTestEnCour())){
+						jButtonAjoutSection.setEnabled(false);
+						jButtonEnleverSection.setEnabled(false);
+					}else{
+						jButtonAjoutSection.setEnabled(true);
+	    		   		jButtonEnleverSection.setEnabled(true);
+					}
 				}
 			}
     		
@@ -688,9 +690,9 @@ public class fenPrincipale extends javax.swing.JFrame {
 				}
 				ctrl.enregistrerQuestion(ctrl.getQuestionEnCour());
 				DefaultMutableTreeNode racine = (DefaultMutableTreeNode)jTreeListeQuestionDispo.getPathForRow(0).getLastPathComponent();
-				Enumeration<DefaultMutableTreeNode> enumeRacine = racine.children();
+				Enumeration<?> enumeRacine = racine.children();
 				while(enumeRacine.hasMoreElements()){
-					DefaultMutableTreeNode section = enumeRacine.nextElement();
+					DefaultMutableTreeNode section = (DefaultMutableTreeNode)enumeRacine.nextElement();
 					if(((Section)section.getUserObject()).getNumero()==ctrl.getSectionEnCour().getNumero()){
 						section.add(new DefaultMutableTreeNode(ctrl.getQuestionEnCour()));
 					}
@@ -727,7 +729,7 @@ public class fenPrincipale extends javax.swing.JFrame {
 						nbrReponse ++;
 					}
 				}
-				if(!jButtonEnregistrerSection.isEnabled()){ //TODO changer la condition (sur la section courante et non sur un bouton)
+				if(ctrl.isInscriptionSection(ctrl.getSectionEnCour())){ //TODO
 					jButtonAjoutDuneReponse.setEnabled(false);
 					jButtonChoixImage.setEnabled(false);
 					jButtonNouvelleQuestion.setEnabled(false);
@@ -792,7 +794,11 @@ public class fenPrincipale extends javax.swing.JFrame {
 				if(jTreeListeQuestionDispo.getSelectionCount()>0 && ((DefaultMutableTreeNode)jTreeListeQuestionDispo.getLastSelectedPathComponent()).getUserObject() instanceof Question){
 					Question question = (Question)((DefaultMutableTreeNode)jTreeListeQuestionDispo.getLastSelectedPathComponent()).getUserObject();
 					Section ancienneSection = question.getSection();
-					ctrl.changerQuestionSection(question, ancienneSection,ctrl.getSectionEnCour());
+					if(!ctrl.isInscriptionSection(ancienneSection)){
+						ctrl.changerQuestionSection(question, ancienneSection,ctrl.getSectionEnCour());
+					}else{
+						JOptionPane.showMessageDialog(null, "Action impossible : la question fait partit d'un test qui possède au moins une inscription.", "Impossible", JOptionPane.INFORMATION_MESSAGE);
+					}
 					
 					//Afficher le jTree
 					DefaultMutableTreeNode racine = new DefaultMutableTreeNode("Questions Disponibles") ;
@@ -820,7 +826,12 @@ public class fenPrincipale extends javax.swing.JFrame {
 					Question question = (Question)jListQuestionDeLaSection.getSelectedValue();
 					Section ancienneSection = ctrl.getSectionEnCour();
 					Section nouvelleSection = (Section)((DefaultMutableTreeNode)jTreeListeQuestionDispo.getLastSelectedPathComponent()).getUserObject();
-					ctrl.changerQuestionSection(question, ancienneSection, nouvelleSection);
+					if(!ctrl.isInscriptionSection(nouvelleSection)){
+						ctrl.changerQuestionSection(question, ancienneSection, nouvelleSection);
+					}else{
+						JOptionPane.showMessageDialog(null, "Action impossible : la section fait partit d'un test qui possède au moins une inscription.", "Impossible", JOptionPane.INFORMATION_MESSAGE);
+					}
+					
 					
 					
 					//Afficher le jTree
@@ -952,23 +963,32 @@ public class fenPrincipale extends javax.swing.JFrame {
 			    			jTextNomTestPanelSection.setText(ctrl.getTestEnCour().getNom());
 			    		   	ctrl.chargerListeSectionsParTest(ctrl.getTestEnCour());
 			    		   	jListSectionDuTest.setListData(ctrl.getListeSectionsParTest());
-			    			if(ctrl.isInscription(ctrl.getTestEnCour())){ //TODO changer la condition (vérifier si la section selectionner fait partit d'un test puis verifier les inscription pour ce test)
-			    		   		jButtonAjoutSection.setEnabled(false);
-			    		   		jButtonEnleverSection.setEnabled(false);
+//			    		   	boolean verif = false;
+//			    		   	for(Test t : ctrl.getListeTests()){
+//			    		   		if(t.getSections().contains(ctrl.getSectionEnCour())){
+//			    		   			if(ctrl.isInscription(t)){
+//			    		   				verif=true;
+//			    		   			}
+//			    		   		}
+//			    		   	}
+			    			if(ctrl.isInscriptionSection(ctrl.getSectionEnCour())){	//TODO
 			    		   		jButtonSupprimerSection.setEnabled(false);
 			    		   		jButtonEnregistrerSection.setEnabled(false);
-			    		   		//jButtonNouveauSection.setEnabled(false);
 			    		   		jTextFieldNomSection.setEnabled(false);
 			    		   		jSpinnerNbrQuestionTest.setEnabled(false);
-			    		   	}else{
-			    		   		jButtonAjoutSection.setEnabled(true);
-			    		   		jButtonEnleverSection.setEnabled(true);
+		    				}else{
 			    		   		jButtonSupprimerSection.setEnabled(true);
 			    		   		jButtonEnregistrerSection.setEnabled(true);
-			    		   		//jButtonNouveauSection.setEnabled(true);
 			    		   		jTextFieldNomSection.setEnabled(true);
 			    		   		jSpinnerNbrQuestionTest.setEnabled(true);
-			    		   	}
+		    				}
+			    		   	if(ctrl.isInscriptionTest(ctrl.getTestEnCour())){
+								jButtonAjoutSection.setEnabled(false);
+								jButtonEnleverSection.setEnabled(false);
+							}else{
+								jButtonAjoutSection.setEnabled(true);
+	    	    		   		jButtonEnleverSection.setEnabled(true);
+							}
 						}
 						break;
 				case 2 :if((ctrl.getSectionEnCour()!=null))
@@ -981,7 +1001,7 @@ public class fenPrincipale extends javax.swing.JFrame {
 						 		jComboBoxListeTypeQuestion.setSelectedItem(jListQuestionDeLaSection.getSelectedValue()); 		
 						 		jEditorPaneEnonceQuestion.setText(ctrl.getQuestionEnCour().getEnonce());
 						 	}else jEditorPaneEnonceQuestion.setText("");
-							if(!jButtonEnregistrerSection.isEnabled()){ //TODO changer la condition (sur la section courante et non sur un bouton)
+							if(ctrl.isInscriptionSection(ctrl.getSectionEnCour())){ //TODO
 								jButtonAjoutDuneReponse.setEnabled(false);
 								jButtonChoixImage.setEnabled(false);
 								jButtonNouvelleQuestion.setEnabled(false);

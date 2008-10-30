@@ -8,7 +8,8 @@ package test;
  */
  public class SplashTest extends Frame
  {
-     Image[] img;
+	private static final long serialVersionUID = 1L;
+	Image[] img;
     
      public SplashTest()
      {

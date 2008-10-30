@@ -5,6 +5,7 @@ import java.util.Vector;
 import modeles.Type;
 
 public class ListeTypes extends Vector<Type>{
+	private static final long serialVersionUID = 1L;
 
 	@Override
 	public int indexOf(Object o) {
