@@ -87,7 +87,7 @@ public class fenPrincipale extends javax.swing.JFrame {
     	super();
     	instance=this;
     	//Changer l'icone de la fenetre
-		Image icone = Toolkit.getDefaultToolkit().getImage("C:/Images/LogoENI16.PNG");
+		Image icone = Toolkit.getDefaultToolkit().getImage("Images/LogoENI16.PNG");
     	this.setIconImage(icone);
     	this.setResizable(false);
     	
@@ -214,8 +214,12 @@ public class fenPrincipale extends javax.swing.JFrame {
 				e2.printStackTrace();
 		}
     	
-		((DefaultTreeCellRenderer)jTreeListeStagaireEni.getCellRenderer()).setLeafIcon(new ImageIcon("user.png"));
-    	((DefaultTreeCellRenderer)jTreeListeStagiaireTest.getCellRenderer()).setLeafIcon(new ImageIcon("user.png"));
+		((DefaultTreeCellRenderer)jTreeListeStagaireEni.getCellRenderer()).setLeafIcon(new ImageIcon("Images/user.png"));
+    	((DefaultTreeCellRenderer)jTreeListeStagiaireTest.getCellRenderer()).setLeafIcon(new ImageIcon("Images/user.png"));
+    	((DefaultTreeCellRenderer)jTreeListeStagaireEni.getCellRenderer()).setClosedIcon(new ImageIcon("Images/Dossier_ferme16.png"));
+    	((DefaultTreeCellRenderer)jTreeListeStagaireEni.getCellRenderer()).setOpenIcon(new ImageIcon("Images/Dossier_ouvert16.png"));
+    	((DefaultTreeCellRenderer)jTreeListeStagiaireTest.getCellRenderer()).setClosedIcon(new ImageIcon("Images/Dossier_ferme16.pngg"));
+    	((DefaultTreeCellRenderer)jTreeListeStagiaireTest.getCellRenderer()).setOpenIcon(new ImageIcon("Images/Dossier_ouvert16.png"));
     	SpinnerNumberModel model = new SpinnerNumberModel(15,0,60,1);
     	jSpinnerDureeInscription.setModel(model);
     	jButtonMotDePasseEleve.setEnabled(false);
@@ -679,7 +683,9 @@ public class fenPrincipale extends javax.swing.JFrame {
  		*		 		Ajout des Listener					 *
  		******************************************************/
  		
- 		((DefaultTreeCellRenderer)jTreeListeQuestionDispo.getCellRenderer()).setLeafIcon(new ImageIcon("Question16.png"));
+ 		((DefaultTreeCellRenderer)jTreeListeQuestionDispo.getCellRenderer()).setLeafIcon(new ImageIcon("Images/Question16.png"));
+ 		((DefaultTreeCellRenderer)jTreeListeQuestionDispo.getCellRenderer()).setClosedIcon(new ImageIcon("Images/Dossier_ferme16.png"));
+ 		((DefaultTreeCellRenderer)jTreeListeQuestionDispo.getCellRenderer()).setOpenIcon(new ImageIcon("Images/Dossier_ouvert16.png"));
  		
  		//Clic sur le bouton d'ajout d'une réponse
  		// 
@@ -1291,15 +1297,15 @@ public class fenPrincipale extends javax.swing.JFrame {
 
         jSliderTemps.setMaximum(240);
 
-        jButtonSupprimerTest.setIcon(new javax.swing.ImageIcon("C:\\Images\\Recycle_Bin_Empty32.png")); // NOI18N
+        jButtonSupprimerTest.setIcon(new javax.swing.ImageIcon("Images\\Recycle_Bin_Empty32.png")); // NOI18N
         jButtonSupprimerTest.setToolTipText("Supprimer le test");
 
-        jButtonEnregistrerTest.setIcon(new javax.swing.ImageIcon("C:\\Images\\Floppy32.png")); // NOI18N
+        jButtonEnregistrerTest.setIcon(new javax.swing.ImageIcon("Images\\Floppy32.png")); // NOI18N
         jButtonEnregistrerTest.setToolTipText("Sauvegarder le  test");
 
-        jButtonNouveauTest.setIcon(new javax.swing.ImageIcon("C:\\Images\\Add32.png")); // NOI18N
+        jButtonNouveauTest.setIcon(new javax.swing.ImageIcon("Images\\Add32.png")); // NOI18N
 
-        jButtonImprimerTest.setIcon(new javax.swing.ImageIcon("C:\\Images\\Print32.png")); // NOI18N
+        jButtonImprimerTest.setIcon(new javax.swing.ImageIcon("Images\\Print32.png")); // NOI18N
         jButtonImprimerTest.setToolTipText("Imprimer le test");
 
         javax.swing.GroupLayout jPanelProprietesTestLayout = new javax.swing.GroupLayout(jPanelProprietesTest);
@@ -1389,10 +1395,10 @@ public class fenPrincipale extends javax.swing.JFrame {
         jTreeListeStagiaireTest.setBorder(javax.swing.BorderFactory.createEtchedBorder());
         jScrollPane3.setViewportView(jTreeListeStagiaireTest);
 
-        jButtonIsncrireEleve.setIcon(new javax.swing.ImageIcon("C:\\Images\\Forward32.png")); // NOI18N
+        jButtonIsncrireEleve.setIcon(new javax.swing.ImageIcon("Images\\Forward32.png")); // NOI18N
         jButtonIsncrireEleve.setToolTipText("Inscrire le stagiaire");
 
-        jButtonSupIncriptionEleve.setIcon(new javax.swing.ImageIcon("C:\\Images\\Back32.png")); // NOI18N
+        jButtonSupIncriptionEleve.setIcon(new javax.swing.ImageIcon("Images\\Back32.png")); // NOI18N
 
         jLabelListeStagiaireInscritTest.setText("Stagiaire(s) inscrit(s) au test :");
 
@@ -1402,7 +1408,7 @@ public class fenPrincipale extends javax.swing.JFrame {
 
         jLabel5.setText("Mail formateur :");
 
-        jButtonMotDePasseEleve.setIcon(new javax.swing.ImageIcon("C:\\Images\\Key32.png")); // NOI18N
+        jButtonMotDePasseEleve.setIcon(new javax.swing.ImageIcon("Images\\Key32.png")); // NOI18N
         jButtonMotDePasseEleve.setToolTipText("Modifier le mot de passe du stagiaire");
 
         jLabel16.setText("Jour(s)");
@@ -1543,19 +1549,19 @@ public class fenPrincipale extends javax.swing.JFrame {
         jTextNomTestPanelSection.setEditable(false);
         jTextNomTestPanelSection.setFont(new java.awt.Font("Tahoma", 1, 11));
 
-        jButtonAjoutSection.setIcon(new javax.swing.ImageIcon("C:\\Images\\Forward32.png")); // NOI18N
+        jButtonAjoutSection.setIcon(new javax.swing.ImageIcon("Images\\Forward32.png")); // NOI18N
         jButtonAjoutSection.setToolTipText("Ajout d'une section au test");
 
-        jButtonEnleverSection.setIcon(new javax.swing.ImageIcon("C:\\Images\\Back32.png")); // NOI18N
+        jButtonEnleverSection.setIcon(new javax.swing.ImageIcon("Images\\Back32.png")); // NOI18N
         jButtonEnleverSection.setToolTipText("Enleve la section du test");
 
-        jButtonNouveauSection.setIcon(new javax.swing.ImageIcon("C:\\Images\\Add32.png")); // NOI18N
+        jButtonNouveauSection.setIcon(new javax.swing.ImageIcon("Images\\Add32.png")); // NOI18N
         jButtonNouveauSection.setToolTipText("Nouvel section pour le test séléctionné");
 
-        jButtonEnregistrerSection.setIcon(new javax.swing.ImageIcon("C:\\Images\\Floppy32.png")); // NOI18N
+        jButtonEnregistrerSection.setIcon(new javax.swing.ImageIcon("Images\\Floppy32.png")); // NOI18N
         jButtonEnregistrerSection.setToolTipText("Enregistrer la section");
 
-        jButtonSupprimerSection.setIcon(new javax.swing.ImageIcon("C:\\Images\\Recycle_Bin_Empty32.png")); // NOI18N
+        jButtonSupprimerSection.setIcon(new javax.swing.ImageIcon("Images\\Recycle_Bin_Empty32.png")); // NOI18N
         jButtonSupprimerSection.setToolTipText("Supprimer la section");
 
         javax.swing.GroupLayout PanelSectionLayout = new javax.swing.GroupLayout(PanelSection);
@@ -1648,14 +1654,14 @@ public class fenPrincipale extends javax.swing.JFrame {
 
         jLabel13.setText("Type :");
 
-        jButtonChoixImage.setIcon(new javax.swing.ImageIcon("C:\\Images\\Camera32.png")); // NOI18N
+        jButtonChoixImage.setIcon(new javax.swing.ImageIcon("Images\\Camera32.png")); // NOI18N
         jButtonChoixImage.setToolTipText("Ajouter un image");
 
-        jButtonNouvelleQuestion.setIcon(new javax.swing.ImageIcon("C:\\Images\\Add32.png")); // NOI18N
+        jButtonNouvelleQuestion.setIcon(new javax.swing.ImageIcon("Images\\Add32.png")); // NOI18N
 
-        jButtonEnregistrerQuestion.setIcon(new javax.swing.ImageIcon("C:\\Images\\Floppy32.png")); // NOI18N
+        jButtonEnregistrerQuestion.setIcon(new javax.swing.ImageIcon("Images\\Floppy32.png")); // NOI18N
 
-        jButtonSupprimmerQuestion.setIcon(new javax.swing.ImageIcon("C:\\Images\\Recycle_Bin_Empty32.png")); // NOI18N
+        jButtonSupprimmerQuestion.setIcon(new javax.swing.ImageIcon("Images\\Recycle_Bin_Empty32.png")); // NOI18N
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -1720,7 +1726,7 @@ public class fenPrincipale extends javax.swing.JFrame {
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Réponses"));
 
-        jButtonAjoutDuneReponse.setIcon(new javax.swing.ImageIcon("C:\\Images\\Add32.png")); // NOI18N
+        jButtonAjoutDuneReponse.setIcon(new javax.swing.ImageIcon("Images\\Add32.png")); // NOI18N
         jButtonAjoutDuneReponse.setToolTipText("Ajouter une reponse");
 
         jPanelReponse.setLayout(new java.awt.GridLayout(10, 0));
@@ -1754,10 +1760,10 @@ public class fenPrincipale extends javax.swing.JFrame {
 
         jLabel15.setText("Liste des questions disponibles :");
 
-        jButtonAjoutSection1.setIcon(new javax.swing.ImageIcon("C:\\Images\\Forward32.png")); // NOI18N
+        jButtonAjoutSection1.setIcon(new javax.swing.ImageIcon("Images\\Forward32.png")); // NOI18N
         jButtonAjoutSection1.setToolTipText("Ajout d'une ou plusieurs question(s) dans la section");
 
-        jButtonEnleverSection1.setIcon(new javax.swing.ImageIcon("C:\\Images\\Back32.png")); // NOI18N
+        jButtonEnleverSection1.setIcon(new javax.swing.ImageIcon("Images\\Back32.png")); // NOI18N
         jButtonEnleverSection1.setToolTipText("Enleve la question de la section");
 
         javax.swing.GroupLayout PanelQuestionLayout = new javax.swing.GroupLayout(PanelQuestion);

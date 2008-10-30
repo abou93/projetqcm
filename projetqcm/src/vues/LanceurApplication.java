@@ -32,7 +32,7 @@ public class LanceurApplication {
 		
 		// Affiche une icone dans la barre de tache		
 		if (SystemTray.isSupported()) {
-			ImageIcon i = new ImageIcon("C:/Images/LogoENI16.png");
+			ImageIcon i = new ImageIcon("Images/LogoENI16.png");
 			Image im = i.getImage();
 			TrayIcon tic = new TrayIcon(im,"Eni - Gestion de test QCM");
 			SystemTray tray = SystemTray.getSystemTray();
@@ -44,7 +44,7 @@ public class LanceurApplication {
 			}
 		}
 		
-		String imagePath = "SplashScreen3.png";
+		String imagePath = "Images/SplashScreen3.png";
 		SplashScreenQCM fond = new SplashScreenQCM(imagePath);
 		fond.setUndecorated(true);
 		fond.pack();
