@@ -298,6 +298,7 @@ public class fenPrincipale extends javax.swing.JFrame {
 				try {
 					XMLEncoder encoder = new XMLEncoder(new FileOutputStream(ctrl.getTestEnCour().getNom() + ".xml"));
 					encoder.writeObject(ctrl.getTestEnCour());
+					encoder.flush();
 					encoder.close();
 				} catch (FileNotFoundException e1) {
 					e1.printStackTrace();
