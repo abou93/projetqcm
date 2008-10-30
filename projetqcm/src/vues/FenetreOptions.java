@@ -85,6 +85,11 @@ public class FenetreOptions extends JDialog {
 					connexion.setProperty("databasename", jTextFieldNomBase.getText().trim());
 					ioProperties.saveProperties(connexion,"connexion.properties", "Fichier connexion");
 					
+					Properties secur = ioProperties.loadProperties("securite.properties");
+					secur.setProperty("mail", jTextFieldMailFormateur.getText().trim());
+					ioProperties.saveProperties(secur,"securite.properties", "Fichier securite");
+					
+					
 				} catch (FileNotFoundException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
