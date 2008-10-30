@@ -111,7 +111,7 @@ public class fenPrincipale extends javax.swing.JFrame {
     ***********************************************************************************************************
     *** 																			 						***
    	***									Initialisation du panel tests										***
-   	***				Gere tous les aspects liés aux tests ( creation, suppresion, enregistrement				***
+   	***				Gere tous les aspects liés aux tests ( creation, suppresion, enregistrement)			***
    	***				L'inscription des stagiaires est géré dans ce panel	 									***
    	***																			 							***
    	***********************************************************************************************************
