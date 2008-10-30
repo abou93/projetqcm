@@ -82,17 +82,46 @@ public class fenPrincipale extends javax.swing.JFrame {
     	//Changer l'icone de la fenetre
 		Image icone = Toolkit.getDefaultToolkit().getImage("C:/Images/LogoENI16.PNG");
     	this.setIconImage(icone);
+    	this.setResizable(false);
     	
     	ctrl=CtrlFormateur.getCtrlFormateur(); // Recupere l'instance du controleur
     	
     	initComponents(); // Initialise les composants
     	
     	initBarreMenu(); // Initialise la barre de menu
-    	initPanelTest(); // Initialise le panel Test
-    	initPanelSection(); // Initialise le panel Section
-    	initPanelQuestion(); // Initialise le panel Question
-    	initJtabbedPane();
-    	this.setResizable(false); 
+    	
+    	if(ctrl.testConnexion())
+    	{
+    	    	
+    	    	initPanelTest(); // Initialise le panel Test
+    	    	initPanelSection(); // Initialise le panel Section
+    	    	initPanelQuestion(); // Initialise le panel Question
+    	    	initJtabbedPane();
+    	}
+    	else
+    	{
+    		JOptionPane.showMessageDialog(this, "Problème de connexion à la base de donnée \n" + "Verifier la configuration dans le menu option" ,"Erreur", JOptionPane.ERROR_MESSAGE);
+    		jTabbedPanelQcm.setEnabled(false);
+    		
+    		DefaultMutableTreeNode racine = new DefaultMutableTreeNode("Vide") ;
+        	jTreeListeStagaireEni.setModel(new DefaultTreeModel(racine));
+        	jTreeListeStagiaireTest.setModel(new DefaultTreeModel(racine));
+    		
+    		for(Component c :PanelTest.getComponents()){
+    			c.setEnabled(false);
+    		}
+    		
+    		for(Component c :jPanelInscriptionTest.getComponents()){
+    			c.setEnabled(false);
+    		}
+    		
+    		for(Component c :jPanelProprietesTest.getComponents()){
+    			c.setEnabled(false);
+    		}
+    		
+    	}
+    		
+    	 
     }
 
 
@@ -163,6 +192,9 @@ public class fenPrincipale extends javax.swing.JFrame {
     }
     
     private void initPanelTest(){
+    	
+    	ctrl.chargerListePromotions();
+		ctrl.chargerListeType();
     	
     	IOProperties io = new IOProperties();
     	Properties secur;
@@ -640,6 +672,7 @@ public class fenPrincipale extends javax.swing.JFrame {
  		******************************************************/
  		 		
  		//Clic sur le bouton d'ajout d'une réponse
+ 		// 
  		jButtonAjoutDuneReponse.addActionListener(new ActionListener(){
  			
 			@Override
@@ -647,6 +680,13 @@ public class fenPrincipale extends javax.swing.JFrame {
 				if(nbrReponse<10){
 					if(tableauReponses.elementAt(nbrReponse-1).getJTextAreaReponse().getText().length()>0)
 					{
+						if(ctrl.getQuestionEnCour().getNombreReponse()<tableauReponses.size())
+						{
+							JPanelNouvelleReponse j = tableauReponses.elementAt(nbrReponse-1);
+							Reponse r = new Reponse(j.getJTextAreaReponse().getText(),nbrReponse,j.getJCheckBoxReponse().isSelected(),ctrl.getQuestionEnCour());
+							ctrl.getQuestionEnCour().addReponse(r);
+						}
+						
 						tableauReponses.add(new JPanelNouvelleReponse(fenPrincipale.this,nbrReponse,"",false)); 
 						jPanelReponse.add(tableauReponses.elementAt(nbrReponse));
 						jPanelReponse.validate();
@@ -669,7 +709,7 @@ public class fenPrincipale extends javax.swing.JFrame {
 				boite.setMultiSelectionEnabled(false);
 				boite.setFileFilter(new FileNameExtensionFilter("Fichier JPEG","jpg"));
 				boite.showOpenDialog(null);
-				ctrl.getQuestionEnCour().setCheminImage(boite.getSelectedFile().toString());
+				if(boite.getSelectedFile()!=null) ctrl.getQuestionEnCour().setCheminImage(boite.getSelectedFile().toString());
 			}
  		});
  		
@@ -699,10 +739,20 @@ public class fenPrincipale extends javax.swing.JFrame {
 			public void actionPerformed(ActionEvent e) {
 				ctrl.getQuestionEnCour().setEnonce(jEditorPaneEnonceQuestion.getText());
 				ctrl.getQuestionEnCour().setType((Type)jComboBoxListeTypeQuestion.getSelectedItem());
-				for(int i =0;i<nbrReponse;i++){
-					Reponse r = new Reponse(tableauReponses.elementAt(i).getJTextAreaReponse().getText(),i,tableauReponses.elementAt(i).getJCheckBoxReponse().isSelected(),ctrl.getQuestionEnCour());
+			
+				//Creer la derniere question si elle n'a pas déja été àjouter a la liste de reponse
+				if(ctrl.getQuestionEnCour().getNombreReponse()<tableauReponses.size())
+				{
+					JPanelNouvelleReponse j = tableauReponses.elementAt(nbrReponse-1);
+					Reponse r = new Reponse(j.getJTextAreaReponse().getText(),nbrReponse,j.getJCheckBoxReponse().isSelected(),ctrl.getQuestionEnCour());
 					ctrl.getQuestionEnCour().addReponse(r);
 				}
+				
+						
+				/*	for(int i =0;i<nbrReponse;i++){
+					Reponse r = new Reponse(tableauReponses.elementAt(i).getJTextAreaReponse().getText(),i,tableauReponses.elementAt(i).getJCheckBoxReponse().isSelected(),ctrl.getQuestionEnCour());
+					ctrl.getQuestionEnCour().addReponse(r);
+				}*/
 				ctrl.enregistrerQuestion(ctrl.getQuestionEnCour());
 				DefaultMutableTreeNode racine = (DefaultMutableTreeNode)jTreeListeQuestionDispo.getPathForRow(0).getLastPathComponent();
 				Enumeration<?> enumeRacine = racine.children();

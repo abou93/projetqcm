@@ -47,15 +47,15 @@ public class AccesBase {
 			connexion.append(";password="+prop.getProperty("password"));
 			connexion.append(";databasename="+prop.getProperty("databasename"));
 			ctn= DriverManager.getConnection(connexion.toString());
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
 		}
 		
 		return ctn;

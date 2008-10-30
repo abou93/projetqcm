@@ -93,7 +93,8 @@ public class FenetreOptions extends javax.swing.JDialog {
 				FenetreOptions.this.dispose();
 				
 			}
-					
+			
+						
 		});
 		
 		
@@ -115,7 +116,6 @@ public class FenetreOptions extends javax.swing.JDialog {
 		
 		jPasswordFieldNv.setText("");
 		jPasswordFieldNv2.setText("");
-		
 		
 		
 		IOProperties ioProperties = new IOProperties();

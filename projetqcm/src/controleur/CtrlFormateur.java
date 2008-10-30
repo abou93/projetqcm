@@ -1,5 +1,6 @@
 package controleur;
 
+import java.sql.Connection;
 import java.util.Enumeration;
 import java.util.Random;
 import java.util.Vector;
@@ -14,6 +15,7 @@ import modeles.Section;
 import modeles.Stagiaire;
 import modeles.Test;
 import modeles.Type;
+import dal.AccesBase;
 import dal.DalInscription;
 import dal.DalQuestion;
 import dal.DalStagiaire;
@@ -130,8 +132,7 @@ public class CtrlFormateur {
 		listeSections = new ListeSections();
 		listeTypes = new Vector<Type>();
 	
-		chargerListePromotions();
-		chargerListeType();
+		
 	}
 	
 
@@ -150,6 +151,17 @@ public class CtrlFormateur {
 			instance=new CtrlFormateur();
 		}
 		return instance;
+	}
+	
+	
+	public boolean testConnexion(){
+		Connection ctn = AccesBase.getConnection();
+		if (ctn==null)	return false;
+		else
+		{
+			AccesBase.deconnexionBase(ctn);
+			return true;
+		}
 	}
 	
 	
@@ -214,7 +226,7 @@ public class CtrlFormateur {
 	/***
 	 * Charge la liste des promotions depuis la base.
 	 */
-	private void chargerListePromotions(){
+	public void chargerListePromotions(){
 		Vector<Promotion> v = DalStagiaire.selectAllPromotions();
 		if (v != null) listePromotions=v; 
 	}
@@ -223,7 +235,7 @@ public class CtrlFormateur {
 	/***
 	 * Charge la liste des types depuis la base.
 	 */
-	private void chargerListeType(){
+	public void chargerListeType(){
 		Vector<Type> v = DalQuestion.selectAllType();
 		if (v != null) listeTypes=v; 
 	}
