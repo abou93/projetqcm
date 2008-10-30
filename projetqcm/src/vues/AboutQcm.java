@@ -6,6 +6,10 @@
 
 package vues;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
 import javax.swing.JDialog;
 
 /**
@@ -17,6 +21,20 @@ public class AboutQcm extends JDialog {
     /** Creates new form AboutQcm */
     public AboutQcm() {
         initComponents();
+    }
+    
+    
+    public void initQcm(){
+    closeButton.addActionListener(new ActionListener(){
+
+		@Override
+		public void actionPerformed(ActionEvent e) {
+			AboutQcm.this.dispose();
+			
+		}
+    	
+    	
+    });
     }
 
     /** This method is called from within the constructor to
@@ -39,7 +57,7 @@ public class AboutQcm extends JDialog {
 
         imageLabel.setIcon(new javax.swing.ImageIcon("C:\\Images\\About.png")); // NOI18N
 
-        appDescLabel.setText("<html>Logiciel de gestion des QCM : <br>Permet la gestion des tests proposÃ©s aux stagiaires de l'ENI\n ");
+        appDescLabel.setText("<html>Logiciel de gestion des QCM : <br>Permet la gestion des tests proposés aux stagiaires de l'ENI\n ");
 
         vendorLabel.setFont(vendorLabel.getFont().deriveFont(vendorLabel.getFont().getStyle() | java.awt.Font.BOLD));
         vendorLabel.setText("Auteurs :");
