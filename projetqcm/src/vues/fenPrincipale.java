@@ -218,7 +218,7 @@ public class fenPrincipale extends javax.swing.JFrame {
     	((DefaultTreeCellRenderer)jTreeListeStagiaireTest.getCellRenderer()).setLeafIcon(new ImageIcon("Images/user.png"));
     	((DefaultTreeCellRenderer)jTreeListeStagaireEni.getCellRenderer()).setClosedIcon(new ImageIcon("Images/Dossier_ferme16.png"));
     	((DefaultTreeCellRenderer)jTreeListeStagaireEni.getCellRenderer()).setOpenIcon(new ImageIcon("Images/Dossier_ouvert16.png"));
-    	((DefaultTreeCellRenderer)jTreeListeStagiaireTest.getCellRenderer()).setClosedIcon(new ImageIcon("Images/Dossier_ferme16.pngg"));
+    	((DefaultTreeCellRenderer)jTreeListeStagiaireTest.getCellRenderer()).setClosedIcon(new ImageIcon("Images/Dossier_ferme16.png"));
     	((DefaultTreeCellRenderer)jTreeListeStagiaireTest.getCellRenderer()).setOpenIcon(new ImageIcon("Images/Dossier_ouvert16.png"));
     	SpinnerNumberModel model = new SpinnerNumberModel(15,0,60,1);
     	jSpinnerDureeInscription.setModel(model);
@@ -683,7 +683,7 @@ public class fenPrincipale extends javax.swing.JFrame {
  		*		 		Ajout des Listener					 *
  		******************************************************/
  		
- 		((DefaultTreeCellRenderer)jTreeListeQuestionDispo.getCellRenderer()).setLeafIcon(new ImageIcon("Images/Question16.png"));
+ 		((DefaultTreeCellRenderer)jTreeListeQuestionDispo.getCellRenderer()).setLeafIcon(new ImageIcon("Images/page.png"));
  		((DefaultTreeCellRenderer)jTreeListeQuestionDispo.getCellRenderer()).setClosedIcon(new ImageIcon("Images/Dossier_ferme16.png"));
  		((DefaultTreeCellRenderer)jTreeListeQuestionDispo.getCellRenderer()).setOpenIcon(new ImageIcon("Images/Dossier_ouvert16.png"));
  		
