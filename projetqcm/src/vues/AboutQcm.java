@@ -6,6 +6,8 @@
 
 package vues;
 
+import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -20,6 +22,10 @@ public class AboutQcm extends JDialog {
 
     /** Creates new form AboutQcm */
     public AboutQcm() {
+    	
+    	Image icone = Toolkit.getDefaultToolkit().getImage("C:/Images/LogoENI16.PNG");
+    	this.setIconImage(icone);
+    	this.setTitle("A propos : Gestion QCM");
         initComponents();
         initQcm();
     }
