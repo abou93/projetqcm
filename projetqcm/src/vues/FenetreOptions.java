@@ -90,11 +90,20 @@ public class FenetreOptions extends javax.swing.JDialog {
 					e1.printStackTrace();
 				}
 				
+				
 				FenetreOptions.this.dispose();
+				
+				fenPrincipale.getFenPrincipale().dispose();
+				fenPrincipale f = new fenPrincipale();
+				f.setLocationRelativeTo(f.getParent());
+				f.setVisible(true);		
+				
+				
+				
 				
 			}
 			
-						
+			 
 		});
 		
 		
@@ -139,7 +148,7 @@ public class FenetreOptions extends javax.swing.JDialog {
 			e1.printStackTrace();
 		}
 		
-    	
+		
     }
     
     

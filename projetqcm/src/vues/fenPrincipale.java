@@ -68,13 +68,20 @@ public class fenPrincipale extends javax.swing.JFrame {
     int nbrReponse = 0;
     Vector<JPanelNouvelleReponse> tableauReponses = new Vector<JPanelNouvelleReponse>();
 	
+    private static fenPrincipale instance;
+    
+    public static fenPrincipale getFenPrincipale(){
+    	return instance;
+    }
+    
+    
 	/*****************************************************
 	*				Constructeur						 *
 	******************************************************/
 	
     public fenPrincipale() {
     	super();
-    	
+    	instance=this;
     	//Changer l'icone de la fenetre
 		Image icone = Toolkit.getDefaultToolkit().getImage("C:/Images/LogoENI16.PNG");
     	this.setIconImage(icone);
@@ -990,7 +997,20 @@ public class fenPrincipale extends javax.swing.JFrame {
  			
  		});
  		
- 		
+ 		jMenuItem3.addActionListener(new ActionListener(){
+ 			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+				AboutQcm about = new AboutQcm();
+				about.setLocationRelativeTo(about.getParent());
+				about.setAlwaysOnTop(true);
+				about.setModal(true);
+				about.setResizable(false);
+				about.setVisible(true);
+				
+				
+			}
+ 		});
  		
  		
     }
