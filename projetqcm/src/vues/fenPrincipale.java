@@ -164,7 +164,18 @@ public class fenPrincipale extends javax.swing.JFrame {
     
     private void initPanelTest(){
     	
-    	jTextFieldMailFormateur.setText("formateur@eni-ecole");
+    	IOProperties io = new IOProperties();
+    	Properties secur;
+		try {
+			secur = io.loadProperties("securite.properties");
+			jTextFieldMailFormateur.setText(secur.getProperty("mail"));
+		} catch (FileNotFoundException e2) {
+				e2.printStackTrace();
+		} catch (IOException e2) {
+				e2.printStackTrace();
+		}
+    	
+    	
     	SpinnerNumberModel model = new SpinnerNumberModel(15,0,60,1);
     	jSpinnerDureeInscription.setModel(model);
     	jButtonMotDePasseEleve.setEnabled(false);

@@ -12,6 +12,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Properties;
 
 import javax.swing.JOptionPane;
@@ -119,11 +120,16 @@ public class FenetreOptions extends javax.swing.JDialog {
 		
 		IOProperties ioProperties = new IOProperties();
 		try {
+			
 			Properties connexion = ioProperties.loadProperties("connexion.properties");
 			jTextFieldAdresse.setText(connexion.getProperty("adresse"));
 			jTextFieldUser.setText(connexion.getProperty("user"));
 			jTextFieldPassword.setText(connexion.getProperty("password"));
 			jTextFieldNomBase.setText(connexion.getProperty("databasename"));
+			
+			Properties securite = ioProperties.loadProperties("securite.properties");
+			jTextFieldAdresse.setText(securite.getProperty("mail"));
+						
 			
 		} catch (FileNotFoundException e1) {
 			// TODO Auto-generated catch block
