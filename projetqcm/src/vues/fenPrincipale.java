@@ -1055,6 +1055,7 @@ public class fenPrincipale extends javax.swing.JFrame {
 				
 				switch(tab)
 				{
+				// Maj des composants lorsque l'on passe sur le Tab Section
 				case 1 :if(ctrl.getTestEnCour()!= null)
 						{
 			    			jTextNomTestPanelSection.setText(ctrl.getTestEnCour().getNom());
@@ -1088,6 +1089,9 @@ public class fenPrincipale extends javax.swing.JFrame {
 							}
 						}
 						break;
+				
+				//Maj des composants lorsque l'on passe sur le Tab Questions
+						
 				case 2 :if((ctrl.getSectionEnCour()!=null))
 						{
 			 				jTextFieldNomSectionPanelQuestion.setText(ctrl.getSectionEnCour().getNom());
