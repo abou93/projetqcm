@@ -44,7 +44,7 @@ public class LanceurApplication {
 			}
 		}
 		
-		String imagePath = "C:/Images/SplashScreen3.png";
+		String imagePath = "SplashScreen3.png";
 		SplashScreenQCM fond = new SplashScreenQCM(imagePath);
 		fond.setUndecorated(true);
 		fond.pack();

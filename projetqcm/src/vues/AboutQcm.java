@@ -21,6 +21,7 @@ public class AboutQcm extends JDialog {
     /** Creates new form AboutQcm */
     public AboutQcm() {
         initComponents();
+        initQcm();
     }
     
     
