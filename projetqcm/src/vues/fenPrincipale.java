@@ -680,7 +680,8 @@ public class fenPrincipale extends javax.swing.JFrame {
  			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if(nbrReponse<10){
+				if((nbrReponse>0 & nbrReponse<10))
+				{
 					if(tableauReponses.elementAt(nbrReponse-1).getJTextAreaReponse().getText().length()>0)
 					{
 						if(ctrl.getQuestionEnCour().getNombreReponse()<tableauReponses.size())
@@ -698,6 +699,16 @@ public class fenPrincipale extends javax.swing.JFrame {
 					}
 					else JOptionPane.showMessageDialog(null,"Veuillez remplir la question précédente","Info",JOptionPane.WARNING_MESSAGE);
 				}
+				else
+				{
+					tableauReponses.add(new JPanelNouvelleReponse(fenPrincipale.this,nbrReponse,"",false)); 
+					jPanelReponse.add(tableauReponses.elementAt(nbrReponse));
+					jPanelReponse.validate();
+					jPanelReponse.repaint();
+					nbrReponse ++;
+				}
+					
+				
 			}
  		});
  	
@@ -740,6 +751,8 @@ public class fenPrincipale extends javax.swing.JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				
+				//Mets à jour l'énoncé et le type de la question en cours
 				ctrl.getQuestionEnCour().setEnonce(jEditorPaneEnonceQuestion.getText());
 				ctrl.getQuestionEnCour().setType((Type)jComboBoxListeTypeQuestion.getSelectedItem());
 			
@@ -750,13 +763,20 @@ public class fenPrincipale extends javax.swing.JFrame {
 					Reponse r = new Reponse(j.getJTextAreaReponse().getText(),nbrReponse,j.getJCheckBoxReponse().isSelected(),ctrl.getQuestionEnCour());
 					ctrl.getQuestionEnCour().addReponse(r);
 				}
+							
+				for(int i = 0 ; i < ctrl.getQuestionEnCour().getNombreReponse(); i++){
+					Reponse r = ctrl.getQuestionEnCour().getReponseAt(i);
+					JPanelNouvelleReponse j = tableauReponses.elementAt(i);
+					r.setTexte(j.getJTextAreaReponse().getText());
+					r.setEtat(j.getJCheckBoxReponse().isSelected());
+				}
 				
-						
-				/*	for(int i =0;i<nbrReponse;i++){
-					Reponse r = new Reponse(tableauReponses.elementAt(i).getJTextAreaReponse().getText(),i,tableauReponses.elementAt(i).getJCheckBoxReponse().isSelected(),ctrl.getQuestionEnCour());
-					ctrl.getQuestionEnCour().addReponse(r);
-				}*/
+				
+				
+				//Enregistre la question
 				ctrl.enregistrerQuestion(ctrl.getQuestionEnCour());
+				
+				//Mets le jTree des questions disponibles à jour
 				DefaultMutableTreeNode racine = (DefaultMutableTreeNode)jTreeListeQuestionDispo.getPathForRow(0).getLastPathComponent();
 				Enumeration<?> enumeRacine = racine.children();
 				while(enumeRacine.hasMoreElements()){

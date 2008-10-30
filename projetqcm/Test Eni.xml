@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<java version="1.6.0_10-beta" class="java.beans.XMLDecoder"> 
+ <object class="modeles.Test"> 
+  <void property="nom"> 
+   <string>Test Eni</string> 
+  </void> 
+  <void property="sections"> 
+   <object class="pluriel.ListeSections"> 
+    <void method="add"> 
+     <object class="modeles.Section"> 
+      <void property="nbrQuestion"> 
+       <int>3</int> 
+      </void> 
+      <void property="nom"> 
+       <string>Section qui tue               </string> 
+      </void> 
+      <void property="numero"> 
+       <int>1</int> 
+      </void> 
+      <void property="questions"> 
+       <void method="add"> 
+        <object class="modeles.Question"> 
+         <void property="enonce"> 
+          <string>1 + 1</string> 
+         </void> 
+         <void property="type"> 
+          <void property="libelle"> 
+           <string>Choisir la bonne réponse</string> 
+          </void> 
+          <void property="numero"> 
+           <int>0</int> 
+          </void> 
+         </void> 
+        </object> 
+       </void> 
+      </void> 
+     </object> 
+    </void> 
+   </object> 
+  </void> 
+  <void property="seuil"> 
+   <int>50</int> 
+  </void> 
+  <void property="temps"> 
+   <int>60</int> 
+  </void> 
+ </object> 
+</java> 
