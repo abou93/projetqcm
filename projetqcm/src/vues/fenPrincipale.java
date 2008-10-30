@@ -26,6 +26,7 @@ import java.util.GregorianCalendar;
 import java.util.Properties;
 import java.util.Vector;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.SpinnerNumberModel;
@@ -34,7 +35,10 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeCellEditor;
+import javax.swing.tree.DefaultTreeCellRenderer;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.MutableTreeNode;
 import javax.swing.tree.TreeNode;
@@ -210,7 +214,8 @@ public class fenPrincipale extends javax.swing.JFrame {
 				e2.printStackTrace();
 		}
     	
-    	
+		((DefaultTreeCellRenderer)jTreeListeStagaireEni.getCellRenderer()).setLeafIcon(new ImageIcon("user.png"));
+    	((DefaultTreeCellRenderer)jTreeListeStagiaireTest.getCellRenderer()).setLeafIcon(new ImageIcon("user.png"));
     	SpinnerNumberModel model = new SpinnerNumberModel(15,0,60,1);
     	jSpinnerDureeInscription.setModel(model);
     	jButtonMotDePasseEleve.setEnabled(false);
@@ -673,7 +678,9 @@ public class fenPrincipale extends javax.swing.JFrame {
  		/*****************************************************
  		*		 		Ajout des Listener					 *
  		******************************************************/
- 		 		
+ 		
+ 		((DefaultTreeCellRenderer)jTreeListeQuestionDispo.getCellRenderer()).setLeafIcon(new ImageIcon("Question16.png"));
+ 		
  		//Clic sur le bouton d'ajout d'une réponse
  		// 
  		jButtonAjoutDuneReponse.addActionListener(new ActionListener(){
