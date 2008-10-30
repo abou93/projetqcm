@@ -40,7 +40,6 @@ public class LanceurApplication {
 				tray.add(tic);
 				// tray.remove(tic);  Pour enlever l'icone
 			} catch (AWTException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
