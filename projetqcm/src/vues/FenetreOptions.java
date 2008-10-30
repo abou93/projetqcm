@@ -128,7 +128,7 @@ public class FenetreOptions extends javax.swing.JDialog {
 			jTextFieldNomBase.setText(connexion.getProperty("databasename"));
 			
 			Properties securite = ioProperties.loadProperties("securite.properties");
-			jTextFieldAdresse.setText(securite.getProperty("mail"));
+			jTextFieldMailFormateur.setText(securite.getProperty("mail"));
 						
 			
 		} catch (FileNotFoundException e1) {
