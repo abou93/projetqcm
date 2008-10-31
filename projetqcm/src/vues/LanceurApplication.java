@@ -32,19 +32,19 @@ public class LanceurApplication {
 			e1.printStackTrace();
 		}
 		
-		// Affiche une icone dans la barre de tache		
-		if (SystemTray.isSupported()) {
-			ImageIcon i = new ImageIcon("Images/LogoENI16.png");
-			Image im = i.getImage();
-			TrayIcon tic = new TrayIcon(im,"Eni - Gestion de test QCM");
-			SystemTray tray = SystemTray.getSystemTray();
-			try {
-				tray.add(tic);
-				// tray.remove(tic);  Pour enlever l'icone
-			} catch (AWTException e) {
-				e.printStackTrace();
-			}
-		}
+//		// Affiche une icone dans la barre de tache		
+//		if (SystemTray.isSupported()) {
+//			ImageIcon i = new ImageIcon("Images/LogoENI16.png");
+//			Image im = i.getImage();
+//			TrayIcon tic = new TrayIcon(im,"Eni - Gestion de test QCM");
+//			SystemTray tray = SystemTray.getSystemTray();
+//			try {
+//				tray.add(tic);
+//				// tray.remove(tic);  Pour enlever l'icone
+//			} catch (AWTException e) {
+//				e.printStackTrace();
+//			}
+//		}
 		
 		String imagePath = "Images/SplashScreen3.png";
 		SplashScreenQCM fond = new SplashScreenQCM(imagePath);

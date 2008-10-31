@@ -1,5 +1,6 @@
 package vues;
 
+import java.awt.AWTException;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
@@ -12,7 +13,9 @@ import java.awt.GridLayout;
 import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
+import java.awt.SystemTray;
 import java.awt.Toolkit;
+import java.awt.TrayIcon;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
@@ -63,16 +66,28 @@ public class SplashScreenQCM  extends JFrame {
 		super("Gestion de test QCM");
 		this.filePath = filePath;
 		
-		Image icone;
-		try {
-			icone = ImageIO.read(getClass().getResource("/Images/LogoENI16.PNG"));
-			this.setIconImage(icone);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}//Toolkit.getDefaultToolkit().getImage(getClass().getResource("Images/LogoENI16.PNG"));
+//		Image icone;
+//		
+//			icone = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Images/LogoENI16.PNG"));
+			this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Images/LogoENI16.PNG")));
+		
+		//Toolkit.getDefaultToolkit().getImage(getClass().getResource("Images/LogoENI16.PNG"));
 		
 		initialize();
+		
+		// Affiche une icone dans la barre de tache		
+		if (SystemTray.isSupported()) {
+			ImageIcon i = new ImageIcon(getClass().getResource("/Images/LogoENI16.png"));
+			Image im = i.getImage();
+			TrayIcon tic = new TrayIcon(im,"Eni - Gestion de test QCM");
+			SystemTray tray = SystemTray.getSystemTray();
+			try {
+				tray.add(tic);
+				// tray.remove(tic);  Pour enlever l'icone
+			} catch (AWTException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 		
@@ -86,7 +101,7 @@ public class SplashScreenQCM  extends JFrame {
 
 			public void paint(Graphics g) {
 				try {
-					BufferedImage image = ImageIO.read(new File(filePath));
+					BufferedImage image = ImageIO.read(getClass().getResource("/Images/SplashScreen3.png"));//new File(filePath));
 					g.drawImage(image, 0, 0, null);
 				} catch (IOException e) {
 					e.printStackTrace();
@@ -125,8 +140,6 @@ public class SplashScreenQCM  extends JFrame {
 		c.add(imagePanel);
 		
 		//Centrer le splashscreen
-		
-				
 		GraphicsEnvironment ge = GraphicsEnvironment.
         getLocalGraphicsEnvironment();
         GraphicsDevice[] gs = ge.getScreenDevices();
