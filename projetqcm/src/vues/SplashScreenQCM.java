@@ -24,6 +24,7 @@ import java.net.URL;
 import java.util.Properties;
 
 import javax.imageio.ImageIO;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -34,6 +35,7 @@ import javax.swing.JTextField;
 
 import securite.IOProperties;
 import securite.hashPassword;
+import sun.swing.ImageIconUIResource;
 
 /**
  * @author D.Team
@@ -61,8 +63,15 @@ public class SplashScreenQCM  extends JFrame {
 		super("Gestion de test QCM");
 		this.filePath = filePath;
 		
-		Image icone = Toolkit.getDefaultToolkit().getImage(getClass().getResource("Images/LogoENI16.PNG"));
-		this.setIconImage(icone);
+		Image icone;
+		try {
+			icone = ImageIO.read(getClass().getResource("/Images/LogoENI16.PNG"));
+			this.setIconImage(icone);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}//Toolkit.getDefaultToolkit().getImage(getClass().getResource("Images/LogoENI16.PNG"));
+		
 		initialize();
 	}
 
