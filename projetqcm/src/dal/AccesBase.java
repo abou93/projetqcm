@@ -40,7 +40,7 @@ public class AccesBase {
 		    
 		// ouverture de la connexion
 		try {
-			Properties prop = IoPropertie.loadProperties("connexion.properties");
+			Properties prop = IoPropertie.loadProperties("Props/connexion.properties");
 			StringBuilder connexion= new StringBuilder();
 			connexion.append("jdbc:sqlserver://"+prop.getProperty("adresse"));
 			connexion.append(":1433;user="+prop.getProperty("user"));

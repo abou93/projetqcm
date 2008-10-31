@@ -63,10 +63,10 @@ public class FenetreOptions extends JDialog {
 					{
 						try {
 						
-							Properties password  = ioProperties.loadProperties("securite.properties");
+							Properties password  = ioProperties.loadProperties("Props/securite.properties");
 							hashPassword hash = new hashPassword();
 							password.setProperty("motdepasse",hash.getHash(jPasswordFieldNv2.getText()));
-							ioProperties.saveProperties(password,"securite.properties", "Fichier password");
+							ioProperties.saveProperties(password,"Props/securite.properties", "Fichier password");
 						} catch (Exception e1) {
 							// TODO Auto-generated catch block
 							e1.printStackTrace();
@@ -78,16 +78,16 @@ public class FenetreOptions extends JDialog {
 				
 				
 				try {
-					Properties connexion = ioProperties.loadProperties("connexion.properties");
+					Properties connexion = ioProperties.loadProperties("Props/connexion.properties");
 					connexion.setProperty("adresse",jTextFieldAdresse.getText().trim());
 					connexion.setProperty("user", jTextFieldUser.getText().trim());
 					connexion.setProperty("password",jTextFieldPassword.getText().trim());
 					connexion.setProperty("databasename", jTextFieldNomBase.getText().trim());
-					ioProperties.saveProperties(connexion,"connexion.properties", "Fichier connexion");
+					ioProperties.saveProperties(connexion,"Props/connexion.properties", "Fichier connexion");
 					
-					Properties secur = ioProperties.loadProperties("securite.properties");
+					Properties secur = ioProperties.loadProperties("Props/securite.properties");
 					secur.setProperty("mail", jTextFieldMailFormateur.getText().trim());
-					ioProperties.saveProperties(secur,"securite.properties", "Fichier securite");
+					ioProperties.saveProperties(secur,"Props/securite.properties", "Fichier securite");
 					
 					
 				} catch (FileNotFoundException e1) {
@@ -138,13 +138,13 @@ public class FenetreOptions extends JDialog {
 		IOProperties ioProperties = new IOProperties();
 		try {
 			
-			Properties connexion = ioProperties.loadProperties("connexion.properties");
+			Properties connexion = ioProperties.loadProperties("Props/connexion.properties");
 			jTextFieldAdresse.setText(connexion.getProperty("adresse"));
 			jTextFieldUser.setText(connexion.getProperty("user"));
 			jTextFieldPassword.setText(connexion.getProperty("password"));
 			jTextFieldNomBase.setText(connexion.getProperty("databasename"));
 			
-			Properties securite = ioProperties.loadProperties("securite.properties");
+			Properties securite = ioProperties.loadProperties("Props/securite.properties");
 			jTextFieldMailFormateur.setText(securite.getProperty("mail"));
 						
 			
