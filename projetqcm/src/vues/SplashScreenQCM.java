@@ -20,6 +20,7 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.Properties;
 
 import javax.imageio.ImageIO;
@@ -63,7 +64,7 @@ public class SplashScreenQCM  extends JFrame {
 		initialize();
 	}
 
-	
+		
 	//Initialisation
 	private void initialize() {
 		
