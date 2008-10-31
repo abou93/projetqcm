@@ -24,6 +24,7 @@ import java.net.URL;
 import java.util.Properties;
 
 import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -59,8 +60,9 @@ public class SplashScreenQCM  extends JFrame {
 	public SplashScreenQCM(String filePath) {
 		super("Gestion de test QCM");
 		this.filePath = filePath;
-		Image icone = Toolkit.getDefaultToolkit().getImage("Images/LogoENI16.PNG");
-    	this.setIconImage(icone);
+		
+		Image icone = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Images/LogoENI16.PNG"));
+		this.setIconImage(icone);
 		initialize();
 	}
 
