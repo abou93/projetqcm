@@ -14,20 +14,16 @@ import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.SystemTray;
-import java.awt.Toolkit;
 import java.awt.TrayIcon;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.util.Properties;
 
 import javax.imageio.ImageIO;
-import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -38,7 +34,6 @@ import javax.swing.JTextField;
 
 import securite.IOProperties;
 import securite.hashPassword;
-import sun.swing.ImageIconUIResource;
 
 /**
  * @author D.Team
@@ -48,7 +43,6 @@ public class SplashScreenQCM  extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private Container c;
 	private JPanel imagePanel;
-	private String filePath;
 	private Point pt;
 	
 	//Composants du splashscreen
@@ -62,22 +56,14 @@ public class SplashScreenQCM  extends JFrame {
 
 	
 	//Constructeur
-	public SplashScreenQCM(String filePath) {
+	public SplashScreenQCM() {
 		super("Gestion de test QCM");
-		this.filePath = filePath;
-		
-//		Image icone;
-//		
-//			icone = Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Images/LogoENI16.PNG"));
-			this.setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Images/LogoENI16.PNG")));
-		
-		//Toolkit.getDefaultToolkit().getImage(getClass().getResource("Images/LogoENI16.PNG"));
 		
 		initialize();
 		
 		// Affiche une icone dans la barre de tache		
 		if (SystemTray.isSupported()) {
-			ImageIcon i = new ImageIcon(getClass().getResource("/Images/LogoENI16.png"));
+			ImageIcon i = new ImageIcon("Images/LogoENI16.png");
 			Image im = i.getImage();
 			TrayIcon tic = new TrayIcon(im,"Eni - Gestion de test QCM");
 			SystemTray tray = SystemTray.getSystemTray();

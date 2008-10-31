@@ -109,7 +109,7 @@ public class JPanelNouvelleReponse extends javax.swing.JPanel {
         jTextAreaNouvelleReponse.setRows(5);
         jScrollPane1.setViewportView(jTextAreaNouvelleReponse);
 
-        jButtonSupprimerReponse.setIcon(new javax.swing.ImageIcon("C:\\Images\\delete32.png")); // NOI18N
+        jButtonSupprimerReponse.setIcon(new javax.swing.ImageIcon("Images/delete32.png")); // NOI18N
         jButtonSupprimerReponse.setToolTipText("Supprimer la reponse");
 
         jLabel1.setText("A");
