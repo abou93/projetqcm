@@ -58,7 +58,7 @@ public class SplashScreenQCM  extends JFrame {
 	public SplashScreenQCM(String filePath) {
 		super("Gestion de test QCM");
 		this.filePath = filePath;
-		Image icone = Toolkit.getDefaultToolkit().getImage("C:/Images/LogoENI16.PNG");
+		Image icone = Toolkit.getDefaultToolkit().getImage("Images/LogoENI16.PNG");
     	this.setIconImage(icone);
 		initialize();
 	}
