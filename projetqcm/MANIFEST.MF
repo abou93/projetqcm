@@ -1,0 +1,4 @@
+Manifest-Version: 1.0
+Sealed: true
+Main-Class: vues.LanceurApplication
+Class-Path: ./Lib/beansbinding-1.2.1.jar ./Lib/sqljdbc.jar
