@@ -14,12 +14,14 @@ import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.SystemTray;
+import java.awt.Toolkit;
 import java.awt.TrayIcon;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
 import java.util.Properties;
 
@@ -58,7 +60,9 @@ public class SplashScreenQCM  extends JFrame {
 	//Constructeur
 	public SplashScreenQCM() {
 		super("Gestion de test QCM");
-		
+		//Changer l'icone de la fenetre
+		Image icone = Toolkit.getDefaultToolkit().getImage("Images/LogoENI16.PNG");
+    	this.setIconImage(icone);
 		initialize();
 		
 		// Affiche une icone dans la barre de tache		
@@ -87,7 +91,7 @@ public class SplashScreenQCM  extends JFrame {
 
 			public void paint(Graphics g) {
 				try {
-					BufferedImage image = ImageIO.read(getClass().getResource("/Images/SplashScreen3.png"));//new File(filePath));
+					BufferedImage image = ImageIO.read(new File("Images/SplashScreen3.png"));
 					g.drawImage(image, 0, 0, null);
 				} catch (IOException e) {
 					e.printStackTrace();
