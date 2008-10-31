@@ -204,7 +204,7 @@ public class fenPrincipale extends javax.swing.JFrame {
     	IOProperties io = new IOProperties();
     	Properties secur;
 		try {
-			secur = io.loadProperties("securite.properties");
+			secur = io.loadProperties("Props/securite.properties");
 			jTextFieldMailFormateur.setText(secur.getProperty("mail"));
 		} catch (FileNotFoundException e2) {
 				e2.printStackTrace();
