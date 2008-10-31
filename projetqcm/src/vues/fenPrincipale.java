@@ -85,7 +85,7 @@ public class fenPrincipale extends javax.swing.JFrame {
     	super();
     	instance=this;
     	//Changer l'icone de la fenetre
-		Image icone = Toolkit.getDefaultToolkit().getImage(getClass().getResource("Images/LogoENI16.PNG"));
+		Image icone = Toolkit.getDefaultToolkit().getImage("Images/LogoENI16.PNG");
     	this.setIconImage(icone);
     	this.setResizable(false);
     	
